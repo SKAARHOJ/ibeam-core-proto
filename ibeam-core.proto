@@ -4,10 +4,6 @@ package ibeam_core;
 option go_package = ".;ibeam_core";
 
 service IbeamCore {
-  rpc Ping(PingRequest) returns (PingResponse);
-
-  // ---------------------
-
   rpc CoreInfo(CoreInfoRequest) returns (CoreInfoResponse);
   // Sent with 0 returns all!
   rpc DeviceInfo(DeviceInfoRequest) returns (DeviceInfoResponse);
@@ -15,23 +11,23 @@ service IbeamCore {
   //---------------------
 
   rpc Get(GetRequest) returns (ParameterResponse);
-  // rpc GetParameterDetails(GetRequest) returns (ParameterResponse);
+  rpc GetParameterDetails(GetRequest) returns (ParameterDetailsResponse);
 
-  // rpc Set(SetRequest) returns (ParameterResponse);
+  rpc Set(SetRequest) returns (ParameterResponse);
 
+  // TODO: this could be potentially a  single Parameter
   rpc Subscribe(SubscribeRequest) returns (stream ParameterResponse);
 }
-
-message PingRequest {}
-message PingResponse {}
 
 message CoreInfoRequest {}
 
 message CoreInfoResponse {
   int32 ibeamVersion = 1; // Implemented version of the IBeam Protocol
-  string productName = 2;
-  int32 maxDevices = 3;
-  int32 connectedClients = 4;
+  int32 coreVersion = 2;
+  // In unisketch this should be a hard break that requires updating!
+  string productName = 3;
+  int32 maxDevices = 4;
+  int32 connectedClients = 6;
 }
 
 message DeviceInfoRequest { int32 deviceId = 1; }
@@ -50,7 +46,6 @@ message GetRequest { repeated ParameterID id = 1; }
 message SetRequest { repeated Parameter parameters = 1; }
 
 // No id ->list everything
-message ParameterDetailsRequest { repeated ParameterID id = 1; }
 message ParameterDetailsResponse { repeated ParameterDetails details = 1; }
 
 message ParameterResponse { repeated Parameter parameters = 1; }
@@ -103,8 +98,8 @@ message ParameterDetails {
   int32 id = 1; // FIXME
   string name = 2;
   repeated ArgumentDetails argumentDetails = 3;
-  ParameterType ptype = 4;
-  ControlType cType = 5; // More concepts ? delay time ?
+  ParameterType paramType = 4;
+  ControlType controlType = 5; // More concepts ? delay time ?
   bool hasFeedback = 6;
   string label = 7;
   string shortLabel = 8;
