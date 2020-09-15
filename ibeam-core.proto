@@ -29,82 +29,81 @@ message CoreInfoData {
   int32 coreVersion = 2;
   // In unisketch this should be a hard break that requires updating!
   string productName = 3;
-  int32 maxDevices = 4;
-  int32 connectedClients = 6;
+  uint32 maxDevices = 4;
+  uint32 connectedClients = 6;
 }
 
-message DeviceIds { int32 deviceId = 1; }
+message DeviceIds { uint32 deviceId = 1; }
 
 message DeviceInfos { repeated DeviceInfo info = 1; }
 
 message DeviceInfo {
-  int32 id = 1;
+  uint32 id = 1;
   bool connected = 2;
   string name = 3;
   ConnectionType connectionType = 4;
 }
 
 message DeviceParameterIds { repeated DeviceParameterId id = 1; }
-message ParameterIds { repeated int32 id = 1; }
+message ParameterIds { repeated uint32 id = 1; }
 message ParameterDetails { repeated ParameterDetail details = 1; }
 
 message DeviceParameterId {
   // Keep in mind that 0 -> absent in protobuf,
   // so DO NOT map params or devices to id 0
-  int32 parameter = 1;
-  int32 device = 2;
+  uint32 parameter = 1;
+  uint32 device = 2;
 }
 
 message ParameterOption {
-  int32 id = 1;
+  uint32 id = 1;
   string name = 2;
 }
 
 message Parameters { repeated Parameter parameters = 1; }
 message Parameter {
   DeviceParameterId id = 1;
-  ParameterValue value = 2;
-  repeated ParamaterArgument arguments = 3;
+  repeated ParameterValue value = 2;
 }
 
-message ParamaterArgument {
-  oneof value {
-    int32 number = 3;
-    float floating = 4;
-    ParameterOption options = 5;
-    int32 currentOption = 6;
-  }
-};
-
 message ParameterValue {
-  int32 parameterId = 1;
-  bool isAssumedState = 2;
+  uint32 parameterId = 1;
+  bool available = 2;
+  bool isAssumedState = 3;
   oneof value {
-    int32 int = 3;
-    float floating = 4;
-    string str = 5;
-    int32 currentOption = 6;
+    int32 int = 4;
+    float floating = 5;
+    string str = 6;
+    uint32 currentOption = 7;
   }
 }
 
 message ParameterDetail {
-  int32 id = 1;
+  uint32 id = 1;
   string name = 2;
-  repeated ArgumentDetail argumentDetail = 3;
+  uint32 instances = 3; // this can give parameters a second dimension of
+                        // values, eg for channels of a frame syncroniser
   GenericType genericType = 4;
   ControlStyle controlStyle = 5;
   FeedbackStyle feedbackStyle = 6;
-  string label = 7;
-  string shortLabel = 8;
-  string description = 9; // Not sure we need this
+  ValueType valueType = 7;
+
+  string label = 8;
+  string shortLabel = 9;
+  string description = 10;
+  DisplayStyle displayStyle = 11;
+
+  float minimum = 12; // optional, proto3 makes all values optional
+  float maximum = 13; // optional
+  repeated ParameterOption optionList = 14; // optional
 }
 
-message ArgumentDetail {
-  int32 id = 1;
-  ArgumentType argType = 2;
-  int32 minimum = 3; // optional, proto3 makes all values optional
-  int32 maximum = 4; // optional
-  repeated ParameterOption optionList = 5; // optional
+enum ValueType {
+  Undefined = 0;
+  Number = 1;
+  Floating = 2;
+  Opt = 3;
+  String = 4;
 }
 
 enum ControlStyle {
@@ -122,6 +121,20 @@ enum FeedbackStyle {
   NoFeedback = 3;
 }
 
+// TODO: this is stolen from the retvalformat array, it should be reevaluated
+enum DisplayStyle {
+  DisplayNumber = 0;
+  DisplayFLOAT_1DEZ = 12;
+  DisplayFloat_2DEZ = 1;
+  DisplayFloat_3DEZ = 8;
+  DisplayFLOAT_5 = 9; // TODO: What is this ?!
+  DisplayPercent = 2;
+  DisplayDb = 3;
+  DisplayFstop = 4;
+  DisplayFraction = 5;
+  DisplayKelvin = 6;
+}
+
 enum GenericType {
   Generic = 0;
   DeviceIP = 1;
@@ -130,14 +143,6 @@ enum GenericType {
   Tally = 4;
   Record = 5;
   Iris = 6;
-}
-
-enum ArgumentType {
-  Undefined = 0;
-  Number = 1;
-  Floating = 2;
-  Opt = 3;
-  String = 4;
 }
 
 enum ConnectionType {
@@ -151,7 +156,7 @@ enum ConnectionType {
 /*
 - [ ] Parameters need some way of signaling RETVAL_Format style rendering info,
 some of which could also be default behaviour
-- [ ] The device abstraction feels odd currently... we should improve that
-- [ ] The concept of parameter arguments needs some decent reevaluation!
 - [ ] What about speed values ?
+- [x] The device abstraction feels odd currently... we should improve that
+- [x] The concept of parameter arguments needs some decent reevaluation!
 */
