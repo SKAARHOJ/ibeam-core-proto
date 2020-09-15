@@ -15,9 +15,9 @@ service IbeamCore {
   //---------------------
 
   rpc Get(GetRequest) returns (ParameterResponse);
-  rpc GetParameterDetails(GetRequest) returns (ParameterResponse);
+  // rpc GetParameterDetails(GetRequest) returns (ParameterResponse);
 
-  rpc Set(SetRequest) returns (ParameterResponse);
+  // rpc Set(SetRequest) returns (ParameterResponse);
 
   rpc Subscribe(SubscribeRequest) returns (stream ParameterResponse);
 }
@@ -75,7 +75,7 @@ message ParameterID {
 
 message Parameter {
   ParameterID id = 1;
-  repeated ParamaterArgument argument = 2;
+  repeated ParamaterArgument arguments = 2;
 }
 
 message ParameterOption {
