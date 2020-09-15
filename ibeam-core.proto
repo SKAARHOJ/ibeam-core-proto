@@ -4,26 +4,27 @@ package ibeam_core;
 option go_package = ".;ibeam_core";
 
 service IbeamCore {
-  rpc CoreInfo(CoreInfoRequest) returns (CoreInfo);
+  rpc CoreInfo(CoreInfoRequest) returns (CoreInfoData);
   // No id -> get everything
   rpc DeviceInfo(DeviceIds) returns (DeviceInfos);
 
   //---------------------
 
-  // No id -> get everything
-  rpc Get(ParamIds) returns (Parameters);
-  rpc GetParameterDetails(ParamIds) returns (ParameterDetailsResponse);
+  // No id -> get everything, as ParamID has 2 dimensions this rule should work
+  // in both
+  rpc Get(DeviceParameterIds) returns (Parameters);
+  rpc GetParameterDetails(ParameterIds) returns (ParameterDetails);
 
-  rpc Set(SetRequest) returns (Parameters);
+  rpc Set(Parameters) returns (Parameters);
 
   // No id -> subscribe to everything
   // On subscribe all current values should be sent back!
-  rpc Subscribe(ParamIds) returns (stream Parameter);
+  rpc Subscribe(DeviceParameterIds) returns (stream Parameter);
 }
 
 message CoreInfoRequest {}
 
-message CoreInfo {
+message CoreInfoData {
   int32 ibeamVersion = 1; // Implemented version of the IBeam Protocol
   int32 coreVersion = 2;
   // In unisketch this should be a hard break that requires updating!
@@ -43,12 +44,28 @@ message DeviceInfo {
   ConnectionType connectionType = 4;
 }
 
-// No id -> list everything
-message ParamIds { repeated ParameterID id = 1; }
-message SetRequest { repeated Parameter parameters = 1; }
+message DeviceParameterIds { repeated DeviceParameterId id = 1; }
+message ParameterIds { repeated int32 id = 1; }
+message ParameterDetails { repeated ParameterDetail details = 1; }
 
-// No id ->list everything
-message ParameterDetailsResponse { repeated ParameterDetails details = 1; }
+message DeviceParameterId {
+  // Keep in mind that 0 -> absent in protobuf,
+  // so DO NOT map params or devices to id 0
+  int32 parameter = 1;
+  int32 device = 2;
+}
+
+message ParameterOption {
+  int32 id = 1;
+  string name = 2;
+}
+
+message Parameters { repeated Parameter parameters = 1; }
+message Parameter {
+  DeviceParameterId id = 1;
+  ParameterValue value = 2;
+  repeated ParamaterArgument arguments = 3;
+}
 
 message ParamaterArgument {
   oneof value {
@@ -59,25 +76,6 @@ message ParamaterArgument {
   }
 };
 
-message ParameterID {
-  // Keep in mind that 0 -> absent in protobuf,
-  // so DO NOT map params or devices to id 0
-  int32 parameter = 1;
-  int32 device = 2;
-}
-
-message Parameters { repeated Parameter parameters = 1; }
-message Parameter {
-  ParameterID id = 1;
-  ParameterValue value = 2;
-  repeated ParamaterArgument arguments = 3;
-}
-
-message ParameterOption {
-  int32 id = 1;
-  string name = 2;
-}
-
 message ParameterValue {
   int32 parameterId = 1;
   bool isAssumedState = 2;
@@ -85,38 +83,23 @@ message ParameterValue {
     int32 int = 3;
     float floating = 4;
     string str = 5;
+    int32 currentOption = 6;
   }
-  repeated ParameterOption options = 6;
 }
 
-message ParameterDetails {
-  int32 id = 1; // FIXME: Shall we use the ParameterId here ?
+message ParameterDetail {
+  int32 id = 1;
   string name = 2;
-  repeated ArgumentDetails argumentDetails = 3;
-  ParameterType paramType = 4;
-  ControlType controlType = 5; // More concepts ? delay time ?
-  bool hasFeedback = 6;
+  repeated ArgumentDetail argumentDetail = 3;
+  GenericType genericType = 4;
+  ControlStyle controlStyle = 5;
+  FeedbackStyle feedbackStyle = 6;
   string label = 7;
   string shortLabel = 8;
   string description = 9; // Not sure we need this
 }
 
-enum ControlType {
-  UndefinedControl = 0;
-  FullControl = 1;
-  Up_down = 2;
-  NoControl = 3;
-  Oneshot = 4;
-}
-
-enum FeedbackType {
-  UndefinedFeedback = 0;
-  FullFeedback = 1;
-  Delayed = 2;
-  NoFeedback = 3;
-}
-
-message ArgumentDetails {
+message ArgumentDetail {
   int32 id = 1;
   ArgumentType argType = 2;
   int32 minimum = 3; // optional, proto3 makes all values optional
@@ -124,7 +107,22 @@ message ArgumentDetails {
   repeated ParameterOption optionList = 5; // optional
 }
 
-enum ParameterType {
+enum ControlStyle {
+  UndefinedControl = 0;
+  FullControl = 1;
+  Up_down = 2;
+  NoControl = 3;
+  Oneshot = 4;
+}
+
+enum FeedbackStyle {
+  UndefinedFeedback = 0;
+  FullFeedback = 1;
+  Delayed = 2;
+  NoFeedback = 3;
+}
+
+enum GenericType {
   Generic = 0;
   DeviceIP = 1;
   Pan = 2;
@@ -155,4 +153,5 @@ enum ConnectionType {
 some of which could also be default behaviour
 - [ ] The device abstraction feels odd currently... we should improve that
 - [ ] The concept of parameter arguments needs some decent reevaluation!
+- [ ] What about speed values ?
 */
