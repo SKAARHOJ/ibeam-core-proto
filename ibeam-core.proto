@@ -1,0 +1,149 @@
+syntax = "proto3";
+
+package ibeam_core;
+option go_package = ".;ibeam_core";
+
+service IbeamCore {
+  rpc Ping(PingRequest) returns (PingResponse);
+
+  // ---------------------
+
+  rpc CoreInfo(CoreInfoRequest) returns (CoreInfoResponse);
+  // Sent with 0 returns all!
+  rpc DeviceInfo(DeviceInfoRequest) returns (DeviceInfoResponse);
+
+  //---------------------
+
+  rpc Get(GetRequest) returns (ParameterResponse);
+  rpc GetParameterDetails(GetRequest) returns (ParameterResponse);
+
+  rpc Set(SetRequest) returns (ParameterResponse);
+
+  rpc Subscribe(SubscribeRequest) returns (stream ParameterResponse);
+}
+
+message PingRequest {}
+message PingResponse {}
+
+message CoreInfoRequest {}
+
+message CoreInfoResponse {
+  int32 ibeamVersion = 1; // Implemented version of the IBeam Protocol
+  string productName = 2;
+  int32 maxDevices = 3;
+  int32 connectedClients = 4;
+}
+
+message DeviceInfoRequest { int32 deviceId = 1; }
+
+message DeviceInfoResponse { repeated DeviceInfo info = 1; }
+
+message DeviceInfo {
+  int32 id = 1;
+  bool connected = 2;
+  string name = 3;
+  ConnectionType connectionType = 4;
+}
+
+// No id -> list everything
+message GetRequest { repeated ParameterID id = 1; }
+message SetRequest { repeated Parameter parameters = 1; }
+
+// No id ->list everything
+message ParameterDetailsRequest { repeated ParameterID id = 1; }
+message ParameterDetailsResponse { repeated ParameterDetails details = 1; }
+
+message ParameterResponse { repeated Parameter parameters = 1; }
+
+// No id -> subscribe to everything
+// On subscribe all current values should be sent back!
+message SubscribeRequest { repeated ParameterID parameterIds = 1; }
+
+message ParamaterArgument {
+  oneof value {
+    int32 number = 3;
+    float floating = 4;
+    ParameterOption options = 5;
+    int32 currentOption = 6;
+  }
+};
+
+message ParameterID {
+  int32 parameter = 1;
+  int32 device = 2;
+}
+
+message Parameter {
+  ParameterID id = 1;
+  repeated ParamaterArgument argument = 2;
+}
+
+message ParameterOption {
+  int32 id = 1;
+  string name = 2;
+}
+
+message Value {
+  oneof value {
+    int32 int = 1;
+    float floating = 2;
+    string s = 3;
+    bool b = 4;
+    string ip = 5;
+  }
+}
+
+message ParameterValue {
+  int32 parameterId = 1;
+  bool isAssumedState = 2;
+  repeated Value value = 4;
+}
+
+message ParameterDetails {
+  int32 id = 1; // FIXME
+  string name = 2;
+  repeated ArgumentDetails argumentDetails = 3;
+  ParameterType ptype = 4;
+  ControlType cType = 5; // More concepts ? delay time ?
+  bool hasFeedback = 6;
+  string label = 7;
+  string shortLabel = 8;
+  string description = 9; // Not sure we need this
+}
+
+enum ControlType {
+  full = 0;
+  up_down = 1;
+  oneshot = 2;
+}
+
+message ArgumentDetails {
+  ArgumentType type = 2;
+  int32 minimum = 3; // optional, proto3 makes all values optional
+  int32 maximum = 4; // optional
+  repeated ParameterOption optionList = 5; // optional
+}
+
+enum ParameterType {
+  generic = 0;
+  deviceIP = 1;
+  pan = 2;
+  tilt = 3;
+  tally = 4;
+  record = 5;
+  iris = 6;
+}
+
+enum ArgumentType {
+  number = 0;
+  floating = 1;
+  opt = 2;
+  ip = 3;
+}
+
+enum ConnectionType {
+  Other = 0;
+  network = 1;
+  serial = 2;
+  sdi = 3;
+}
