@@ -70,14 +70,14 @@ message Parameter {
 }
 
 message ParameterValue {
-  uint32 parameterId = 1;
+  uint32 instanceId = 1;
   bool available = 2;
   bool isAssumedState = 3;
   oneof value {
     int32 int = 4;
     float floating = 5;
-    string str = 6;
-    uint32 currentOption = 7;
+    uint32 currentOption = 6;
+    string str = 7;
   }
 }
 
