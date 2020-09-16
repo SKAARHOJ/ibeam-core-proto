@@ -4,9 +4,9 @@ package ibeam_core;
 option go_package = ".;ibeam_core";
 
 service IbeamCore {
-  rpc CoreInfo(CoreInfoRequest) returns (CoreInfoData);
+  rpc GetCoreInfo(Empty) returns (CoreInfo);
   // No id -> get everything
-  rpc DeviceInfo(DeviceIds) returns (DeviceInfos);
+  rpc GetDeviceInfo(DeviceIds) returns (DeviceInfos);
 
   //---------------------
 
@@ -15,16 +15,19 @@ service IbeamCore {
   rpc Get(DeviceParameterIds) returns (Parameters);
   rpc GetParameterDetails(ParameterIds) returns (ParameterDetails);
 
-  rpc Set(Parameters) returns (Parameters);
+  rpc Set(Parameters) returns (Empty); // Or Parameters ?
 
   // No id -> subscribe to everything
   // On subscribe all current values should be sent back!
   rpc Subscribe(DeviceParameterIds) returns (stream Parameter);
 }
 
-message CoreInfoRequest {}
 
-message CoreInfoData {
+message Empty {
+}
+
+
+message CoreInfo {
   int32 ibeamVersion = 1; // Implemented version of the IBeam Protocol
   int32 coreVersion = 2;
   // In unisketch this should be a hard break that requires updating!
