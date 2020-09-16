@@ -100,7 +100,7 @@ message ParameterDetail {
 
 enum ValueType {
   Undefined = 0;
-  Number = 1;
+  Int = 1;
   Floating = 2;
   Opt = 3;
   String = 4;
@@ -123,7 +123,7 @@ enum FeedbackStyle {
 
 // TODO: this is stolen from the retvalformat array, it should be reevaluated
 enum DisplayStyle {
-  DisplayNumber = 0;
+  DisplayDefault = 0;
   DisplayFLOAT_1DEZ = 12;
   DisplayFloat_2DEZ = 1;
   DisplayFloat_3DEZ = 8;
