@@ -36,7 +36,7 @@ message CoreInfo {
   uint32 connectedClients = 6;
 }
 
-message DeviceIds { uint32 deviceId = 1; }
+message DeviceIds { repeated uint32 deviceIds = 1; }
 
 message DeviceInfos { repeated DeviceInfo info = 1; }
 
@@ -47,8 +47,8 @@ message DeviceInfo {
   ConnectionType connectionType = 4;
 }
 
-message DeviceParameterIds { repeated DeviceParameterId id = 1; }
-message ParameterIds { repeated uint32 id = 1; }
+message DeviceParameterIds { repeated DeviceParameterId ids = 1; }
+message ParameterIds { repeated uint32 ids = 1; }
 message ParameterDetails { repeated ParameterDetail details = 1; }
 
 message DeviceParameterId {
@@ -88,7 +88,8 @@ message ParameterDetail {
                         // values, eg for channels of a frame syncroniser
   GenericType genericType = 4;
   ControlStyle controlStyle = 5;
-  FeedbackStyle feedbackStyle = 6;
+  uint32 feedbackDelayMs = 6; // 0 means no feedback
+  // We might need a control pulses limiting thing here as well...
   ValueType valueType = 7;
 
   string label = 8;
@@ -111,18 +112,12 @@ enum ValueType {
 
 enum ControlStyle {
   UndefinedControl = 0;
-  FullControl = 1;
-  Up_down = 2;
+  Normal = 1;
+  Incremental = 2;
   NoControl = 3;
-  Oneshot = 4;
+  Oneshot = 4; // TODO: do we need this ?
 }
 
-enum FeedbackStyle {
-  UndefinedFeedback = 0;
-  FullFeedback = 1;
-  Delayed = 2;
-  NoFeedback = 3;
-}
 
 // TODO: this is stolen from the retvalformat array, it should be reevaluated
 enum DisplayStyle {
