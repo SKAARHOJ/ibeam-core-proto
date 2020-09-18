@@ -71,14 +71,21 @@ message Parameter {
 
 message ParameterValue {
   uint32 instanceId = 1;
-  bool available = 2;
-  bool isAssumedState = 3;
+  bool available = 2; // Ignored in set request
+  bool isAssumedState = 3; // Ignored in set request
   oneof value {
     int32 int = 4;
     float floating = 5;
     uint32 currentOption = 6;
     string str = 7;
+    Command cmd = 8;
   }
+}
+
+enum Command {
+  Idle = 0;
+  Increment = 1;
+  Decrement = 2;
 }
 
 message ParameterDetail {
