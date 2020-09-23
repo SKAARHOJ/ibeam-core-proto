@@ -4,6 +4,13 @@ package ibeam_core;
 option go_package = ".;ibeam_core";
 
 service IbeamCore {
+  /* Return the Info of the Core that inclues:
+  * - Ibeam Version Number
+  * - Core Version Number
+  * - Product Name
+  * - Max Devices
+  * - Connected Clients
+  */
   rpc GetCoreInfo(Empty) returns (CoreInfo);
   // No id -> get everything
   rpc GetDeviceInfo(DeviceIds) returns (DeviceInfos);
@@ -28,8 +35,8 @@ message Empty {
 
 
 message CoreInfo {
-  int32 ibeamVersion = 1; // Implemented version of the IBeam Protocol
-  int32 coreVersion = 2;
+  string ibeamVersion = 1; // Implemented version of the IBeam Protocol (better String than int for Versions like 1.0.2b)
+  string coreVersion = 2; // Implemented version of the IBeam Core
   // In unisketch this should be a hard break that requires updating!
   string productName = 3;
   uint32 maxDevices = 4;
