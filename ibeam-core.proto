@@ -4,95 +4,108 @@ package ibeam_core;
 option go_package = ".;ibeam_core";
 
 service IbeamCore {
-  /* Return the Info of the Core that inclues:
-  * - Ibeam Version Number
-  * - Core Version Number
-  * - Product Name
-  * - Max Devices
-  * - Connected Clients
-  */
+  /* Return the Core and it's Infos that inclues:
+   * - Ibeam Version Numbe
+   * - Core Version Number
+   * - Product Name
+   * - Max Devices
+   * - Connected Clients
+   */
   rpc GetCoreInfo(Empty) returns (CoreInfo);
+
   // No id -> get everything
-  rpc GetDeviceInfo(DeviceIds) returns (DeviceInfos);
+  rpc GetDeviceInfo(DeviceIDs) returns (DeviceInfos);
 
   //---------------------
 
   // No id -> get everything, as ParamID has 2 dimensions this rule should work
   // in both
-  rpc Get(DeviceParameterIds) returns (Parameters);
-  rpc GetParameterDetails(ParameterIds) returns (ParameterDetails);
+  rpc Get(ModelIDs) returns (Parameters);
+  rpc GetParameterDetails(ParameterIDs) returns (ParameterDetails);
 
   rpc Set(Parameters) returns (Empty); // Or Parameters ?
 
   // No id -> subscribe to everything
   // On subscribe all current values should be sent back!
-  rpc Subscribe(DeviceParameterIds) returns (stream Parameter);
+  rpc Subscribe(Parameter) returns (stream Parameter);
 }
 
+message Empty {}
 
-message Empty {
-}
-
+/* * * * * * * * * * * * * *
+        CORE
+ * * * * * * * * * * * * * */
 
 message CoreInfo {
-  string ibeamVersion = 1; // Implemented version of the IBeam Protocol (better String than int for Versions like 1.0.2b)
-  string coreVersion = 2; // Implemented version of the IBeam Core
+  string ibeamVersion = 1; // Implemented version of the IBeam Protocol (better
+                           // String than int for Versions like 1.0.2b)
+  string coreVersion = 2;  // Implemented version of the IBeam Core
   // In unisketch this should be a hard break that requires updating!
   string productName = 3;
   uint32 maxDevices = 4;
-  uint32 connectedClients = 6;
+  uint32 connectedClients = 5;
 }
 
-message DeviceIds { repeated uint32 deviceIds = 1; }
+/* * * * * * * * * * * * * *
+        DEVICE
+ * * * * * * * * * * * * * */
 
-message DeviceInfos { repeated DeviceInfo info = 1; }
+message DeviceID { uint32 deviceID = 1; }
+message DeviceIDs { repeated DeviceID deviceIDs = 1; }
 
 message DeviceInfo {
-  uint32 id = 1;
-  bool connected = 2;
+  DeviceID deviceID = 1;
+  ModelID modelID = 2;
   string name = 3;
-  ConnectionType connectionType = 4;
+  bool connected = 4;
+  ConnectionType connectionType = 5;
+}
+message DeviceInfos { repeated DeviceInfo deviceInfos = 1; }
+
+enum ConnectionType {
+  Other = 0;
+  Network = 1;
+  Serial = 2;
+  Sdi = 3;
 }
 
-message DeviceParameterIds { repeated DeviceParameterId ids = 1; }
-message ParameterIds { repeated uint32 ids = 1; }
-message ParameterDetails { repeated ParameterDetail details = 1; }
+/* * * * * * * * * * * * * *
+        MODEL
+ * * * * * * * * * * * * * */
 
-message DeviceParameterId {
-  // Keep in mind that 0 -> absent in protobuf,
-  // so DO NOT map params or devices to id 0
-  uint32 parameter = 1;
-  uint32 device = 2;
+message ModelID { uint32 modelID = 1; }
+message ModelIDs { repeated ModelID modelIDs = 1; }
+
+message ModelInfo {
+  uint32 ModelID = 1;
+  ParameterIDs parameterIDs = 2;
 }
+message ModelInfos { repeated ModelInfo modelInfos = 1; }
 
-message ParameterOption {
-  uint32 id = 1;
-  string name = 2;
-}
+/* * * * * * * * * * * * * *
+        PARAMETER
+ * * * * * * * * * * * * * */
 
-message Parameters { repeated Parameter parameters = 1; }
+message ParameterID { uint32 parameterID = 1; }
+message ParameterIDs { repeated ParameterID parameterID = 1; }
+
 message Parameter {
-  DeviceParameterId id = 1;
-  repeated ParameterValue value = 2;
+  ParameterID parameterID = 1;
+  repeated ParameterValue value = 3;
 }
+message Parameters { repeated Parameter parameters = 1; }
 
 message ParameterValue {
-  uint32 instanceId = 1;
-  bool available = 2; // Ignored in set request
+  uint32 instanceID = 1;
+  bool available = 2;      // Ignored in set request
   bool isAssumedState = 3; // Ignored in set request
   oneof value {
-    int32 int = 4;
+    int32 integer = 4;
     float floating = 5;
     uint32 currentOption = 6;
     string str = 7;
     Command cmd = 8;
   }
-}
-
-enum Command {
-  Idle = 0;
-  Increment = 1;
-  Decrement = 2;
 }
 
 message ParameterDetail {
@@ -115,6 +128,18 @@ message ParameterDetail {
   float maximum = 13; // optional
   repeated ParameterOption optionList = 14; // optional
 }
+message ParameterDetails { repeated ParameterDetail parameterDetails = 1; }
+
+message ParameterOption {
+  uint32 id = 1;
+  string name = 2;
+}
+
+enum Command {
+  IDle = 0;
+  Increment = 1;
+  Decrement = 2;
+}
 
 enum ValueType {
   Undefined = 0;
@@ -131,7 +156,6 @@ enum ControlStyle {
   NoControl = 3;
   Oneshot = 4; // TODO: do we need this ?
 }
-
 
 // TODO: this is stolen from the retvalformat array, it should be reevaluated
 enum DisplayStyle {
@@ -157,18 +181,12 @@ enum GenericType {
   Iris = 6;
 }
 
-enum ConnectionType {
-  Other = 0;
-  Network = 1;
-  Serial = 2;
-  Sdi = 3;
-}
-
 // Current TODO
 /*
 - [ ] Parameters need some way of signaling RETVAL_Format style rendering info,
 some of which could also be default behaviour
 - [ ] What about speed values ?
+- [ ] Add Error Handling
 - [x] The device abstraction feels odd currently... we should improve that
 - [x] The concept of parameter arguments needs some decent reevaluation!
 */
