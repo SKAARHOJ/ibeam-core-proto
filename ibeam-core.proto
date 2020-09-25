@@ -77,7 +77,7 @@ message ModelID { uint32 modelID = 1; }
 message ModelIDs { repeated ModelID modelIDs = 1; }
 
 message ModelInfo {
-  uint32 ModelID = 1;
+  ModelID ModelID = 1;
   ParameterIDs parameterIDs = 2;
 }
 message ModelInfos { repeated ModelInfo modelInfos = 1; }
