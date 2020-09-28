@@ -190,12 +190,13 @@ enum DisplayStyle {
 
 enum GenericType {
   Generic = 0;
-  DeviceIP = 1;
-  Pan = 2;
-  Tilt = 3;
-  Tally = 4;
-  Record = 5;
-  Iris = 6;
+  ConnectionState = 1;
+  DeviceIP = 2;
+  Pan = 3;
+  Tilt = 4;
+  Tally = 5;
+  Record = 6;
+  Iris = 7;
 }
 
 enum ParameterError {
