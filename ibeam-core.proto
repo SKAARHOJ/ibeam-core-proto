@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+// IBeam-Core protocol version 0.1.0
+
 package ibeam_core;
 option go_package = ".;ibeam_core";
 
@@ -21,7 +23,7 @@ service IbeamCore {
   // No id -> get everything, as ParamID has 2 dimensions this rule should work
   // in both
   rpc Get(ModelIDs) returns (Parameters);
-  rpc GetParameterDetails(ParameterIDs) returns (ParameterDetails);
+  rpc GetParameterDetails(ModelID) returns (ParameterDetails);
 
   rpc Set(Parameters) returns (Empty); // Or Parameters ?
 
@@ -41,9 +43,10 @@ message CoreInfo {
                            // String than int for Versions like 1.0.2b)
   string coreVersion = 2;  // Implemented version of the IBeam Core
   // In unisketch this should be a hard break that requires updating!
-  string productName = 3;
-  uint32 maxDevices = 4;
-  uint32 connectedClients = 5;
+  string description = 3;
+  string productName = 4;
+  uint32 maxDevices = 5;
+  uint32 connectedClients = 6;
 }
 
 /* * * * * * * * * * * * * *
@@ -78,7 +81,9 @@ message ModelIDs { repeated ModelID modelIDs = 1; }
 
 message ModelInfo {
   ModelID ModelID = 1;
-  ParameterIDs parameterIDs = 2;
+  string name = 2;
+  string description = 3;
+  ParameterIDs parameterIDs = 4; // FIXME: Remove
 }
 message ModelInfos { repeated ModelInfo modelInfos = 1; }
 
@@ -86,11 +91,18 @@ message ModelInfos { repeated ModelInfo modelInfos = 1; }
         PARAMETER
  * * * * * * * * * * * * * */
 
-message ParameterID { uint32 parameterID = 1; }
+// FIXME: too redundant....
+message ParameterID {
+  uint32 parameterID = 1;
+  uint32 deviceID = 2;
+  uint32 modelID = 3; // if unspecified get default model!
+}
+
 message ParameterIDs { repeated ParameterID parameterID = 1; }
 
 message Parameter {
   ParameterID parameterID = 1;
+  ParameterError error = 2;
   repeated ParameterValue value = 3;
 }
 message Parameters { repeated Parameter parameters = 1; }
@@ -108,8 +120,16 @@ message ParameterValue {
   }
 }
 
+message ModelParameterID {
+  uint32 parameterID = 1;
+  uint32 modelID = 2; // if unspecified get default model!
+}
+message ModelParameterIDs {
+  repeated ParameterID modelParameterIDs = 1;
+} // TODO: Shall we use short form here ?
+
 message ParameterDetail {
-  uint32 id = 1;
+  ModelParameterID id = 1;
   string name = 2;
   uint32 instances = 3; // this can give parameters a second dimension of
                         // values, eg for channels of a frame syncroniser
@@ -136,14 +156,14 @@ message ParameterOption {
 }
 
 enum Command {
-  IDle = 0;
+  Idle = 0;
   Increment = 1;
   Decrement = 2;
 }
 
 enum ValueType {
   Undefined = 0;
-  Int = 1;
+  Integer = 1;
   Floating = 2;
   Opt = 3;
   String = 4;
@@ -181,9 +201,15 @@ enum GenericType {
   Iris = 6;
 }
 
+enum ParameterError {
+  UnknownError = 0;
+  UnknownID = 1;
+  SetParamFailed = 2;
+}
+
 // Current TODO
 /*
-- [ ] Parameters need some way of signaling RETVAL_Format style rendering info,
+- [x] Parameters need some way of signaling RETVAL_Format style rendering info,
 some of which could also be default behaviour
 - [ ] What about speed values ?
 - [ ] Add Error Handling
