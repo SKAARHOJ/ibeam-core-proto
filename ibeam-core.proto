@@ -22,7 +22,7 @@ service IbeamCore {
 
   // No id -> get everything, as ParamID has 2 dimensions this rule should work
   // in both
-  rpc Get(DeviceParameterID) returns (Parameters);
+  rpc Get(DeviceParameterIDs) returns (Parameters);
   rpc GetParameterDetails(ModelParameterIDs) returns (ParameterDetails);
 
   rpc Set(Parameters) returns (Empty); // on error: return via stream
