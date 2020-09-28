@@ -53,12 +53,12 @@ message CoreInfo {
         DEVICE
  * * * * * * * * * * * * * */
 
-message DeviceID { uint32 deviceID = 1; }
-message DeviceIDs { repeated DeviceID deviceIDs = 1; }
+message DeviceIDs { repeated uint32 ids = 1; }
 
 message DeviceInfo {
-  DeviceID deviceID = 1;
-  ModelID modelID = 2;
+  uint32 deviceID = 1;
+  uint32 modelID = 2;
+
   bool connected = 3;
   ConnectionType connectionType = 4;
   string name = 5;
@@ -76,11 +76,8 @@ enum ConnectionType {
         MODEL
  * * * * * * * * * * * * * */
 
-message ModelID { uint32 modelID = 1; }
-message ModelIDs { repeated ModelID modelIDs = 1; }
-
 message ModelInfo {
-  ModelID modelID = 1;
+  uint32 id = 1;
   string name = 2;
   string description = 3;
 }
@@ -91,22 +88,22 @@ message ModelInfos { repeated ModelInfo modelInfos = 1; }
  * * * * * * * * * * * * * */
 
 message ParameterID {
-  uint32 parameterID = 1;
-  uint32 deviceID = 2;
-  uint32 modelID = 3; // if unspecified get default model!
+  uint32 parameter = 1;
+  uint32 device = 2;
+  uint32 model = 3; // if unspecified get default model!
 }
 
-message ParameterIDs { repeated ParameterID parameterID = 1; }
+message ParameterIDs { repeated ParameterID ids = 1; }
 
 message Parameter {
-  ParameterID parameterID = 1;
+  ParameterID id = 1;
   ParameterError error = 2;
   repeated ParameterValue value = 3;
 }
 message Parameters { repeated Parameter parameters = 1; }
 
 message ParameterValue {
-  uint32 instanceID = 1;
+  uint32 instanceID = 1;   // instance id
   bool available = 2;      // Ignored in set request
   bool isAssumedState = 3; // Ignored in set request
   oneof value {
@@ -119,11 +116,11 @@ message ParameterValue {
 }
 
 message ModelParameterID {
-  uint32 parameterID = 1;
-  uint32 modelID = 2; // if unspecified get default model!
+  uint32 parameter = 1;
+  uint32 model = 2; // if unspecified get default model!
 }
 message ModelParameterIDs {
-  repeated ParameterID modelParameterIDs = 1;
+  repeated ParameterID ids = 1;
 } // TODO: Shall we use short form here ?
 
 message ParameterDetail {
@@ -146,7 +143,7 @@ message ParameterDetail {
   float maximum = 13; // optional
   repeated ParameterOption optionList = 14; // optional
 }
-message ParameterDetails { repeated ParameterDetail parameterDetails = 1; }
+message ParameterDetails { repeated ParameterDetail details = 1; }
 
 message ParameterOption {
   uint32 id = 1;
