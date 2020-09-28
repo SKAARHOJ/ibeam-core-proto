@@ -25,7 +25,7 @@ service IbeamCore {
   rpc Get(ParameterIDs) returns (Parameters);
   rpc GetParameterDetails(ModelParameterIDs) returns (ParameterDetails);
 
-  rpc Set(Parameters) returns (Empty); // Or Parameters ?
+  rpc Set(Parameters) returns (Empty); // on error: return via stream
 
   // No id -> subscribe to everything
   // On subscribe all current values should be sent back!
@@ -211,7 +211,7 @@ enum ParameterError {
 - [x] Parameters need some way of signaling RETVAL_Format style rendering info,
 some of which could also be default behaviour
 - [ ] What about speed values ?
-- [ ] Add Error Handling
+- [x] Add Error Handling
 - [x] The device abstraction feels odd currently... we should improve that
 - [x] The concept of parameter arguments needs some decent reevaluation!
 */
