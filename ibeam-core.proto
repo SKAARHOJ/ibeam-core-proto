@@ -22,14 +22,14 @@ service IbeamCore {
 
   // No id -> get everything, as ParamID has 2 dimensions this rule should work
   // in both
-  rpc Get(ParameterIDs) returns (Parameters);
+  rpc Get(DeviceParameterID) returns (Parameters);
   rpc GetParameterDetails(ModelParameterIDs) returns (ParameterDetails);
 
   rpc Set(Parameters) returns (Empty); // on error: return via stream
 
   // No id -> subscribe to everything
   // On subscribe all current values should be sent back!
-  rpc Subscribe(Parameter) returns (stream Parameter);
+  rpc Subscribe(DeviceParameterIDs) returns (stream Parameter);
 }
 
 message Empty {}
@@ -87,16 +87,15 @@ message ModelInfos { repeated ModelInfo modelInfos = 1; }
         PARAMETER
  * * * * * * * * * * * * * */
 
-message ParameterID {
+message DeviceParameterID {
   uint32 parameter = 1;
   uint32 device = 2;
-  uint32 model = 3; // if unspecified get default model!
 }
 
-message ParameterIDs { repeated ParameterID ids = 1; }
+message DeviceParameterIDs { repeated DeviceParameterID ids = 1; }
 
 message Parameter {
-  ParameterID id = 1;
+  DeviceParameterID id = 1;
   ParameterError error = 2;
   repeated ParameterValue value = 3;
 }
@@ -119,9 +118,7 @@ message ModelParameterID {
   uint32 parameter = 1;
   uint32 model = 2; // if unspecified get default model!
 }
-message ModelParameterIDs {
-  repeated ParameterID ids = 1;
-} // TODO: Shall we use short form here ?
+message ModelParameterIDs { repeated ModelParameterID ids = 1; }
 
 message ParameterDetail {
   ModelParameterID id = 1;
