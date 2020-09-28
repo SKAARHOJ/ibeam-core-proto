@@ -61,9 +61,7 @@ message DeviceIDs { repeated uint32 ids = 1; }
 message DeviceInfo {
   uint32 deviceID = 1;
   uint32 modelID = 2;
-  // bool connected = 4; // This could be the number one default
-  // parameter! and then removed here... would ease notifications!
-  // string name = 5; // TODO: this could be removed I guess... but not so sure
+  // string name = 3; // TODO: this could be removed I guess... but not so sure
 }
 message DeviceInfos { repeated DeviceInfo deviceInfos = 1; }
 
