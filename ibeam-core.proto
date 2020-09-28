@@ -40,8 +40,8 @@ message Empty {}
 
 message CoreInfo {
   string ibeamVersion = 1; // Implemented version of the IBeam Protocol (better
-                           // String than int for Versions like 1.0.2b)
-  string coreVersion = 2;  // Implemented version of the IBeam Core
+  // String than int for Versions like 1.0.2b)
+  string coreVersion = 2; // Implemented version of the IBeam Core
   // In unisketch this should be a hard break that requires updating!
   string description = 3;
   string productName = 4;
@@ -55,22 +55,16 @@ message CoreInfo {
 
 message DeviceIDs { repeated uint32 ids = 1; }
 
+// Deviceinfo is kept simple, connection status and device config is handeled
+// via parameters
 message DeviceInfo {
   uint32 deviceID = 1;
   uint32 modelID = 2;
-
-  bool connected = 3;
-  ConnectionType connectionType = 4;
-  string name = 5;
+  // bool connected = 4; // This could be the number one default
+  // parameter! and then removed here... would ease notifications!
+  // string name = 5; // TODO: this could be removed I guess... but not so sure
 }
 message DeviceInfos { repeated DeviceInfo deviceInfos = 1; }
-
-enum ConnectionType {
-  Other = 0;
-  Network = 1;
-  Serial = 2;
-  Sdi = 3;
-}
 
 /* * * * * * * * * * * * * *
         MODEL
@@ -80,8 +74,16 @@ message ModelInfo {
   uint32 id = 1;
   string name = 2;
   string description = 3;
+  ConnectionType connectionType = 4;
 }
 message ModelInfos { repeated ModelInfo modelInfos = 1; }
+
+enum ConnectionType {
+  Other = 0;
+  Network = 1;
+  Serial = 2;
+  Sdi = 3;
+}
 
 /* * * * * * * * * * * * * *
         PARAMETER
