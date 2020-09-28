@@ -17,6 +17,7 @@ service IbeamCore {
 
   // No id -> get everything
   rpc GetDeviceInfo(DeviceIDs) returns (DeviceInfos);
+  rpc GetModelInfo(ModelIDs) returns (ModelInfos);
 
   //---------------------
 
@@ -69,6 +70,8 @@ message DeviceInfos { repeated DeviceInfo deviceInfos = 1; }
 /* * * * * * * * * * * * * *
         MODEL
  * * * * * * * * * * * * * */
+
+message ModelIDs { repeated uint32 ids = 1; }
 
 message ModelInfo {
   uint32 id = 1;
