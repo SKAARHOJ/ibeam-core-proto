@@ -22,8 +22,8 @@ service IbeamCore {
 
   // No id -> get everything, as ParamID has 2 dimensions this rule should work
   // in both
-  rpc Get(ModelIDs) returns (Parameters);
-  rpc GetParameterDetails(ModelID) returns (ParameterDetails);
+  rpc Get(ParameterIDs) returns (Parameters);
+  rpc GetParameterDetails(ModelParameterIDs) returns (ParameterDetails);
 
   rpc Set(Parameters) returns (Empty); // Or Parameters ?
 
@@ -59,9 +59,9 @@ message DeviceIDs { repeated DeviceID deviceIDs = 1; }
 message DeviceInfo {
   DeviceID deviceID = 1;
   ModelID modelID = 2;
-  string name = 3;
-  bool connected = 4;
-  ConnectionType connectionType = 5;
+  bool connected = 3;
+  ConnectionType connectionType = 4;
+  string name = 5;
 }
 message DeviceInfos { repeated DeviceInfo deviceInfos = 1; }
 
@@ -80,10 +80,9 @@ message ModelID { uint32 modelID = 1; }
 message ModelIDs { repeated ModelID modelIDs = 1; }
 
 message ModelInfo {
-  ModelID ModelID = 1;
+  ModelID modelID = 1;
   string name = 2;
   string description = 3;
-  ParameterIDs parameterIDs = 4; // FIXME: Remove
 }
 message ModelInfos { repeated ModelInfo modelInfos = 1; }
 
@@ -91,7 +90,6 @@ message ModelInfos { repeated ModelInfo modelInfos = 1; }
         PARAMETER
  * * * * * * * * * * * * * */
 
-// FIXME: too redundant....
 message ParameterID {
   uint32 parameterID = 1;
   uint32 deviceID = 2;
@@ -202,9 +200,10 @@ enum GenericType {
 }
 
 enum ParameterError {
-  UnknownError = 0;
-  UnknownID = 1;
-  SetParamFailed = 2;
+  NoError = 0;
+  UnknownError = 1;
+  UnknownID = 2;
+  SetParamFailed = 3;
 }
 
 // Current TODO
