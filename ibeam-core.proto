@@ -131,18 +131,22 @@ message ParameterDetail {
                         // values, eg for channels of a frame syncroniser
   GenericType genericType = 4;
   ControlStyle controlStyle = 5;
-  uint32 feedbackDelayMs = 6; // 0 means no feedback
-  // We might need a control pulses limiting thing here as well...
-  ValueType valueType = 7;
+  uint32 feedbackDelayMs = 6;   // 0 means no feedback
+  uint32 quarantineDelayMs = 7; // how long to wait before accepting new values
+                                // from the camera after a change from the core
+  // TODO: We might need a control pulses limiting thing here as well...
+  // TODO: when assuming state, how long do we want to do it for before falling
+  // back ? can this be couppeled with quarantine delay ?
+  ValueType valueType = 8;
 
-  string label = 8;
-  string shortLabel = 9;
-  string description = 10;
-  DisplayStyle displayStyle = 11;
+  string label = 9;
+  string shortLabel = 10;
+  string description = 11;
+  DisplayStyle displayStyle = 12;
 
-  float minimum = 12; // optional, proto3 makes all values optional
-  float maximum = 13; // optional
-  repeated ParameterOption optionList = 14; // optional
+  float minimum = 13; // optional, proto3 makes all values optional
+  float maximum = 14; // optional
+  repeated ParameterOption optionList = 15; // optional
 }
 message ParameterDetails { repeated ParameterDetail details = 1; }
 
@@ -152,13 +156,13 @@ message ParameterOption {
 }
 
 enum Command {
-  Idle = 0;
+  Trigger = 0;
   Increment = 1;
   Decrement = 2;
 }
 
 enum ValueType {
-  Undefined = 0;
+  NoValue = 0;
   Integer = 1;
   Floating = 2;
   Opt = 3;
@@ -171,7 +175,7 @@ enum ControlStyle {
   Normal = 1;
   Incremental = 2;
   NoControl = 3;
-  Oneshot = 4; // TODO: do we need this ?
+  Oneshot = 4;
 }
 
 // TODO: this is stolen from the retvalformat array, it should be reevaluated
