@@ -114,6 +114,7 @@ message ParameterValue {
     uint32 currentOption = 6;
     string str = 7;
     Command cmd = 8;
+    Boolean binary = 9;
   }
 }
 
@@ -162,6 +163,7 @@ enum ValueType {
   Floating = 2;
   Opt = 3;
   String = 4;
+  Binary = 5;
 }
 
 enum ControlStyle {
