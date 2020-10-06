@@ -132,27 +132,33 @@ message ParameterDetail {
   string name = 2;
   uint32 instances = 3; // this can give parameters a second dimension of
                         // values, eg for channels of a frame syncroniser
-  GenericType genericType = 4;
-  ControlStyle controlStyle = 5;
 
-  uint32 feedbackDelayMs = 6;   // 0 means no feedback
-  uint32 quarantineDelayMs = 7; // how long to wait before accepting new values
-                                // from the camera after a change from the core
-  // TODO: We might need a control pulses limiting thing here as well...
-  // TODO: when assuming state, how long do we want to do it for before falling
-  // back ? can this be couppeled with quarantine delay ?
+  string label = 4;
+  string shortLabel = 5;
+  string description = 6;
+  GenericType genericType = 7;
 
-  ValueType valueType = 8;
+  ControlStyle controlStyle = 8;
+  FeedbackStyle feedbackStyle = 9;
 
-  string label = 9;
-  string shortLabel = 10;
-  string description = 11;
-  DisplayStyle displayStyle = 12;
+  uint32 controlDelayMs = 10;    // minimum delay between sent commands
+  uint32 quarantineDelayMs = 11; // time to wait after a set before sending new
+                                 // values to the client subscribe stream
 
-  float minimum = 13;         // optional, proto3 makes all values optional
-  float maximum = 14;         // optional
-  OptionList optionList = 15; // optional
-  bool optionListIsDynamic = 16;
+  // optional config values for delayed feedback
+  uint32 assumeDelay = 12;
+  // how long to keep target value assumed before falling back to current
+
+  // optional config values for Normal and ControlledIncremental
+  uint32 retryCount = 13; // how often to retry a set if target != current
+
+  ValueType valueType = 14;
+
+  DisplayStyle displayStyle = 15;
+  float minimum = 16;         // optional, proto3 makes all values optional
+  float maximum = 17;         // optional
+  OptionList optionList = 18; // optional
+  bool optionListIsDynamic = 19;
   // this is set to true when the optionlist can update during runtime
 }
 message ParameterDetails { repeated ParameterDetail details = 1; }
@@ -177,12 +183,21 @@ enum ValueType {
   Binary = 5;
 }
 
+enum FeedbackStyle {
+  UndefinedFeedback = 0;
+  NormalFeedback = 1;
+  DelayedFeedback = 2;
+  NoFeedback = 3;
+}
+
 enum ControlStyle {
-  UndefinedControl = 0;
+  Undefined = 0;
   Normal = 1;
-  Incremental = 2;
-  NoControl = 3;
-  Oneshot = 4;
+  Incremental = 2; // Accept only Command::Increment and Command::Decrement
+  NoControl = 3;   // Accept no control, display only
+  Oneshot = 4;     // Accept only Command::Trigger
+  ControlledIncremental = 5;
+  // Simulate Normal by using Incremental under the hood
 }
 
 // TODO: this is stolen from the retvalformat array, it should be reevaluated
@@ -218,13 +233,3 @@ enum ParameterError {
   MaxViolation = 4;
   InvalidType = 5;
 }
-
-// Current TODO
-/*
-- [x] Parameters need some way of signaling RETVAL_Format style rendering info,
-some of which could also be default behaviour
-- [ ] What about speed values ?
-- [x] Add Error Handling
-- [x] The device abstraction feels odd currently... we should improve that
-- [x] The concept of parameter arguments needs some decent reevaluation!
-*/
