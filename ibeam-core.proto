@@ -214,7 +214,9 @@ enum ParameterError {
   NoError = 0;
   UnknownError = 1;
   UnknownID = 2;
-  SetParamFailed = 3;
+  MinViolation = 3;
+  MaxViolation = 4;
+  InvalidType = 5;
 }
 
 // Current TODO
