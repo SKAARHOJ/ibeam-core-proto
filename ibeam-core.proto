@@ -232,4 +232,5 @@ enum ParameterError {
   MinViolation = 3;
   MaxViolation = 4;
   InvalidType = 5;
+  MaxRetrys = 6;
 }
