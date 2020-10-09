@@ -160,6 +160,7 @@ message ParameterDetail {
   OptionList optionList = 18; // optional
   bool optionListIsDynamic = 19;
   // this is set to true when the optionlist can update during runtime
+  ParameterValue defaultValue = 20;
 }
 message ParameterDetails { repeated ParameterDetail details = 1; }
 
@@ -200,18 +201,17 @@ enum ControlStyle {
   // Simulate Normal by using Incremental under the hood
 }
 
-// TODO: this is stolen from the retvalformat array, it should be reevaluated
+// DisplayStyle can set additional rendering details for the client display
 enum DisplayStyle {
   DisplayDefault = 0;
-  DisplayFLOAT_1DEZ = 12;
-  DisplayFloat_2DEZ = 1;
-  DisplayFloat_3DEZ = 8;
-  DisplayFLOAT_5 = 9; // TODO: What is this ?!
-  DisplayPercent = 2;
-  DisplayDb = 3;
-  DisplayFstop = 4;
-  DisplayFraction = 5;
-  DisplayKelvin = 6;
+  DisplayFLOAT_1DEZ = 1;
+  DisplayFloat_2DEZ = 2;
+  DisplayFloat_3DEZ = 3;
+  DisplayPercent = 4;
+  DisplayDb = 5;
+  DisplayFstop = 6;
+  DisplayFraction = 7;
+  DisplayKelvin = 8;
 }
 
 enum GenericType {
