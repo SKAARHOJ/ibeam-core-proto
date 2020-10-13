@@ -143,11 +143,7 @@ message ParameterDetail {
 
   uint32 controlDelayMs = 10;    // minimum delay between sent commands
   uint32 quarantineDelayMs = 11; // time to wait after a set before sending new
-                                 // values to the client subscribe stream
-
-  // optional config values for delayed feedback
-  uint32 assumeDelayMs = 12;
-  // how long to keep target value assumed before falling back to current
+  // values to the client subscribe stream
 
   // optional config values for Normal and ControlledIncremental
   uint32 retryCount = 13; // how often to retry a set if target != current
@@ -228,9 +224,9 @@ enum GenericType {
 enum ParameterError {
   NoError = 0;
   UnknownError = 1;
-  UnknownID = 2;
-  MinViolation = 3;
-  MaxViolation = 4;
+  UnknownID = 2;    // implemented for get
+  MinViolation = 3; // implemented
+  MaxViolation = 4; // implemented
   InvalidType = 5;
-  MaxRetrys = 6;
+  MaxRetrys = 6; // implemented
 }
