@@ -45,7 +45,7 @@ message CoreInfo {
   string coreVersion = 2; // Implemented version of the IBeam Core
   // In unisketch this should be a hard break that requires updating!
   string description = 3;
-  string productName = 4;
+  string name = 4;
   uint32 maxDevices = 5;
   uint32 connectedClients = 6;
 }
@@ -61,7 +61,6 @@ message DeviceIDs { repeated uint32 ids = 1; }
 message DeviceInfo {
   uint32 deviceID = 1;
   uint32 modelID = 2;
-  // string name = 3; // TODO: this could be removed I guess... but not so sure
 }
 message DeviceInfos { repeated DeviceInfo deviceInfos = 1; }
 
