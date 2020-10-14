@@ -13,24 +13,24 @@ service IbeamCore {
    * - Max Devices
    * - Connected Clients
    */
-  rpc GetCoreInfo(Empty) returns (CoreInfo);
+  rpc GetCoreInfo(Empty) returns(CoreInfo);
 
   // No id -> get everything
-  rpc GetDeviceInfo(DeviceIDs) returns (DeviceInfos);
-  rpc GetModelInfo(ModelIDs) returns (ModelInfos);
+  rpc GetDeviceInfo(DeviceIDs) returns(DeviceInfos);
+  rpc GetModelInfo(ModelIDs) returns(ModelInfos);
 
   //---------------------
 
   // No id -> get everything, as ParamID has 2 dimensions this rule should work
   // in both
-  rpc Get(DeviceParameterIDs) returns (Parameters);
-  rpc GetParameterDetails(ModelParameterIDs) returns (ParameterDetails);
+  rpc Get(DeviceParameterIDs) returns(Parameters);
+  rpc GetParameterDetails(ModelParameterIDs) returns(ParameterDetails);
 
-  rpc Set(Parameters) returns (Empty); // on error: return via stream
+  rpc Set(Parameters) returns(Empty); // on error: return via stream
 
   // No id -> subscribe to everything
   // On subscribe all current values should be sent back!
-  rpc Subscribe(DeviceParameterIDs) returns (stream Parameter);
+  rpc Subscribe(DeviceParameterIDs) returns(stream Parameter);
 }
 
 message Empty {}
@@ -78,12 +78,7 @@ message ModelInfo {
 }
 message ModelInfos { repeated ModelInfo modelInfos = 1; }
 
-enum ConnectionType {
-  Other = 0;
-  Network = 1;
-  Serial = 2;
-  Sdi = 3;
-}
+enum ConnectionType { Other = 0; Network = 1; Serial = 2; Sdi = 3; }
 
 /* * * * * * * * * * * * * *
         PARAMETER
@@ -136,16 +131,19 @@ message ParameterDetail {
   string shortLabel = 5;
   string description = 6;
   GenericType genericType = 7;
-  bool isSpeedValue = 8; // Specifys if this parameter can be controled via a centering analog control like a joystick
+  bool isSpeedValue = 8; // Specifys if this parameter can be controled via a
+                         // centering analog control like a joystick
 
   ControlStyle controlStyle = 9;
   FeedbackStyle feedbackStyle = 10;
-  
-  uint32 controlDelayMs = 11;    // minimum delay between sent commands
-  uint32 quarantineDelayMs = 12; // time to wait after a set before sending new values to the client subscribe stream
 
-  uint32 retryCount = 13; // how often to retry a set if target != current
-    // optional config value for Normal and ControlledIncremental
+  uint32 controlDelayMs = 11;    // minimum delay between sent commands
+  uint32 quarantineDelayMs = 12; // time to wait after a set before sending new
+                                 // values to the client subscribe stream
+
+  uint32 retryCount =
+      13; // how often to retry a set if target != current
+          // optional config value for Normal and ControlledIncremental
 
   ValueType valueType = 14;
 
@@ -164,31 +162,19 @@ message ParameterOption {
   string name = 2;
 }
 
-enum Command {
-  Trigger = 0;
-  Increment = 1;
-  Decrement = 2;
-}
+enum Command { Trigger = 0; Increment = 1; Decrement = 2; }
 
 enum ValueType {
-  NoValue = 0;
-  Integer = 1;
-  Floating = 2;
-  Opt = 3;
-  String = 4;
-  Binary = 5;
+  NoValue = 0; Integer = 1; Floating = 2; Opt = 3; String = 4; Binary = 5;
 }
 
 enum FeedbackStyle {
-  UndefinedFeedback = 0;
-  NormalFeedback = 1;
-  DelayedFeedback = 2;
+  UndefinedFeedback = 0; NormalFeedback = 1; DelayedFeedback = 2;
   NoFeedback = 3;
 }
 
 enum ControlStyle {
-  Undefined = 0;
-  Normal = 1;
+  Undefined = 0; Normal = 1;
   Incremental = 2; // Accept only Command::Increment and Command::Decrement
   NoControl = 3;   // Accept no control, display only
   Oneshot = 4;     // Accept only Command::Trigger
@@ -198,9 +184,7 @@ enum ControlStyle {
 
 // DisplayStyle can set additional rendering details for the client display
 enum DisplayStyle {
-  DisplayDefault = 0;
-  DisplayFLOAT_1DEZ = 1;
-  DisplayFloat_2DEZ = 2;
+  DisplayDefault = 0; DisplayFLOAT_1DEZ = 1; DisplayFloat_2DEZ = 2;
   DisplayFloat_3DEZ = 3;
   DisplayPercent = 4;
   DisplayDb = 5;
@@ -210,22 +194,15 @@ enum DisplayStyle {
 }
 
 enum GenericType {
-  Generic = 0;
-  ConnectionState = 1;
-  DeviceIP = 2;
-  Pan = 3;
-  Tilt = 4;
-  Tally = 5;
+  Generic = 0; ConnectionState = 1; DeviceIP = 2; Pan = 3; Tilt = 4; Tally = 5;
   Record = 6;
   Iris = 7;
 }
 
 enum ParameterError {
-  NoError = 0;
-  UnknownError = 1;
-  UnknownID = 2;    // implemented for get
-  MinViolation = 3; // implemented
-  MaxViolation = 4; // implemented
+  NoError = 0; UnknownError = 1; UnknownID = 2; // implemented for get
+  MinViolation = 3;                             // implemented
+  MaxViolation = 4;                             // implemented
   InvalidType = 5;
   MaxRetrys = 6; // implemented
 }
