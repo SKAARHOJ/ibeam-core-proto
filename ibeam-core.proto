@@ -111,7 +111,6 @@ message ParameterValue {
     bool binary = 9;
     OptionList optionList = 10;
   }
-  float incDecSpeed = 20; // Only inportant for Command Increment and Decrement, if 0 -> should defaults to 1
 }
 
 message OptionList { repeated ParameterOption options = 1; }
@@ -142,9 +141,8 @@ message ParameterDetail {
   uint32 quarantineDelayMs = 12; // time to wait after a set before sending new
                                  // values to the client subscribe stream
 
-  uint32 retryCount =
-      13; // how often to retry a set if target != current
-          // optional config value for Normal and ControlledIncremental
+  uint32 retryCount =13; // how often to retry a set if target != current
+  // optional config value for Normal and ControlledIncremental
 
   ValueType valueType = 14;
 
