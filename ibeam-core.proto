@@ -1,6 +1,13 @@
 syntax = "proto3";
+import "google/protobuf/descriptor.proto";
 
-// IBeam-Core protocol version 0.1.0
+extend google.protobuf.FileOptions {
+  optional string ibeam_version = 5000;
+}
+
+option (ibeam_version) = "0.1.0";
+
+
 
 package ibeam_core;
 option go_package = ".;ibeam_core";
