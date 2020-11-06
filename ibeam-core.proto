@@ -186,10 +186,10 @@ message ParameterMetaValue {
 
 message ParameterMetaDescription {
   string key = 1; // In case of meta the key is the id
-  MetaType type = 2;
+  ParameterMetaType metaType = 2;
 }
 
-enum MetaType {
+enum ParameterMetaType {
   MetaInteger = 0;
   MetaBinary = 1;
   MetaStr = 2;
