@@ -1,16 +1,15 @@
 syntax = "proto3";
 import "google/protobuf/descriptor.proto";
+package ibeam_core;
+option go_package = ".;ibeam_core";
 
-/// This block hardcodes the ibeam version, it might make difficulties with evans and bloomRPC tooling
+/// This block hardcodes the ibeam version
+option (ibeam_version) = "0.1.1";
+
 extend google.protobuf.FileOptions {
   string ibeam_version = 5000;
 }
-option (ibeam_version) = "0.1.1";
 /// End version block
-
-
-package ibeam_core;
-option go_package = ".;ibeam_core";
 
 service IbeamCore {
   /* Return the Core and it's Infos that inclues:
@@ -116,6 +115,7 @@ message ParameterValue {
   bool isAssumedState = 3; // Ignored in set request
   oneof value {
     int32 integer = 4;
+    //int32 incDecSteps = 4; Could change concept here...
     float floating = 5;
     uint32 currentOption = 6;
     string str = 7;
