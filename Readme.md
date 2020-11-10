@@ -15,3 +15,6 @@ One Model has multiple Parameters. A Model can be used by multiple devices.
 
 ### Parameter
 
+## Generate Documentation 
+For the documentation we use the tool [protoc-gen-doc](https://github.com/pseudomuto/protoc-gen-doc)
+Just run `generatedocs.sh` to generate the documentation.
