@@ -1,58 +1,71 @@
+/*
+ * This Protofile describes the IBeam-Core Procotol.
+ */
 syntax = "proto3";
 import "google/protobuf/descriptor.proto";
 package ibeam_core;
 option go_package = ".;ibeam_core";
 
 /// This block hardcodes the ibeam version
-option (ibeam_version) = "0.1.1";
-
-extend google.protobuf.FileOptions {
-  string ibeam_version = 5000;
-}
+option(ibeam_version) = "0.1.2";
+extend google.protobuf.FileOptions { string ibeam_version = 5000; }
 /// End version block
 
 service IbeamCore {
-  /* Return the Core and it's Infos that inclues:
-   * - Ibeam Version Numbe
-   * - Core Version Number
-   * - Product Name
-   * - Max Devices
-   * - Connected Clients
-   */
+  // Returns all basic information about the Core.
   rpc GetCoreInfo(Empty) returns(CoreInfo);
 
-  // No id -> get everything
+  // Returns all information about the Device of the given DeviceID.
+  // If you specify no ID, you get the DeviceInfos of all Devices.
   rpc GetDeviceInfo(DeviceIDs) returns(DeviceInfos);
+
+  // Returns all information about the Model of the given ModelID.
+  // If you specify no ID, you get the ModelInfos of all Models.
   rpc GetModelInfo(ModelIDs) returns(ModelInfos);
 
-  //---------------------
-
-  // No id -> get everything, as ParamID has 2 dimensions this rule should work
-  // in both
+  // Returns all Parameters, with the specified DeviceParameterIDs.
+  // This Parameters include the actual ParameterValue, which gives Information
+  // about the availability and shows if the Parameter is assumed.
+  // If you set no ParameterID, you get all Parameters for a given Device.
   rpc Get(DeviceParameterIDs) returns(Parameters);
+
+  // Returns all ParameterDetails of the given ModelParameterID.
+  // The Details include all basic information about a Parameter,
+  // that descibe also how you cann controll the Parameter.
+  // If you set no ParameterID, you get all Parameters for a given Model.
   rpc GetParameterDetails(ModelParameterIDs) returns(ParameterDetails);
 
-  rpc Set(Parameters) returns(Empty); // on error: return via stream
+  // With this funciton you can set a Value of a Parameter.
+  // This function provides no Error. This will be send over the Subscribe
+  // Stream.
+  rpc Set(Parameters) returns(Empty);
 
   // No id -> subscribe to everything
   // On subscribe all current values should be sent back!
   rpc Subscribe(DeviceParameterIDs) returns(stream Parameter);
 }
 
+// The Empty message type for services that need or return no data
 message Empty {}
 
 /* * * * * * * * * * * * * *
         CORE
  * * * * * * * * * * * * * */
 
+// The CoreInfo inclued tha basic Information about the IBeamCore
 message CoreInfo {
-  string ibeamVersion = 1; // Implemented version of the IBeam Protocol (better
-  // String than int for Versions like 1.0.2b)
-  string coreVersion = 2; // Implemented version of the IBeam Core
-  // In unisketch this should be a hard break that requires updating!
+  // Version of the IBeam Protocol
+  string ibeamVersion = 1;
+  // Version of the IBeam Core
+  string coreVersion = 2;
+  // @exclude In unisketch this should be a hard break that requires updating!
+  // Flied for describing the Core
   string description = 3;
+  // Name of the Core
   string name = 4;
+  // Number of Devices, that can be handled by the core
   uint32 maxDevices = 5;
+  // Number of clients that can connect to the Core
   uint32 connectedClients = 6;
 }
 
@@ -68,6 +81,7 @@ message DeviceInfo {
   uint32 deviceID = 1;
   uint32 modelID = 2;
 }
+
 message DeviceInfos { repeated DeviceInfo deviceInfos = 1; }
 
 /* * * * * * * * * * * * * *
@@ -76,20 +90,22 @@ message DeviceInfos { repeated DeviceInfo deviceInfos = 1; }
 
 message ModelIDs { repeated uint32 ids = 1; }
 
+// ModelInfo describes a model of the IBeamCore. It is used to describe
+// different sets of Parameter fon different models
 message ModelInfo {
+  // ID of the model
   uint32 id = 1;
+  // Name of the model
   string name = 2;
+  // Description of the model
   string description = 3;
+  // Thype of connection. See ConnectionType enum
   ConnectionType connectionType = 4;
 }
 message ModelInfos { repeated ModelInfo modelInfos = 1; }
 
-enum ConnectionType { 
-  Other = 0; 
-  Network = 1; 
-  Serial = 2; 
-  Sdi = 3; 
-}
+// The ConnectionType describes how the Core connects to the device
+enum ConnectionType { Other = 0; Network = 1; Serial = 2; Sdi = 3; }
 
 /* * * * * * * * * * * * * *
         PARAMETER
@@ -111,17 +127,22 @@ message Parameters { repeated Parameter parameters = 1; }
 
 message ParameterValue {
   uint32 instanceID = 1;
-  bool available = 2;      // Ignored in set request
-  bool isAssumedState = 3; // Ignored in set request
+  // Shows if the Parameter is currently available.
+  // This field is ignored in set request
+  bool available = 2;
+  // Shows if the Parameter is currently assumed.
+  // This field is ignored in set request.
+  bool isAssumedState = 3;
+  // The Value for the Parameter.
   oneof value {
     int32 integer = 4;
-    //int32 incDecSteps = 4; Could change concept here...
-    float floating = 5;
-    uint32 currentOption = 6;
+    int32 incDecSteps = 5; // Could change concept here...
+    float floating = 6;
     string str = 7;
-    Command cmd = 8;
-    bool binary = 9;
-    OptionList optionList = 10;
+    uint32 currentOption = 8;
+    Command cmd = 9;
+    bool binary = 10;
+    OptionList optionList = 11;
   }
   repeated ParameterMetaValue metaValues = 20;
 }
@@ -137,25 +158,29 @@ message ModelParameterIDs { repeated ModelParameterID ids = 1; }
 message ParameterDetail {
   ModelParameterID id = 1;
   string name = 2;
-  uint32 instances = 3; // this can give parameters a second dimension of
-                        // values, eg for channels of a frame syncroniser
+  // this can give parameters a second dimension of
+  // values, eg for channels of a frame syncroniser
+  uint32 instances = 3;
 
   string label = 4;
   string shortLabel = 5;
   string description = 6;
   GenericType genericType = 7;
-  bool isSpeedValue = 8; // Specifys if this parameter can be controled via a
-                         // centering analog control like a joystick
+  // Specifys if this parameter can be controled via a
+  // centering analog control like a joystick
+  bool isSpeedValue = 8;
 
   ControlStyle controlStyle = 9;
   FeedbackStyle feedbackStyle = 10;
+  // minimum delay between sent commands
+  uint32 controlDelayMs = 11;
+  // time to wait after a set before sending new
+  // values to the client subscribe stream
+  uint32 quarantineDelayMs = 12;
 
-  uint32 controlDelayMs = 11;    // minimum delay between sent commands
-  uint32 quarantineDelayMs = 12; // time to wait after a set before sending new
-                                 // values to the client subscribe stream
-
-  uint32 retryCount =13; // how often to retry a set if target != current
+  // how often to retry a set if target != current
   // optional config value for Normal and ControlledIncremental
+  uint32 retryCount = 13;
 
   ValueType valueType = 14;
 
@@ -168,11 +193,13 @@ message ParameterDetail {
   ParameterValue defaultValue = 20;
 
   repeated ParameterMetaDescription metaDescription = 21;
+  // Maximum Value for Incrementation
+  int32 incDecStepsUpperRange = 22;
+  // Maximum Negative Value for Decrementation
+  int32 incDecStepsLowerRange = 23;
 }
 
-message ParameterDetails { 
-  repeated ParameterDetail details = 1; 
-}
+message ParameterDetails { repeated ParameterDetail details = 1; }
 
 message ParameterMetaValue {
   string key = 1;
@@ -190,10 +217,7 @@ message ParameterMetaDescription {
 }
 
 enum ParameterMetaType {
-  MetaInteger = 0;
-  MetaBinary = 1;
-  MetaStr = 2;
-  MetaFloating = 3;
+  MetaInteger = 0; MetaBinary = 1; MetaStr = 2; MetaFloating = 3;
 }
 
 message ParameterOption {
@@ -201,68 +225,67 @@ message ParameterOption {
   string name = 2;
 }
 
-enum Command { 
-  Trigger = 0; 
-  Increment = 1; 
-  Decrement = 2; 
-}
+enum Command { Trigger = 0; Increment = 1; Decrement = 2; }
 
 enum ValueType {
-  NoValue = 0; 
-  Integer = 1; 
-  Floating = 2; 
-  Opt = 3; 
-  String = 4; 
-  Binary = 5;
+  NoValue = 0; Integer = 1; Floating = 2; Opt = 3; String = 4; Binary = 5;
 }
 
 enum FeedbackStyle {
-  UndefinedFeedback = 0; 
-  NormalFeedback = 1; 
-  DelayedFeedback = 2;
+  UndefinedFeedback = 0; NormalFeedback = 1; DelayedFeedback = 2;
   NoFeedback = 3;
 }
 
 enum ControlStyle {
-  Undefined = 0; 
+  Undefined = 0;
+  // Normal control, by setting a Value
   Normal = 1;
-  Incremental = 2; // Accept only Command::Increment and Command::Decrement
-  NoControl = 3;   // Accept no control, display only
-  Oneshot = 4;     // Accept only Command::Trigger
-  ControlledIncremental = 5;
+  // Accept only Command::Increment and Command::Decrement
+  Incremental = 2;
+  // Accept no control, display only
+  NoControl = 3;
+  // Accept only Command::Trigger
+  Oneshot = 4;
   // Simulate Normal by using Incremental under the hood
+  ControlledIncremental = 5;
+  // Use Increment and Decrement by sending positiv or negative Values
+  IncrementalWithSteps = 6;
 }
 
-// DisplayStyle can set additional rendering details for the client display
+// DisplayStyle can set additional rendering details for the display
 enum DisplayStyle {
-  DisplayDefault = 0; 
-  DisplayFLOAT_1DEZ = 1; 
+  // Value will be displayed like it is
+  DisplayDefault = 0;
+  // Value will be displayed with one decimal place (f.e. 32.7)
+  DisplayFLOAT_1DEZ = 1;
+  // Value will be displayed with two decimal places (f.e. 32.78)
   DisplayFloat_2DEZ = 2;
+  // Value will be displayed with three decimal places (f.e. 32.789)
   DisplayFloat_3DEZ = 3;
+  // Value will be displayed with an appended '%' sign
   DisplayPercent = 4;
+  // Value will be displayed with an appended 'db' sign
   DisplayDb = 5;
+  // Value will be displayed with an appended 'f' sign
   DisplayFstop = 6;
+  // Value will be displayed as unit fraction (f.e. 32 will be shown as 1/32)
   DisplayFraction = 7;
+  // Value will be displayed with an appended 'K' sign
   DisplayKelvin = 8;
 }
 
+// Some generic types for common parameter
 enum GenericType {
-  Generic = 0; 
-  ConnectionState = 1; 
-  DeviceIP = 2; 
-  Pan = 3; 
-  Tilt = 4; 
-  Tally = 5;
+  Generic = 0; ConnectionState = 1; DeviceIP = 2; Pan = 3; Tilt = 4; Tally = 5;
   Record = 6;
   Iris = 7;
 }
 
+// Errortypes when setting a Parameter
 enum ParameterError {
-  NoError = 0; 
-  UnknownError = 1; 
-  UnknownID = 2; 
-  MinViolation = 3;
+  NoError = 0; UnknownError = 1; UnknownID = 2; MinViolation = 3;
   MaxViolation = 4;
   InvalidType = 5;
   MaxRetrys = 6;
+  RangeViolation = 7;
 }
