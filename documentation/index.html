@@ -325,7 +325,7 @@
 
       
         <h3 id="ibeam_core.CoreInfo">CoreInfo</h3>
-        <p></p>
+        <p>The CoreInfo inclued tha basic Information about the IBeamCore</p>
 
         
           <table class="field-table">
@@ -338,14 +338,14 @@
                   <td>ibeamVersion</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Implemented version of the IBeam Protocol </p></td>
+                  <td><p>Version of the IBeam Protocol </p></td>
                 </tr>
               
                 <tr>
                   <td>coreVersion</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Implemented version of the IBeam Core </p></td>
+                  <td><p>Version of the IBeam Core </p></td>
                 </tr>
               
                 <tr>
@@ -359,21 +359,21 @@
                   <td>name</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Name of the Core </p></td>
                 </tr>
               
                 <tr>
                   <td>maxDevices</td>
                   <td><a href="#uint32">uint32</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Number of Devices, that can be handled by the core </p></td>
                 </tr>
               
                 <tr>
                   <td>connectedClients</td>
                   <td><a href="#uint32">uint32</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Number of clients that can connect to the Core </p></td>
                 </tr>
               
             </tbody>
@@ -518,7 +518,7 @@
         
       
         <h3 id="ibeam_core.Empty">Empty</h3>
-        <p></p>
+        <p>The Empty message type for services that need or return no data</p>
 
         
 
@@ -549,7 +549,7 @@
         
       
         <h3 id="ibeam_core.ModelInfo">ModelInfo</h3>
-        <p></p>
+        <p>ModelInfo describes a model of the IBeamCore. It is used to describe</p><p>different sets of Parameter fon different models</p>
 
         
           <table class="field-table">
@@ -562,28 +562,28 @@
                   <td>id</td>
                   <td><a href="#uint32">uint32</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>ID of the model </p></td>
                 </tr>
               
                 <tr>
                   <td>name</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Name of the model </p></td>
                 </tr>
               
                 <tr>
                   <td>description</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Description of the model </p></td>
                 </tr>
               
                 <tr>
                   <td>connectionType</td>
                   <td><a href="#ibeam_core.ConnectionType">ConnectionType</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Thype of connection. See ConnectionType enum </p></td>
                 </tr>
               
             </tbody>
@@ -762,7 +762,8 @@
                   <td>instances</td>
                   <td><a href="#uint32">uint32</a></td>
                   <td></td>
-                  <td><p>this can give parameters a second dimension of </p></td>
+                  <td><p>this can give parameters a second dimension of
+values, eg for channels of a frame syncroniser </p></td>
                 </tr>
               
                 <tr>
@@ -797,7 +798,8 @@
                   <td>isSpeedValue</td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
-                  <td><p>Specifys if this parameter can be controled via a </p></td>
+                  <td><p>Specifys if this parameter can be controled via a
+centering analog control like a joystick </p></td>
                 </tr>
               
                 <tr>
@@ -825,14 +827,16 @@
                   <td>quarantineDelayMs</td>
                   <td><a href="#uint32">uint32</a></td>
                   <td></td>
-                  <td><p>time to wait after a set before sending new </p></td>
+                  <td><p>time to wait after a set before sending new
+values to the client subscribe stream </p></td>
                 </tr>
               
                 <tr>
                   <td>retryCount</td>
                   <td><a href="#uint32">uint32</a></td>
                   <td></td>
-                  <td><p>how often to retry a set if target != current </p></td>
+                  <td><p>how often to retry a set if target != current
+optional config value for Normal and ControlledIncremental </p></td>
                 </tr>
               
                 <tr>
@@ -889,6 +893,20 @@
                   <td><a href="#ibeam_core.ParameterMetaDescription">ParameterMetaDescription</a></td>
                   <td>repeated</td>
                   <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>incDecStepsUpperRange</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>Maximum Value for Incrementation </p></td>
+                </tr>
+              
+                <tr>
+                  <td>incDecStepsLowerRange</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>Maximum Negative Value for Decrementation </p></td>
                 </tr>
               
             </tbody>
@@ -1057,14 +1075,16 @@
                   <td>available</td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
-                  <td><p>Ignored in set request </p></td>
+                  <td><p>Shows if the Parameter is currently available.
+This field is ignored in set request </p></td>
                 </tr>
               
                 <tr>
                   <td>isAssumedState</td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
-                  <td><p>Ignored in set request </p></td>
+                  <td><p>Shows if the Parameter is currently assumed.
+This field is ignored in set request. </p></td>
                 </tr>
               
                 <tr>
@@ -1075,15 +1095,15 @@
                 </tr>
               
                 <tr>
-                  <td>floating</td>
-                  <td><a href="#float">float</a></td>
+                  <td>incDecSteps</td>
+                  <td><a href="#int32">int32</a></td>
                   <td></td>
-                  <td><p>int32 incDecSteps = 4; Could change concept here... </p></td>
+                  <td><p>Could change concept here... </p></td>
                 </tr>
               
                 <tr>
-                  <td>currentOption</td>
-                  <td><a href="#uint32">uint32</a></td>
+                  <td>floating</td>
+                  <td><a href="#float">float</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>
@@ -1091,6 +1111,13 @@
                 <tr>
                   <td>str</td>
                   <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>currentOption</td>
+                  <td><a href="#uint32">uint32</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>
@@ -1186,7 +1213,7 @@
         </table>
       
         <h3 id="ibeam_core.ConnectionType">ConnectionType</h3>
-        <p></p>
+        <p>The ConnectionType describes how the Core connects to the device</p>
         <table class="enum-table">
           <thead>
             <tr><td>Name</td><td>Number</td><td>Description</td></tr>
@@ -1237,7 +1264,7 @@
               <tr>
                 <td>Normal</td>
                 <td>1</td>
-                <td><p></p></td>
+                <td><p>Normal control, by setting a Value</p></td>
               </tr>
             
               <tr>
@@ -1264,11 +1291,17 @@
                 <td><p>Simulate Normal by using Incremental under the hood</p></td>
               </tr>
             
+              <tr>
+                <td>IncrementalWithSteps</td>
+                <td>6</td>
+                <td><p>Use Increment and Decrement by sending positiv or negative Values</p></td>
+              </tr>
+            
           </tbody>
         </table>
       
         <h3 id="ibeam_core.DisplayStyle">DisplayStyle</h3>
-        <p>DisplayStyle can set additional rendering details for the client display</p>
+        <p>DisplayStyle can set additional rendering details for the display</p>
         <table class="enum-table">
           <thead>
             <tr><td>Name</td><td>Number</td><td>Description</td></tr>
@@ -1278,55 +1311,55 @@
               <tr>
                 <td>DisplayDefault</td>
                 <td>0</td>
-                <td><p></p></td>
+                <td><p>Value will be displayed like it is</p></td>
               </tr>
             
               <tr>
                 <td>DisplayFLOAT_1DEZ</td>
                 <td>1</td>
-                <td><p></p></td>
+                <td><p>Value will be displayed with one decimal place (f.e. 32.7)</p></td>
               </tr>
             
               <tr>
                 <td>DisplayFloat_2DEZ</td>
                 <td>2</td>
-                <td><p></p></td>
+                <td><p>Value will be displayed with two decimal places (f.e. 32.78)</p></td>
               </tr>
             
               <tr>
                 <td>DisplayFloat_3DEZ</td>
                 <td>3</td>
-                <td><p></p></td>
+                <td><p>Value will be displayed with three decimal places (f.e. 32.789)</p></td>
               </tr>
             
               <tr>
                 <td>DisplayPercent</td>
                 <td>4</td>
-                <td><p></p></td>
+                <td><p>Value will be displayed with an appended &#39;%&#39; sign</p></td>
               </tr>
             
               <tr>
                 <td>DisplayDb</td>
                 <td>5</td>
-                <td><p></p></td>
+                <td><p>Value will be displayed with an appended &#39;db&#39; sign</p></td>
               </tr>
             
               <tr>
                 <td>DisplayFstop</td>
                 <td>6</td>
-                <td><p></p></td>
+                <td><p>Value will be displayed with an appended &#39;f&#39; sign</p></td>
               </tr>
             
               <tr>
                 <td>DisplayFraction</td>
                 <td>7</td>
-                <td><p></p></td>
+                <td><p>Value will be displayed as unit fraction (f.e. 32 will be shown as 1/32)</p></td>
               </tr>
             
               <tr>
                 <td>DisplayKelvin</td>
                 <td>8</td>
-                <td><p></p></td>
+                <td><p>Value will be displayed with an appended &#39;K&#39; sign</p></td>
               </tr>
             
           </tbody>
@@ -1368,7 +1401,7 @@
         </table>
       
         <h3 id="ibeam_core.GenericType">GenericType</h3>
-        <p></p>
+        <p>Some generic types for common parameter</p>
         <table class="enum-table">
           <thead>
             <tr><td>Name</td><td>Number</td><td>Description</td></tr>
@@ -1427,7 +1460,7 @@
         </table>
       
         <h3 id="ibeam_core.ParameterError">ParameterError</h3>
-        <p></p>
+        <p>Errortypes when setting a Parameter</p>
         <table class="enum-table">
           <thead>
             <tr><td>Name</td><td>Number</td><td>Description</td></tr>
@@ -1473,6 +1506,12 @@
               <tr>
                 <td>MaxRetrys</td>
                 <td>6</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>RangeViolation</td>
+                <td>7</td>
                 <td><p></p></td>
               </tr>
             
@@ -1595,48 +1634,52 @@
                 <td>GetCoreInfo</td>
                 <td><a href="#ibeam_core.Empty">Empty</a></td>
                 <td><a href="#ibeam_core.CoreInfo">CoreInfo</a></td>
-                <td><p>Return the Core and it&#39;s Infos that inclues:
-- Ibeam Version Numbe
-- Core Version Number
-- Product Name
-- Max Devices
-- Connected Clients</p></td>
+                <td><p>Returns all basic information about the Core.</p></td>
               </tr>
             
               <tr>
                 <td>GetDeviceInfo</td>
                 <td><a href="#ibeam_core.DeviceIDs">DeviceIDs</a></td>
                 <td><a href="#ibeam_core.DeviceInfos">DeviceInfos</a></td>
-                <td><p>No id -&gt; get everything</p></td>
+                <td><p>Returns all information about the Device of the given DeviceID.
+If you specify no ID, you get the DeviceInfos of all Devices.</p></td>
               </tr>
             
               <tr>
                 <td>GetModelInfo</td>
                 <td><a href="#ibeam_core.ModelIDs">ModelIDs</a></td>
                 <td><a href="#ibeam_core.ModelInfos">ModelInfos</a></td>
-                <td><p></p></td>
+                <td><p>Returns all information about the Model of the given ModelID.
+If you specify no ID, you get the ModelInfos of all Models.</p></td>
               </tr>
             
               <tr>
                 <td>Get</td>
                 <td><a href="#ibeam_core.DeviceParameterIDs">DeviceParameterIDs</a></td>
                 <td><a href="#ibeam_core.Parameters">Parameters</a></td>
-                <td><p>No id -&gt; get everything, as ParamID has 2 dimensions this rule should work
-in both</p></td>
+                <td><p>Returns all Parameters, with the specified DeviceParameterIDs.
+This Parameters include the actual ParameterValue, which gives Information
+about the availability and shows if the Parameter is assumed.
+If you set no ParameterID, you get all Parameters for a given Device.</p></td>
               </tr>
             
               <tr>
                 <td>GetParameterDetails</td>
                 <td><a href="#ibeam_core.ModelParameterIDs">ModelParameterIDs</a></td>
                 <td><a href="#ibeam_core.ParameterDetails">ParameterDetails</a></td>
-                <td><p></p></td>
+                <td><p>Returns all ParameterDetails of the given ModelParameterID.
+The Details include all basic information about a Parameter,
+that descibe also how you cann controll the Parameter.
+If you set no ParameterID, you get all Parameters for a given Model.</p></td>
               </tr>
             
               <tr>
                 <td>Set</td>
                 <td><a href="#ibeam_core.Parameters">Parameters</a></td>
                 <td><a href="#ibeam_core.Empty">Empty</a></td>
-                <td><p>on error: return via stream</p></td>
+                <td><p>With this funciton you can set a Value of a Parameter.
+This function provides no Error. This will be send over the Subscribe
+Stream.</p></td>
               </tr>
             
               <tr>
