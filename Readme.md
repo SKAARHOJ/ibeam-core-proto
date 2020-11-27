@@ -4,6 +4,7 @@
 
 ### 0.2.0
 - Adds incDecSteps
+- Replaces instances with Dimension concept
 - Adds path to details
 - Adds invalid to value
 - Make meta details and values a protobuf map
