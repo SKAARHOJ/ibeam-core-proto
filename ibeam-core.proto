@@ -131,7 +131,7 @@ message Parameter {
 message Parameters { repeated Parameter parameters = 1; }
 
 message ParameterValue {
-  uint32 instanceID = 1;
+  repeated uint32 dimenstionID = 1;
   // Shows if the Parameter is currently available.
   // This field is ignored in set request
   bool available = 2;
@@ -177,7 +177,7 @@ message ParameterDetail {
   string path = 24;
 
   // give parameters multiple dimensions values, eg for channels of a frame syncroniser or MEs / Keys in a switcher
-  repeated ParameterDimension dimensions = 3;
+  repeated DimensionDetail dimensions = 3;
 
   // The parameter label for the client
   string label = 4;
@@ -223,6 +223,12 @@ message ParameterDetail {
 }
 
 message ParameterDetails { repeated ParameterDetail details = 1; }
+
+message DimensionDetail {
+  string name = 1;
+  uint32 count = 2;
+  string description = 3;
+}
 
 message ParameterMetaValue {
   oneof value {
