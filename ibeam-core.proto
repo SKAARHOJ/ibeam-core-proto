@@ -7,7 +7,7 @@ package ibeam_core;
 option go_package = ".;ibeam_core";
 
 /// This block hardcodes the ibeam version
-option(ibeam_version) = "0.1.2";
+option(ibeam_version) = "0.2.0";
 extend google.protobuf.FileOptions { string ibeam_version = 5000; }
 /// End version block
 
@@ -105,7 +105,12 @@ message ModelInfo {
 message ModelInfos { repeated ModelInfo modelInfos = 1; }
 
 // The ConnectionType describes how the Core connects to the device
-enum ConnectionType { Other = 0; Network = 1; Serial = 2; Sdi = 3; }
+enum ConnectionType { 
+  Other = 0; 
+  Network = 1; 
+  Serial = 2; 
+  Sdi = 3; 
+}
 
 /* * * * * * * * * * * * * *
         PARAMETER
@@ -133,6 +138,10 @@ message ParameterValue {
   // Shows if the Parameter is currently assumed.
   // This field is ignored in set request.
   bool isAssumedState = 3;
+
+  // This boolean should be set by the server if the value is eitehr not yet known, or known to be garbage from the implementation. 
+  // It should signal to the client to replace the value with a placeholder
+  bool invalid = 21;
   // The Value for the Parameter.
   oneof value {
     int32 integer = 4;
@@ -144,7 +153,8 @@ message ParameterValue {
     bool binary = 10;
     OptionList optionList = 11;
   }
-  repeated ParameterMetaValue metaValues = 20;
+
+  map<string, ParameterMetaValue> metaValues = 20;
 }
 
 message OptionList { repeated ParameterOption options = 1; }
@@ -156,12 +166,20 @@ message ModelParameterID {
 message ModelParameterIDs { repeated ModelParameterID ids = 1; }
 
 message ParameterDetail {
+  // Parameter IDs should be unique (per model) and will break compatibility if changed between versions
   ModelParameterID id = 1;
-  string name = 2;
-  // this can give parameters a second dimension of
-  // values, eg for channels of a frame syncroniser
-  uint32 instances = 3;
 
+  // Codesave name of the parameter
+  string name = 2;
+  
+  // Path describes a grouping of the parameter to the client. Groups need to be seperated by a / and can contain spaces
+  // This should also end with a / and not contain the parameter name or label again
+  string path = 24;
+
+  // give parameters multiple dimensions values, eg for channels of a frame syncroniser or MEs / Keys in a switcher
+  repeated ParameterDimension dimensions = 3;
+
+  // The parameter label for the client
   string label = 4;
   string shortLabel = 5;
   string description = 6;
@@ -185,14 +203,19 @@ message ParameterDetail {
   ValueType valueType = 14;
 
   DisplayStyle displayStyle = 15;
-  float minimum = 16;         // optional, proto3 makes all values optional
-  float maximum = 17;         // optional
-  OptionList optionList = 18; // optional
-  bool optionListIsDynamic = 19;
+  // Maximum Value for Integers and Floats
+  float minimum = 16;
+  // Minimum Value for Integers and Floats
+  float maximum = 17;
+  OptionList optionList = 18;
+
   // this is set to true when the optionlist can update during runtime
+  bool optionListIsDynamic = 19;
+  
   ParameterValue defaultValue = 20;
 
-  repeated ParameterMetaDescription metaDescription = 21;
+  map<string, ParameterMetaDescription> metaDescription = 21;
+
   // Maximum Value for Incrementation
   int32 incDecStepsUpperRange = 22;
   // Maximum Negative Value for Decrementation
@@ -202,22 +225,23 @@ message ParameterDetail {
 message ParameterDetails { repeated ParameterDetail details = 1; }
 
 message ParameterMetaValue {
-  string key = 1;
   oneof value {
-    int32 integer = 2;
-    bool binary = 3;
-    string str = 4;
-    float floating = 5;
+    int32 integer = 1;
+    bool binary = 2;
+    string str = 3;
+    float floating = 4;
   }
 }
 
 message ParameterMetaDescription {
-  string key = 1; // In case of meta the key is the id
-  ParameterMetaType metaType = 2;
+  ParameterMetaType metaType = 1;
 }
 
 enum ParameterMetaType {
-  MetaInteger = 0; MetaBinary = 1; MetaStr = 2; MetaFloating = 3;
+  MetaInteger = 0; 
+  MetaBinary = 1; 
+  MetaStr = 2; 
+  MetaFloating = 3;
 }
 
 message ParameterOption {
@@ -225,14 +249,23 @@ message ParameterOption {
   string name = 2;
 }
 
-enum Command { Trigger = 0; Increment = 1; Decrement = 2; }
+enum Command { 
+  Trigger = 0; 
+}
 
 enum ValueType {
-  NoValue = 0; Integer = 1; Floating = 2; Opt = 3; String = 4; Binary = 5;
+  NoValue = 0; 
+  Integer = 1; 
+  Floating = 2; 
+  Opt = 3; 
+  String = 4; 
+  Binary = 5;
 }
 
 enum FeedbackStyle {
-  UndefinedFeedback = 0; NormalFeedback = 1; DelayedFeedback = 2;
+  UndefinedFeedback = 0; 
+  NormalFeedback = 1; 
+  DelayedFeedback = 2;
   NoFeedback = 3;
 }
 
@@ -240,7 +273,7 @@ enum ControlStyle {
   Undefined = 0;
   // Normal control, by setting a Value
   Normal = 1;
-  // Accept only Command::Increment and Command::Decrement
+  // Use Increment and Decrement by sending positiv or negative Values
   Incremental = 2;
   // Accept no control, display only
   NoControl = 3;
@@ -248,8 +281,6 @@ enum ControlStyle {
   Oneshot = 4;
   // Simulate Normal by using Incremental under the hood
   ControlledIncremental = 5;
-  // Use Increment and Decrement by sending positiv or negative Values
-  IncrementalWithSteps = 6;
 }
 
 // DisplayStyle can set additional rendering details for the display
@@ -276,18 +307,25 @@ enum DisplayStyle {
 
 // Some generic types for common parameter
 enum GenericType {
-  Generic = 0; ConnectionState = 1; DeviceIP = 2; Pan = 3; Tilt = 4; Tally = 5;
+  Generic = 0; 
+  ConnectionState = 1; 
+  DeviceIP = 2; 
+  Pan = 3; 
+  Tilt = 4; 
+  Tally = 5;
   Record = 6;
   Iris = 7;
 }
 
 // Errortypes when setting a Parameter
 enum ParameterError {
-  NoError = 0; UnknownError = 1; UnknownID = 2; MinViolation = 3;
+  NoError = 0; 
+  UnknownError = 1; 
+  UnknownID = 2; 
+  MinViolation = 3;
   MaxViolation = 4;
   InvalidType = 5;
   MaxRetrys = 6;
   RangeViolation = 7;
-  // Will be returned if Value for Parameter with NoValue was set
-  HasNoValue = 8;
+  HasNoValue = 8; // Will be returned if Value for Parameter with NoValue was set
 }

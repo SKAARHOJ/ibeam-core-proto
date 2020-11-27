@@ -1,6 +1,12 @@
 # IBeam-Core Protocol
 
-## Definitions
+## Changelog
+
+### 0.2.0
+- Adds incDecSteps
+- Adds path to details
+- Adds invalid to value
+- Make meta details and values a protobuf map
 
 ### Core
 The Core implements some type of Protocol, that is used by one or more Devices.
@@ -19,3 +25,4 @@ One Model has multiple Parameters. A Model can be used by multiple devices.
 For the documentation we use the tool [protoc-gen-doc](https://github.com/pseudomuto/protoc-gen-doc)
 
 Just run `generatedocs.sh` to generate the documentation.
+
