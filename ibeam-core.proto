@@ -131,7 +131,7 @@ message Parameter {
 message Parameters { repeated Parameter parameters = 1; }
 
 message ParameterValue {
-  repeated uint32 dimenstionID = 1;
+  repeated uint32 dimensionID = 1;
   // Shows if the Parameter is currently available.
   // This field is ignored in set request
   bool available = 2;
