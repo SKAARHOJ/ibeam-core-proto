@@ -220,6 +220,9 @@ message ParameterDetail {
   int32 incDecStepsUpperRange = 22;
   // Maximum Negative Value for Decrementation
   int32 incDecStepsLowerRange = 23;
+  // Specifies if a parameter can still be controlled while connection state is
+  // false, only comes into affect if connectionstate exists in the devicecore
+  bool controlableWhileDisconnected = 25;
 }
 
 message ParameterDetails { repeated ParameterDetail details = 1; }
