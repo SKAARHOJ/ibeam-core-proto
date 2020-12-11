@@ -7,7 +7,7 @@ package ibeam_core;
 option go_package = ".;ibeam_core";
 
 /// This block hardcodes the ibeam version
-option(ibeam_version) = "0.2.1";
+option(ibeam_version) = "0.2.2";
 extend google.protobuf.FileOptions { string ibeam_version = 5000; }
 /// End version block
 
@@ -214,7 +214,7 @@ message ParameterDetail {
   
   ParameterValue defaultValue = 20;
 
-  map<string, ParameterMetaDescription> metaDescription = 21;
+  map<string, ParameterMetaType> metaDescription = 21;
 
   // Maximum Value for Incrementation
   int32 incDecStepsUpperRange = 22;
@@ -240,10 +240,6 @@ message ParameterMetaValue {
     string str = 3;
     float floating = 4;
   }
-}
-
-message ParameterMetaDescription {
-  ParameterMetaType metaType = 1;
 }
 
 enum ParameterMetaType {
