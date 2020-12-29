@@ -65,7 +65,7 @@ message CoreInfo {
   string name = 4;
   // Number of Devices, that can be handled by the core
   uint32 maxDevices = 5;
-  // Number of clients that can connect to the Core
+  // Number of currently connected clients on the Core
   uint32 connectedClients = 6;
 }
 
@@ -190,7 +190,7 @@ message ParameterDetail {
 
   ControlStyle controlStyle = 9;
   FeedbackStyle feedbackStyle = 10;
-  // minimum delay between sent commands
+  // minimum delay between sent commands (manageed)
   uint32 controlDelayMs = 11;
   // time to wait after a set before sending new
   // values to the client subscribe stream
