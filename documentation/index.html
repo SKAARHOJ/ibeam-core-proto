@@ -271,10 +271,6 @@
                 </li>
               
                 <li>
-                  <a href="#ibeam_core.ParameterMetaDescription" class="m rmBackground"><span class="badge m">M</span>ParameterMetaDescription</a>
-                </li>
-              
-                <li>
                   <a href="#ibeam_core.ParameterMetaValue" class="m rmBackground"><span class="badge m">M</span>ParameterMetaValue</a>
                 </li>
               
@@ -405,7 +401,14 @@
                   <td>connectedClients</td>
                   <td><a href="#uint32">uint32</a></td>
                   <td></td>
-                  <td><p>Number of clients that can connect to the Core </p></td>
+                  <td><p>Number of currently connected clients on the Core </p></td>
+                </tr>
+              
+                <tr>
+                  <td>connectionType</td>
+                  <td><a href="#ibeam_core.ConnectionType">ConnectionType</a></td>
+                  <td></td>
+                  <td><p>Type of connection. See ConnectionType enum </p></td>
                 </tr>
               
             </tbody>
@@ -649,13 +652,6 @@
                   <td><p>Description of the model </p></td>
                 </tr>
               
-                <tr>
-                  <td>connectionType</td>
-                  <td><a href="#ibeam_core.ConnectionType">ConnectionType</a></td>
-                  <td></td>
-                  <td><p>Thype of connection. See ConnectionType enum </p></td>
-                </tr>
-              
             </tbody>
           </table>
 
@@ -897,7 +893,7 @@ centering analog control like a joystick </p></td>
                   <td>controlDelayMs</td>
                   <td><a href="#uint32">uint32</a></td>
                   <td></td>
-                  <td><p>minimum delay between sent commands </p></td>
+                  <td><p>minimum delay between sent commands (manageed) </p></td>
                 </tr>
               
                 <tr>
@@ -986,6 +982,14 @@ optional config value for Normal and ControlledIncremental </p></td>
                   <td><p>Maximum Negative Value for Decrementation </p></td>
                 </tr>
               
+                <tr>
+                  <td>controlableWhileDisconnected</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>Specifies if a parameter can still be controlled while connection state is
+false, only comes into affect if connectionstate exists in the devicecore </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -1012,7 +1016,7 @@ optional config value for Normal and ControlledIncremental </p></td>
               
                 <tr>
                   <td>value</td>
-                  <td><a href="#ibeam_core.ParameterMetaDescription">ParameterMetaDescription</a></td>
+                  <td><a href="#ibeam_core.ParameterMetaType">ParameterMetaType</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>
@@ -1038,30 +1042,6 @@ optional config value for Normal and ControlledIncremental </p></td>
                   <td>details</td>
                   <td><a href="#ibeam_core.ParameterDetail">ParameterDetail</a></td>
                   <td>repeated</td>
-                  <td><p> </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="ibeam_core.ParameterMetaDescription">ParameterMetaDescription</h3>
-        <p></p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>metaType</td>
-                  <td><a href="#ibeam_core.ParameterMetaType">ParameterMetaType</a></td>
-                  <td></td>
                   <td><p> </p></td>
                 </tr>
               
