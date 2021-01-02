@@ -14,5 +14,5 @@ fi
 mkdir $DIR
 
 echo "Generate documentation..."
-protoc --doc_out=./$DIR --doc_opt=html,index.html ibeam-core.proto
+protoc --doc_out=./$DIR --doc_opt=template.tmpl,index.html ibeam-core.proto
 echo "...finished 🏁"

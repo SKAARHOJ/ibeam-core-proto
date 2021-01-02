@@ -34,7 +34,7 @@
 
       a {
         text-decoration: none;
-        color: #567e25;
+        color: rgb(6,76,159);
       }
 
       table {
@@ -63,57 +63,57 @@
       }
 
       td p:nth-child(1) {
-        text-indent: 0;  
+        text-indent: 0; /* No indent on first p in td */
       }
 
-       
-      .field-table td:nth-child(1) {  
+      /* Table of fields */
+      .field-table td:nth-child(1) { /* Field */
         width: 10em;
       }
-      .field-table td:nth-child(2) {  
+      .field-table td:nth-child(2) { /* Type */
         width: 10em;
       }
-      .field-table td:nth-child(3) {  
+      .field-table td:nth-child(3) { /* Label */
         width: 6em;
       }
-      .field-table td:nth-child(4) {  
+      .field-table td:nth-child(4) { /* Description */
         width: auto;
       }
 
-       
-      .extension-table td:nth-child(1) {  
+      /* Table of extensions */
+      .extension-table td:nth-child(1) { /* Extension */
         width: 10em;
       }
-      .extension-table td:nth-child(2) {  
+      .extension-table td:nth-child(2) { /* Type */
         width: 10em;
       }
-      .extension-table td:nth-child(3) {  
+      .extension-table td:nth-child(3) { /* Base */
         width: 10em;
       }
-      .extension-table td:nth-child(4) {  
+      .extension-table td:nth-child(4) { /* Number */
         width: 5em;
       }
-      .extension-table td:nth-child(5) {  
+      .extension-table td:nth-child(5) { /* Description */
         width: auto;
       }
 
-       
-      .enum-table td:nth-child(1) {  
+      /* Table of enum values. */
+      .enum-table td:nth-child(1) { /* Name */
         width: 10em;
       }
-      .enum-table td:nth-child(2) {  
+      .enum-table td:nth-child(2) { /* Number */
         width: 10em;
       }
-      .enum-table td:nth-child(3) {  
+      .enum-table td:nth-child(3) { /* Description */
         width: auto;
       }
 
-       
+      /* Table of scalar value types. */
       .scalar-value-types-table tr {
         height: 3em;
       }
 
-       
+      /* Table of contents. */
       #toc-container ul {
         list-style-type: none;
         padding-left: 1em;
@@ -124,7 +124,7 @@
         font-weight: bold;
       }
 
-       
+      /* File heading div */
       .file-heading {
         width: 100%;
         display: table;
@@ -140,7 +140,7 @@
         display: table-cell;
       }
 
-       
+      /* The 'M', 'E' and 'X' badges in the ToC */
       .badge {
         width: 1.6em;
         height: 1.6em;
@@ -151,16 +151,36 @@
         font-weight: bold;
         font-size: 60%;
 
-        color: #89ba48;
-        background-color: #dff0c8;
-
         margin: 0.5ex 1em 0.5ex -1em;
         border: 1px solid #fbfbfb;
         border-radius: 1ex;
-      }
+	  }
+	  
+	.m {
+		color: #ba4848;
+		background-color: #f0c8c8;
+	}
+
+	.e {
+		color: #4876ba;
+		background-color: #c8d9f0;
+	}
+
+	.x {
+		color: #bab248;
+		background-color: #f0edc8;
+	}
+
+	.s {
+		color: #89ba48;
+		background-color: #dff0c8;
+	}
+	.rmBackground{
+		background-color: #fff;
+	}
     </style>
 
-    
+    <!-- User custom CSS -->
     <link rel="stylesheet" type="text/css" href="stylesheet.css"/>
   </head>
 
@@ -175,144 +195,156 @@
         
           
           <li>
-            <a href="#ibeam-core.proto">ibeam-core.proto</a>
+            <a href="#ibeam-core.proto" style="color: #222">ibeam-core.proto</a>
             <ul>
               
                 <li>
-                  <a href="#ibeam_core.CoreInfo"><span class="badge">M</span>CoreInfo</a>
+                  <a href="#ibeam_core.CoreInfo" class="m rmBackground"><span class="badge m">M</span>CoreInfo</a>
                 </li>
               
                 <li>
-                  <a href="#ibeam_core.DeviceIDs"><span class="badge">M</span>DeviceIDs</a>
+                  <a href="#ibeam_core.DeviceIDs" class="m rmBackground"><span class="badge m">M</span>DeviceIDs</a>
                 </li>
               
                 <li>
-                  <a href="#ibeam_core.DeviceInfo"><span class="badge">M</span>DeviceInfo</a>
+                  <a href="#ibeam_core.DeviceInfo" class="m rmBackground"><span class="badge m">M</span>DeviceInfo</a>
                 </li>
               
                 <li>
-                  <a href="#ibeam_core.DeviceInfos"><span class="badge">M</span>DeviceInfos</a>
+                  <a href="#ibeam_core.DeviceInfos" class="m rmBackground"><span class="badge m">M</span>DeviceInfos</a>
                 </li>
               
                 <li>
-                  <a href="#ibeam_core.DeviceParameterID"><span class="badge">M</span>DeviceParameterID</a>
+                  <a href="#ibeam_core.DeviceParameterID" class="m rmBackground"><span class="badge m">M</span>DeviceParameterID</a>
                 </li>
               
                 <li>
-                  <a href="#ibeam_core.DeviceParameterIDs"><span class="badge">M</span>DeviceParameterIDs</a>
+                  <a href="#ibeam_core.DeviceParameterIDs" class="m rmBackground"><span class="badge m">M</span>DeviceParameterIDs</a>
                 </li>
               
                 <li>
-                  <a href="#ibeam_core.Empty"><span class="badge">M</span>Empty</a>
+                  <a href="#ibeam_core.DimensionDetail" class="m rmBackground"><span class="badge m">M</span>DimensionDetail</a>
                 </li>
               
                 <li>
-                  <a href="#ibeam_core.ModelIDs"><span class="badge">M</span>ModelIDs</a>
+                  <a href="#ibeam_core.Empty" class="m rmBackground"><span class="badge m">M</span>Empty</a>
                 </li>
               
                 <li>
-                  <a href="#ibeam_core.ModelInfo"><span class="badge">M</span>ModelInfo</a>
+                  <a href="#ibeam_core.ModelIDs" class="m rmBackground"><span class="badge m">M</span>ModelIDs</a>
                 </li>
               
                 <li>
-                  <a href="#ibeam_core.ModelInfos"><span class="badge">M</span>ModelInfos</a>
+                  <a href="#ibeam_core.ModelInfo" class="m rmBackground"><span class="badge m">M</span>ModelInfo</a>
                 </li>
               
                 <li>
-                  <a href="#ibeam_core.ModelParameterID"><span class="badge">M</span>ModelParameterID</a>
+                  <a href="#ibeam_core.ModelInfos" class="m rmBackground"><span class="badge m">M</span>ModelInfos</a>
                 </li>
               
                 <li>
-                  <a href="#ibeam_core.ModelParameterIDs"><span class="badge">M</span>ModelParameterIDs</a>
+                  <a href="#ibeam_core.ModelParameterID" class="m rmBackground"><span class="badge m">M</span>ModelParameterID</a>
                 </li>
               
                 <li>
-                  <a href="#ibeam_core.OptionList"><span class="badge">M</span>OptionList</a>
+                  <a href="#ibeam_core.ModelParameterIDs" class="m rmBackground"><span class="badge m">M</span>ModelParameterIDs</a>
                 </li>
               
                 <li>
-                  <a href="#ibeam_core.Parameter"><span class="badge">M</span>Parameter</a>
+                  <a href="#ibeam_core.OptionList" class="m rmBackground"><span class="badge m">M</span>OptionList</a>
                 </li>
               
                 <li>
-                  <a href="#ibeam_core.ParameterDetail"><span class="badge">M</span>ParameterDetail</a>
+                  <a href="#ibeam_core.Parameter" class="m rmBackground"><span class="badge m">M</span>Parameter</a>
                 </li>
               
                 <li>
-                  <a href="#ibeam_core.ParameterDetails"><span class="badge">M</span>ParameterDetails</a>
+                  <a href="#ibeam_core.ParameterDetail" class="m rmBackground"><span class="badge m">M</span>ParameterDetail</a>
                 </li>
               
                 <li>
-                  <a href="#ibeam_core.ParameterMetaDescription"><span class="badge">M</span>ParameterMetaDescription</a>
+                  <a href="#ibeam_core.ParameterDetail.MetaDescriptionEntry" class="m rmBackground"><span class="badge m">M</span>ParameterDetail.MetaDescriptionEntry</a>
                 </li>
               
                 <li>
-                  <a href="#ibeam_core.ParameterMetaValue"><span class="badge">M</span>ParameterMetaValue</a>
+                  <a href="#ibeam_core.ParameterDetails" class="m rmBackground"><span class="badge m">M</span>ParameterDetails</a>
                 </li>
               
                 <li>
-                  <a href="#ibeam_core.ParameterOption"><span class="badge">M</span>ParameterOption</a>
+                  <a href="#ibeam_core.ParameterMetaDescription" class="m rmBackground"><span class="badge m">M</span>ParameterMetaDescription</a>
                 </li>
               
                 <li>
-                  <a href="#ibeam_core.ParameterValue"><span class="badge">M</span>ParameterValue</a>
+                  <a href="#ibeam_core.ParameterMetaValue" class="m rmBackground"><span class="badge m">M</span>ParameterMetaValue</a>
                 </li>
               
                 <li>
-                  <a href="#ibeam_core.Parameters"><span class="badge">M</span>Parameters</a>
-                </li>
-              
-              
-                <li>
-                  <a href="#ibeam_core.Command"><span class="badge">E</span>Command</a>
+                  <a href="#ibeam_core.ParameterOption" class="m rmBackground"><span class="badge m">M</span>ParameterOption</a>
                 </li>
               
                 <li>
-                  <a href="#ibeam_core.ConnectionType"><span class="badge">E</span>ConnectionType</a>
+                  <a href="#ibeam_core.ParameterValue" class="m rmBackground"><span class="badge m">M</span>ParameterValue</a>
                 </li>
               
                 <li>
-                  <a href="#ibeam_core.ControlStyle"><span class="badge">E</span>ControlStyle</a>
+                  <a href="#ibeam_core.ParameterValue.MetaValuesEntry" class="m rmBackground"><span class="badge m">M</span>ParameterValue.MetaValuesEntry</a>
                 </li>
               
                 <li>
-                  <a href="#ibeam_core.DisplayStyle"><span class="badge">E</span>DisplayStyle</a>
-                </li>
-              
-                <li>
-                  <a href="#ibeam_core.FeedbackStyle"><span class="badge">E</span>FeedbackStyle</a>
-                </li>
-              
-                <li>
-                  <a href="#ibeam_core.GenericType"><span class="badge">E</span>GenericType</a>
-                </li>
-              
-                <li>
-                  <a href="#ibeam_core.ParameterError"><span class="badge">E</span>ParameterError</a>
-                </li>
-              
-                <li>
-                  <a href="#ibeam_core.ParameterMetaType"><span class="badge">E</span>ParameterMetaType</a>
-                </li>
-              
-                <li>
-                  <a href="#ibeam_core.ValueType"><span class="badge">E</span>ValueType</a>
+                  <a href="#ibeam_core.Parameters" class="m rmBackground"><span class="badge m">M</span>Parameters</a>
                 </li>
               
               
                 <li>
-                  <a href="#ibeam-core.proto-extensions"><span class="badge">X</span>File-level Extensions</a>
+                  <a href="#ibeam_core.Command" class="e rmBackground"><span class="badge e">E</span>Command</a>
+                </li>
+              
+                <li>
+                  <a href="#ibeam_core.ConnectionType" class="e rmBackground"><span class="badge e">E</span>ConnectionType</a>
+                </li>
+              
+                <li>
+                  <a href="#ibeam_core.ControlStyle" class="e rmBackground"><span class="badge e">E</span>ControlStyle</a>
+                </li>
+              
+                <li>
+                  <a href="#ibeam_core.DisplayStyle" class="e rmBackground"><span class="badge e">E</span>DisplayStyle</a>
+                </li>
+              
+                <li>
+                  <a href="#ibeam_core.FeedbackStyle" class="e rmBackground"><span class="badge e">E</span>FeedbackStyle</a>
+                </li>
+              
+                <li>
+                  <a href="#ibeam_core.GenericType" class="e rmBackground"><span class="badge e">E</span>GenericType</a>
+                </li>
+              
+                <li>
+                  <a href="#ibeam_core.ParameterError" class="e rmBackground"><span class="badge e">E</span>ParameterError</a>
+                </li>
+              
+                <li>
+                  <a href="#ibeam_core.ParameterMetaType" class="e rmBackground"><span class="badge e">E</span>ParameterMetaType</a>
+                </li>
+              
+                <li>
+                  <a href="#ibeam_core.ValueType" class="e rmBackground"><span class="badge e">E</span>ValueType</a>
                 </li>
               
               
                 <li>
-                  <a href="#ibeam_core.IbeamCore"><span class="badge">S</span>IbeamCore</a>
+                  <a href="#ibeam-core.proto-extensions" class="x rmBackground"><span class="badge x">X</span>File-level Extensions</a>
+                </li>
+              
+              
+                <li>
+                  <a href="#ibeam_core.IbeamCore" class="s rmBackground"><span class="badge s">S</span>IbeamCore</a>
                 </li>
               
             </ul>
           </li>
         
-        <li><a href="#scalar-value-types">Scalar Value Types</a></li>
+        <li style="margin-top: 20px;"><a href="#scalar-value-types" style="color: #222;">Scalar Value Types</a></li>
       </ul>
     </div>
 
@@ -507,6 +539,44 @@
                   <td>ids</td>
                   <td><a href="#ibeam_core.DeviceParameterID">DeviceParameterID</a></td>
                   <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="ibeam_core.DimensionDetail">DimensionDetail</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>count</td>
+                  <td><a href="#uint32">uint32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>description</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
                   <td><p> </p></td>
                 </tr>
               
@@ -748,29 +818,36 @@
                   <td>id</td>
                   <td><a href="#ibeam_core.ModelParameterID">ModelParameterID</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Parameter IDs should be unique (per model) and will break compatibility if changed between versions </p></td>
                 </tr>
               
                 <tr>
                   <td>name</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Codesave name of the parameter </p></td>
                 </tr>
               
                 <tr>
-                  <td>instances</td>
-                  <td><a href="#uint32">uint32</a></td>
+                  <td>path</td>
+                  <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>this can give parameters a second dimension of
-values, eg for channels of a frame syncroniser </p></td>
+                  <td><p>Path describes a grouping of the parameter to the client. Groups need to be seperated by a / and can contain spaces
+This should also end with a / and not contain the parameter name or label again </p></td>
+                </tr>
+              
+                <tr>
+                  <td>dimensions</td>
+                  <td><a href="#ibeam_core.DimensionDetail">DimensionDetail</a></td>
+                  <td>repeated</td>
+                  <td><p>give parameters multiple dimensions values, eg for channels of a frame syncroniser or MEs / Keys in a switcher </p></td>
                 </tr>
               
                 <tr>
                   <td>label</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>The parameter label for the client </p></td>
                 </tr>
               
                 <tr>
@@ -857,40 +934,40 @@ optional config value for Normal and ControlledIncremental </p></td>
                   <td>minimum</td>
                   <td><a href="#float">float</a></td>
                   <td></td>
-                  <td><p>optional, proto3 makes all values optional </p></td>
+                  <td><p>Maximum Value for Integers and Floats </p></td>
                 </tr>
               
                 <tr>
                   <td>maximum</td>
                   <td><a href="#float">float</a></td>
                   <td></td>
-                  <td><p>optional </p></td>
+                  <td><p>Minimum Value for Integers and Floats </p></td>
                 </tr>
               
                 <tr>
                   <td>optionList</td>
                   <td><a href="#ibeam_core.OptionList">OptionList</a></td>
                   <td></td>
-                  <td><p>optional </p></td>
+                  <td><p> </p></td>
                 </tr>
               
                 <tr>
                   <td>optionListIsDynamic</td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>this is set to true when the optionlist can update during runtime </p></td>
                 </tr>
               
                 <tr>
                   <td>defaultValue</td>
                   <td><a href="#ibeam_core.ParameterValue">ParameterValue</a></td>
                   <td></td>
-                  <td><p>this is set to true when the optionlist can update during runtime </p></td>
+                  <td><p> </p></td>
                 </tr>
               
                 <tr>
                   <td>metaDescription</td>
-                  <td><a href="#ibeam_core.ParameterMetaDescription">ParameterMetaDescription</a></td>
+                  <td><a href="#ibeam_core.ParameterDetail.MetaDescriptionEntry">ParameterDetail.MetaDescriptionEntry</a></td>
                   <td>repeated</td>
                   <td><p> </p></td>
                 </tr>
@@ -907,6 +984,37 @@ optional config value for Normal and ControlledIncremental </p></td>
                   <td><a href="#int32">int32</a></td>
                   <td></td>
                   <td><p>Maximum Negative Value for Decrementation </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="ibeam_core.ParameterDetail.MetaDescriptionEntry">ParameterDetail.MetaDescriptionEntry</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>key</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>value</td>
+                  <td><a href="#ibeam_core.ParameterMetaDescription">ParameterMetaDescription</a></td>
+                  <td></td>
+                  <td><p> </p></td>
                 </tr>
               
             </tbody>
@@ -951,13 +1059,6 @@ optional config value for Normal and ControlledIncremental </p></td>
             <tbody>
               
                 <tr>
-                  <td>key</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>In case of meta the key is the id </p></td>
-                </tr>
-              
-                <tr>
                   <td>metaType</td>
                   <td><a href="#ibeam_core.ParameterMetaType">ParameterMetaType</a></td>
                   <td></td>
@@ -980,13 +1081,6 @@ optional config value for Normal and ControlledIncremental </p></td>
               <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
             </thead>
             <tbody>
-              
-                <tr>
-                  <td>key</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
               
                 <tr>
                   <td>integer</td>
@@ -1065,9 +1159,9 @@ optional config value for Normal and ControlledIncremental </p></td>
             <tbody>
               
                 <tr>
-                  <td>instanceID</td>
+                  <td>dimensionID</td>
                   <td><a href="#uint32">uint32</a></td>
-                  <td></td>
+                  <td>repeated</td>
                   <td><p> </p></td>
                 </tr>
               
@@ -1085,6 +1179,14 @@ This field is ignored in set request </p></td>
                   <td></td>
                   <td><p>Shows if the Parameter is currently assumed.
 This field is ignored in set request. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>invalid</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>This boolean should be set by the server if the value is eitehr not yet known, or known to be garbage from the implementation. 
+It should signal to the client to replace the value with a placeholder </p></td>
                 </tr>
               
                 <tr>
@@ -1145,8 +1247,39 @@ This field is ignored in set request. </p></td>
               
                 <tr>
                   <td>metaValues</td>
-                  <td><a href="#ibeam_core.ParameterMetaValue">ParameterMetaValue</a></td>
+                  <td><a href="#ibeam_core.ParameterValue.MetaValuesEntry">ParameterValue.MetaValuesEntry</a></td>
                   <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="ibeam_core.ParameterValue.MetaValuesEntry">ParameterValue.MetaValuesEntry</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>key</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>value</td>
+                  <td><a href="#ibeam_core.ParameterMetaValue">ParameterMetaValue</a></td>
+                  <td></td>
                   <td><p> </p></td>
                 </tr>
               
@@ -1194,18 +1327,6 @@ This field is ignored in set request. </p></td>
               <tr>
                 <td>Trigger</td>
                 <td>0</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>Increment</td>
-                <td>1</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>Decrement</td>
-                <td>2</td>
                 <td><p></p></td>
               </tr>
             
@@ -1270,7 +1391,7 @@ This field is ignored in set request. </p></td>
               <tr>
                 <td>Incremental</td>
                 <td>2</td>
-                <td><p>Accept only Command::Increment and Command::Decrement</p></td>
+                <td><p>Use Increment and Decrement by sending positiv or negative Values</p></td>
               </tr>
             
               <tr>
@@ -1289,12 +1410,6 @@ This field is ignored in set request. </p></td>
                 <td>ControlledIncremental</td>
                 <td>5</td>
                 <td><p>Simulate Normal by using Incremental under the hood</p></td>
-              </tr>
-            
-              <tr>
-                <td>IncrementalWithSteps</td>
-                <td>6</td>
-                <td><p>Use Increment and Decrement by sending positiv or negative Values</p></td>
               </tr>
             
           </tbody>
@@ -1335,19 +1450,19 @@ This field is ignored in set request. </p></td>
               <tr>
                 <td>DisplayPercent</td>
                 <td>4</td>
-                <td><p>Value will be displayed with an appended &#39;%&#39; sign</p></td>
+                <td><p>Value will be displayed with an appended '%' sign</p></td>
               </tr>
             
               <tr>
                 <td>DisplayDb</td>
                 <td>5</td>
-                <td><p>Value will be displayed with an appended &#39;db&#39; sign</p></td>
+                <td><p>Value will be displayed with an appended 'db' sign</p></td>
               </tr>
             
               <tr>
                 <td>DisplayFstop</td>
                 <td>6</td>
-                <td><p>Value will be displayed with an appended &#39;f&#39; sign</p></td>
+                <td><p>Value will be displayed with an appended 'f' sign</p></td>
               </tr>
             
               <tr>
@@ -1359,7 +1474,7 @@ This field is ignored in set request. </p></td>
               <tr>
                 <td>DisplayKelvin</td>
                 <td>8</td>
-                <td><p>Value will be displayed with an appended &#39;K&#39; sign</p></td>
+                <td><p>Value will be displayed with an appended 'K' sign</p></td>
               </tr>
             
           </tbody>
@@ -1513,6 +1628,12 @@ This field is ignored in set request. </p></td>
                 <td>RangeViolation</td>
                 <td>7</td>
                 <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>HasNoValue</td>
+                <td>8</td>
+                <td><p>Will be returned if Value for Parameter with NoValue was set</p></td>
               </tr>
             
           </tbody>
@@ -1686,7 +1807,7 @@ Stream.</p></td>
                 <td>Subscribe</td>
                 <td><a href="#ibeam_core.DeviceParameterIDs">DeviceParameterIDs</a></td>
                 <td><a href="#ibeam_core.Parameter">Parameter</a> stream</td>
-                <td><p>No id -&gt; subscribe to everything
+                <td><p>No id -> subscribe to everything
 On subscribe all current values should be sent back!</p></td>
               </tr>
             
@@ -1887,4 +2008,3 @@ On subscribe all current values should be sent back!</p></td>
     </table>
   </body>
 </html>
-
