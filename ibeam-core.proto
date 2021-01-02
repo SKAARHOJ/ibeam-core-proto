@@ -7,7 +7,7 @@ package ibeam_core;
 option go_package = ".;ibeam_core";
 
 /// This block hardcodes the ibeam version
-option(ibeam_version) = "0.2.0";
+option(ibeam_version) = "v0.2.3";
 extend google.protobuf.FileOptions { string ibeam_version = 5000; }
 /// End version block
 
@@ -65,8 +65,18 @@ message CoreInfo {
   string name = 4;
   // Number of Devices, that can be handled by the core
   uint32 maxDevices = 5;
-  // Number of clients that can connect to the Core
+  // Number of currently connected clients on the Core
   uint32 connectedClients = 6;
+  // Type of connection. See ConnectionType enum
+  ConnectionType connectionType = 7;
+}
+
+// The ConnectionType describes how the Core connects to the device
+enum ConnectionType { 
+  Other = 0; 
+  Network = 1; 
+  Serial = 2; 
+  Sdi = 3; 
 }
 
 /* * * * * * * * * * * * * *
@@ -99,18 +109,8 @@ message ModelInfo {
   string name = 2;
   // Description of the model
   string description = 3;
-  // Thype of connection. See ConnectionType enum
-  ConnectionType connectionType = 4;
 }
 message ModelInfos { repeated ModelInfo modelInfos = 1; }
-
-// The ConnectionType describes how the Core connects to the device
-enum ConnectionType { 
-  Other = 0; 
-  Network = 1; 
-  Serial = 2; 
-  Sdi = 3; 
-}
 
 /* * * * * * * * * * * * * *
         PARAMETER
@@ -190,7 +190,7 @@ message ParameterDetail {
 
   ControlStyle controlStyle = 9;
   FeedbackStyle feedbackStyle = 10;
-  // minimum delay between sent commands
+  // minimum delay between sent commands (manageed)
   uint32 controlDelayMs = 11;
   // time to wait after a set before sending new
   // values to the client subscribe stream
@@ -214,12 +214,15 @@ message ParameterDetail {
   
   ParameterValue defaultValue = 20;
 
-  map<string, ParameterMetaDescription> metaDescription = 21;
+  map<string, ParameterMetaType> metaDescription = 21;
 
   // Maximum Value for Incrementation
   int32 incDecStepsUpperRange = 22;
   // Maximum Negative Value for Decrementation
   int32 incDecStepsLowerRange = 23;
+  // Specifies if a parameter can still be controlled while connection state is
+  // false, only comes into affect if connectionstate exists in the devicecore
+  bool controlableWhileDisconnected = 25;
 }
 
 message ParameterDetails { repeated ParameterDetail details = 1; }
@@ -237,10 +240,6 @@ message ParameterMetaValue {
     string str = 3;
     float floating = 4;
   }
-}
-
-message ParameterMetaDescription {
-  ParameterMetaType metaType = 1;
 }
 
 enum ParameterMetaType {
