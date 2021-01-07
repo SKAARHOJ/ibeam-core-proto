@@ -3,7 +3,7 @@
 export PATH="$PATH:$(go env GOPATH)/bin"
 DIR="documentation"
 
-echo "Download/Upadte protoc-gen-doc..."
+echo "Download/Update protoc-gen-doc..."
 go get -u github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-doc &> /dev/null
 go mod tidy
 
