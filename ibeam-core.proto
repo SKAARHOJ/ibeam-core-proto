@@ -7,7 +7,7 @@ package ibeam_core;
 option go_package = ".;ibeam_core";
 
 /// This block hardcodes the ibeam version
-option(ibeam_version) = "v0.2.3";
+option(ibeam_version) = "v0.2.4";
 extend google.protobuf.FileOptions { string ibeam_version = 5000; }
 /// End version block
 
@@ -217,9 +217,9 @@ message ParameterDetail {
   map<string, ParameterMetaType> metaDescription = 21;
 
   // Maximum Value for Incrementation
-  int32 incDecStepsUpperRange = 22;
+  float incDecStepsUpperLimit = 22;
   // Maximum Negative Value for Decrementation
-  int32 incDecStepsLowerRange = 23;
+  float incDecStepsLowerLimit = 23;
   // Specifies if a parameter can still be controlled while connection state is
   // false, only comes into affect if connectionstate exists in the devicecore
   bool controlableWhileDisconnected = 25;
@@ -331,6 +331,6 @@ enum ParameterError {
   MaxViolation = 4;
   InvalidType = 5;
   MaxRetrys = 6;
-  RangeViolation = 7;
+  StepSizeViolation = 7;
   HasNoValue = 8; // Will be returned if Value for Parameter with NoValue was set
 }
