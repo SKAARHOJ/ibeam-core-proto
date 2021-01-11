@@ -217,9 +217,9 @@ message ParameterDetail {
   map<string, ParameterMetaType> metaDescription = 21;
 
   // Maximum Value for Incrementation
-  float incDecStepsUpperLimit = 22;
+  int32 incDecStepsUpperLimit = 22;
   // Maximum Negative Value for Decrementation
-  float incDecStepsLowerLimit = 23;
+  int32 incDecStepsLowerLimit = 23;
   // Specifies if a parameter can still be controlled while connection state is
   // false, only comes into affect if connectionstate exists in the devicecore
   bool controlableWhileDisconnected = 25;
