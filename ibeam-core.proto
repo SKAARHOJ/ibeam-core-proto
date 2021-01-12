@@ -7,7 +7,7 @@ package ibeam_core;
 option go_package = ".;ibeam_core";
 
 /// This block hardcodes the ibeam version
-option(ibeam_version) = "v0.2.4";
+option(ibeam_version) = "v0.2.5";
 extend google.protobuf.FileOptions { string ibeam_version = 5000; }
 /// End version block
 
@@ -146,7 +146,7 @@ message ParameterValue {
   oneof value {
     int32 integer = 4;
     int32 incDecSteps = 5; // Could change concept here...
-    float floating = 6;
+    double floating = 6;
     string str = 7;
     uint32 currentOption = 8;
     Command cmd = 9;
@@ -204,9 +204,9 @@ message ParameterDetail {
 
   DisplayStyle displayStyle = 15;
   // Maximum Value for Integers and Floats
-  float minimum = 16;
+  double minimum = 16;
   // Minimum Value for Integers and Floats
-  float maximum = 17;
+  double maximum = 17;
   OptionList optionList = 18;
 
   // this is set to true when the optionlist can update during runtime
@@ -238,7 +238,7 @@ message ParameterMetaValue {
     int32 integer = 1;
     bool binary = 2;
     string str = 3;
-    float floating = 4;
+    double floating = 4;
   }
 }
 
