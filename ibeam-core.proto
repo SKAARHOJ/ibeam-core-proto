@@ -4,10 +4,10 @@
 syntax = "proto3";
 import "google/protobuf/descriptor.proto";
 package ibeam_core;
-option go_package = ".;ibeam_core";
+option go_package = "../ibeam-core";
 
 /// This block hardcodes the ibeam version
-option(ibeam_version) = "v0.2.5";
+option(ibeam_version) = "v0.3.0";
 extend google.protobuf.FileOptions { string ibeam_version = 5000; }
 /// End version block
 
@@ -151,7 +151,9 @@ message ParameterValue {
     uint32 currentOption = 8;
     Command cmd = 9;
     bool binary = 10;
-    OptionList optionList = 11;
+    OptionList optionListUpdate = 11; // Used to update an optionlist
+    float minimumUpdate = 12; // used to update a minimum value
+    float maximumUpdate = 13; // used to update a maximum value
   }
 
   map<string, ParameterMetaValue> metaValues = 20;
@@ -211,10 +213,11 @@ message ParameterDetail {
 
   // this is set to true when the optionlist can update during runtime
   bool optionListIsDynamic = 19;
+  bool minMaxIsDynamic = 26;
   
   ParameterValue defaultValue = 20;
 
-  map<string, ParameterMetaType> metaDescription = 21;
+  map<string, ParameterMetaDetail> metaDetails = 21;
 
   // Maximum Value for Incrementation
   int32 incDecStepsUpperLimit = 22;
@@ -222,7 +225,7 @@ message ParameterDetail {
   int32 incDecStepsLowerLimit = 23;
   // Specifies if a parameter can still be controlled while connection state is
   // false, only comes into affect if connectionstate exists in the devicecore
-  bool controlableWhileDisconnected = 25;
+  bool controllableWhileDisconnected = 25;
 }
 
 message ParameterDetails { repeated ParameterDetail details = 1; }
@@ -247,11 +250,20 @@ enum ParameterMetaType {
   MetaBinary = 1; 
   MetaStr = 2; 
   MetaFloating = 3;
+  MetaOption = 4;
+}
+
+message ParameterMetaDetail {
+ ParameterMetaType metaType = 1;
+ double Minimum = 2;
+ double Maximum = 3;
+ repeated string option = 4;
 }
 
 message ParameterOption {
   uint32 id = 1;
   string name = 2;
+  string shortName = 3;
 }
 
 enum Command { 
@@ -265,6 +277,8 @@ enum ValueType {
   Opt = 3; 
   String = 4; 
   Binary = 5;
+  // Blob = 6; To be added later, might also be done as a direct timage format like png / jpg or bmp
+  // PNG = 7; To be added later TODO:
 }
 
 enum FeedbackStyle {
@@ -288,6 +302,7 @@ enum ControlStyle {
   ControlledIncremental = 5;
 }
 
+// TODO: FIX DISPLAY STYLES WITH KASPER
 // DisplayStyle can set additional rendering details for the display
 enum DisplayStyle {
   // Value will be displayed like it is
@@ -320,6 +335,7 @@ enum GenericType {
   Tally = 5;
   Record = 6;
   Iris = 7;
+  // TODO: RGB ? This needs discussion
 }
 
 // Errortypes when setting a Parameter
