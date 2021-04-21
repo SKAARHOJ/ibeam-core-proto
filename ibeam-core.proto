@@ -277,8 +277,8 @@ enum ValueType {
   Opt = 3; 
   String = 4; 
   Binary = 5;
-  // Blob = 6; To be added later, might also be done as a direct timage format like png / jpg or bmp
-  // PNG = 7; To be added later TODO:
+  PNG = 6;
+  JPEG = 7;
 }
 
 enum FeedbackStyle {
@@ -335,7 +335,6 @@ enum GenericType {
   Tally = 5;
   Record = 6;
   Iris = 7;
-  // TODO: RGB ? This needs discussion
 }
 
 // Errortypes when setting a Parameter
