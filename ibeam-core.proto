@@ -152,8 +152,10 @@ message ParameterValue {
     Command cmd = 9;
     bool binary = 10;
     OptionList optionListUpdate = 11; // Used to update an optionlist
-    float minimumUpdate = 12; // used to update a minimum value
-    float maximumUpdate = 13; // used to update a maximum value
+    double minimumUpdate = 12; // used to update a minimum value
+    double maximumUpdate = 13; // used to update a maximum value
+    bytes png = 14;
+    bytes jpeg = 15;
   }
 
   map<string, ParameterMetaValue> metaValues = 20;
@@ -257,7 +259,7 @@ message ParameterMetaDetail {
  ParameterMetaType metaType = 1;
  double Minimum = 2;
  double Maximum = 3;
- repeated string option = 4;
+ repeated string options = 4;
 }
 
 message ParameterOption {
