@@ -187,15 +187,19 @@ message ParameterDetail {
   string label = 4;
   string shortLabel = 5;
   string description = 6;
+
   GenericType genericType = 7;
+  
   // Specifys if this parameter can be controled via a
   // centering analog control like a joystick
   bool isSpeedValue = 8;
 
   ControlStyle controlStyle = 9;
   FeedbackStyle feedbackStyle = 10;
-  // minimum delay between sent commands (manageed)
+  
+  // time to wait between sending commands to the device
   uint32 controlDelayMs = 11;
+
   // time to wait after a set before sending new
   // values to the client subscribe stream
   uint32 quarantineDelayMs = 12;
@@ -204,30 +208,53 @@ message ParameterDetail {
   // optional config value for Normal and ControlledIncremental
   uint32 retryCount = 13;
 
+  // The actual type of the value
   ValueType valueType = 14;
 
-  DisplayStyle displayStyle = 15;
+  string displayPrefix = 27; 
+  string displaySuffix = 28;
+  FloatPrecision displayFloatPrecision = 29;
+
+  // Input curve allows the  core to specify what style of input value range function is appropriate for this parameter, eg focus or audio might need logarithmic style curves
+  InputCurve inputCurve = 30;
+
+  // Extended value info provides a way of adding further values to a integer or float value type
+  // it also allows to specify labels for certain values like "Close", "Far", "Near". Do NOT use this for indicating unavailable or invalid values! use the corresponding flags instead
+  repeated ExtendedValueInfo extendedValues = 31;
+
   // Maximum Value for Integers and Floats
   double minimum = 16;
   // Minimum Value for Integers and Floats
   double maximum = 17;
+
+
+  // Fine steps allow the devicecore to recommend a fine step value
+  double fineSteps = 32;
+  // Fine steps allow the devicecore to recommend a corse step value
+  double corseSteps = 33;
+
+  // Option List including the starting options
   OptionList optionList = 18;
 
-  // this is set to true when the optionlist can update during runtime
+  // This is set to true when the optionlist can update during runtime
   bool optionListIsDynamic = 19;
+  // This is set to true when the minimmum and maximum can update during runtime
   bool minMaxIsDynamic = 26;
   
+  // Default value for a parameter
   ParameterValue defaultValue = 20;
 
+  // Map with Parameter meta values, added values that might need to be used for any additional info that does not require the devicecore to hold more state
   map<string, ParameterMetaDetail> metaDetails = 21;
-
   // Maximum Value for Incrementation
   int32 incDecStepsUpperLimit = 22;
   // Maximum Negative Value for Decrementation
   int32 incDecStepsLowerLimit = 23;
+  
   // Specifies if a parameter can still be controlled while connection state is
   // false, only comes into affect if connectionstate exists in the devicecore
   bool controllableWhileDisconnected = 25;
+
 }
 
 message ParameterDetails { repeated ParameterDetail details = 1; }
@@ -236,6 +263,8 @@ message DimensionDetail {
   string name = 1;
   uint32 count = 2;
   string description = 3;
+  // if we need to name dimensions we need to add a map here
+  // map<uint32, string> elementLabels = 4;
 }
 
 message ParameterMetaValue {
@@ -268,6 +297,20 @@ message ParameterOption {
   string shortName = 3;
 }
 
+message ExtendedValueInfo {
+  // The actual value that is supposed to be replaced
+  double value = 1;
+
+  // From value to toValue a range is specified that will get the same label and color assignment
+  double toValue = 2;
+  
+  // The actual label for this value or valuerange
+  string name = 3;
+
+  // The color used to represent this value, eg for Button or ledstripe LEDs
+  string color = 4;
+}
+
 enum Command { 
   Trigger = 0; 
 }
@@ -284,14 +327,14 @@ enum ValueType {
 }
 
 enum FeedbackStyle {
-  UndefinedFeedback = 0; 
+  UndefinedFeedbackStyle = 0; 
   NormalFeedback = 1; 
   DelayedFeedback = 2;
   NoFeedback = 3;
 }
 
 enum ControlStyle {
-  Undefined = 0;
+  UndefinedControlStyle = 0;
   // Normal control, by setting a Value
   Normal = 1;
   // Use Increment and Decrement by sending positiv or negative Values
@@ -304,27 +347,20 @@ enum ControlStyle {
   ControlledIncremental = 5;
 }
 
-// TODO: FIX DISPLAY STYLES WITH KASPER
-// DisplayStyle can set additional rendering details for the display
-enum DisplayStyle {
-  // Value will be displayed like it is
-  DisplayDefault = 0;
-  // Value will be displayed with one decimal place (f.e. 32.7)
-  DisplayFLOAT_1DEZ = 1;
-  // Value will be displayed with two decimal places (f.e. 32.78)
-  DisplayFloat_2DEZ = 2;
-  // Value will be displayed with three decimal places (f.e. 32.789)
-  DisplayFloat_3DEZ = 3;
-  // Value will be displayed with an appended '%' sign
-  DisplayPercent = 4;
-  // Value will be displayed with an appended 'db' sign
-  DisplayDb = 5;
-  // Value will be displayed with an appended 'f' sign
-  DisplayFstop = 6;
-  // Value will be displayed as unit fraction (f.e. 32 will be shown as 1/32)
-  DisplayFraction = 7;
-  // Value will be displayed with an appended 'K' sign
-  DisplayKelvin = 8;
+enum FloatPrecision {
+  UndefinedFloatPrecision = 0;
+  OneDecimal = 1;
+  TwoDecimals = 2;
+  ThreeDecimals = 3;
+  FourDecimals = 4;
+}
+
+enum InputCurve {
+  NormalInputCurve = 0;
+  Ln = 1;
+  Ln_Inverse = 2;
+  Log10 = 3;
+  Log10_Inverse = 4;
 }
 
 // Some generic types for common parameter
