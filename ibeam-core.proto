@@ -220,7 +220,7 @@ message ParameterDetail {
 
   // Extended value info provides a way of adding further values to a integer or float value type
   // it also allows to specify labels for certain values like "Close", "Far", "Near". Do NOT use this for indicating unavailable or invalid values! use the corresponding flags instead
-  repeated ExtendedValueInfo extendedValues = 31;
+  repeated DescreteValueDetail descreteValueDetails = 31;
 
   // Maximum Value for Integers and Floats
   double minimum = 16;
@@ -228,9 +228,9 @@ message ParameterDetail {
   double maximum = 17;
 
 
-  // Fine steps allow the devicecore to recommend a fine step value
+  // Fine steps allow the devicecore to recommend a fine step value for Integers and Floats
   double fineSteps = 32;
-  // Fine steps allow the devicecore to recommend a corse step value
+  // Fine steps allow the devicecore to recommend a corse step value for Integers and Floats
   double corseSteps = 33;
 
   // Option List including the starting options
@@ -297,19 +297,19 @@ message ParameterOption {
   string shortName = 3;
 }
 
-message ExtendedValueInfo {
+message DescreteValueDetail {
   // The actual value that is supposed to be replaced
   double value = 1;
-
-  // From value to toValue a range is specified that will get the same label and color assignment
-  double toValue = 2;
   
   // The actual label for this value or valuerange
-  string name = 3;
-
-  // The color used to represent this value, eg for Button or ledstripe LEDs
-  string color = 4;
+  string name = 2;
 }
+
+// From value to toValue a range is specified that will get the same label and color assignment
+// double toValue = 2;
+
+// The color used to represent this value, eg for Button or ledstripe LEDs
+// string color = 4;
 
 enum Command { 
   Trigger = 0; 
