@@ -263,8 +263,10 @@ message DimensionDetail {
   string name = 1;
   uint32 count = 2;
   string description = 3;
-  // if we need to name dimensions we need to add a map here
-  // map<uint32, string> elementLabels = 4;
+  // if we need to name dimensions elementLabels can be used. Caution: this is not supposed for parameters like RGB or combinations of different values. 
+  // It is rather used to indicate labeling in values like different audiochannels (eg chanell 9 and 10 are refered to as MasterLeft / MasterRight)
+  // Think of it this way: if the user could still understand the parameter without the label it is ok to use it to improve the user experience
+  map<uint32, string> elementLabels = 4;
 }
 
 message ParameterMetaValue {
