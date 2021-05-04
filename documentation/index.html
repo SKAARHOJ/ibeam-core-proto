@@ -203,6 +203,10 @@
                 </li>
               
                 <li>
+                  <a href="#ibeam_core.DescreteValueDetail" class="m rmBackground"><span class="badge m">M</span>DescreteValueDetail</a>
+                </li>
+              
+                <li>
                   <a href="#ibeam_core.DeviceIDs" class="m rmBackground"><span class="badge m">M</span>DeviceIDs</a>
                 </li>
               
@@ -224,6 +228,10 @@
               
                 <li>
                   <a href="#ibeam_core.DimensionDetail" class="m rmBackground"><span class="badge m">M</span>DimensionDetail</a>
+                </li>
+              
+                <li>
+                  <a href="#ibeam_core.DimensionDetail.ElementLabelsEntry" class="m rmBackground"><span class="badge m">M</span>DimensionDetail.ElementLabelsEntry</a>
                 </li>
               
                 <li>
@@ -263,11 +271,15 @@
                 </li>
               
                 <li>
-                  <a href="#ibeam_core.ParameterDetail.MetaDescriptionEntry" class="m rmBackground"><span class="badge m">M</span>ParameterDetail.MetaDescriptionEntry</a>
+                  <a href="#ibeam_core.ParameterDetail.MetaDetailsEntry" class="m rmBackground"><span class="badge m">M</span>ParameterDetail.MetaDetailsEntry</a>
                 </li>
               
                 <li>
                   <a href="#ibeam_core.ParameterDetails" class="m rmBackground"><span class="badge m">M</span>ParameterDetails</a>
+                </li>
+              
+                <li>
+                  <a href="#ibeam_core.ParameterMetaDetail" class="m rmBackground"><span class="badge m">M</span>ParameterMetaDetail</a>
                 </li>
               
                 <li>
@@ -304,15 +316,19 @@
                 </li>
               
                 <li>
-                  <a href="#ibeam_core.DisplayStyle" class="e rmBackground"><span class="badge e">E</span>DisplayStyle</a>
-                </li>
-              
-                <li>
                   <a href="#ibeam_core.FeedbackStyle" class="e rmBackground"><span class="badge e">E</span>FeedbackStyle</a>
                 </li>
               
                 <li>
+                  <a href="#ibeam_core.FloatPrecision" class="e rmBackground"><span class="badge e">E</span>FloatPrecision</a>
+                </li>
+              
+                <li>
                   <a href="#ibeam_core.GenericType" class="e rmBackground"><span class="badge e">E</span>GenericType</a>
+                </li>
+              
+                <li>
+                  <a href="#ibeam_core.InputCurve" class="e rmBackground"><span class="badge e">E</span>InputCurve</a>
                 </li>
               
                 <li>
@@ -409,6 +425,37 @@
                   <td><a href="#ibeam_core.ConnectionType">ConnectionType</a></td>
                   <td></td>
                   <td><p>Type of connection. See ConnectionType enum </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="ibeam_core.DescreteValueDetail">DescreteValueDetail</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>value</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p>The actual value that is supposed to be replaced </p></td>
+                </tr>
+              
+                <tr>
+                  <td>name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The actual label for this value or valuerange </p></td>
                 </tr>
               
             </tbody>
@@ -578,6 +625,46 @@
               
                 <tr>
                   <td>description</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>elementLabels</td>
+                  <td><a href="#ibeam_core.DimensionDetail.ElementLabelsEntry">DimensionDetail.ElementLabelsEntry</a></td>
+                  <td>repeated</td>
+                  <td><p>if we need to name dimensions elementLabels can be used. Caution: this is not supposed for parameters like RGB or combinations of different values. 
+It is rather used to indicate labeling in values like different audiochannels (eg chanell 9 and 10 are refered to as MasterLeft / MasterRight)
+Think of it this way: if the user could still understand the parameter without the label it is ok to use it to improve the user experience </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="ibeam_core.DimensionDetail.ElementLabelsEntry">DimensionDetail.ElementLabelsEntry</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>key</td>
+                  <td><a href="#uint32">uint32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>value</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p> </p></td>
@@ -893,7 +980,7 @@ centering analog control like a joystick </p></td>
                   <td>controlDelayMs</td>
                   <td><a href="#uint32">uint32</a></td>
                   <td></td>
-                  <td><p>minimum delay between sent commands (manageed) </p></td>
+                  <td><p>time to wait between sending commands to the device </p></td>
                 </tr>
               
                 <tr>
@@ -916,74 +1003,124 @@ optional config value for Normal and ControlledIncremental </p></td>
                   <td>valueType</td>
                   <td><a href="#ibeam_core.ValueType">ValueType</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>The actual type of the value </p></td>
                 </tr>
               
                 <tr>
-                  <td>displayStyle</td>
-                  <td><a href="#ibeam_core.DisplayStyle">DisplayStyle</a></td>
+                  <td>displayPrefix</td>
+                  <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>
               
                 <tr>
+                  <td>displaySuffix</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>displayFloatPrecision</td>
+                  <td><a href="#ibeam_core.FloatPrecision">FloatPrecision</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>inputCurve</td>
+                  <td><a href="#ibeam_core.InputCurve">InputCurve</a></td>
+                  <td></td>
+                  <td><p>Input curve allows the  core to specify what style of input value range function is appropriate for this parameter, eg focus or audio might need logarithmic style curves </p></td>
+                </tr>
+              
+                <tr>
+                  <td>descreteValueDetails</td>
+                  <td><a href="#ibeam_core.DescreteValueDetail">DescreteValueDetail</a></td>
+                  <td>repeated</td>
+                  <td><p>Extended value info provides a way of adding further values to a integer or float value type
+it also allows to specify labels for certain values like "Close", "Far", "Near". Do NOT use this for indicating unavailable or invalid values! use the corresponding flags instead </p></td>
+                </tr>
+              
+                <tr>
                   <td>minimum</td>
-                  <td><a href="#float">float</a></td>
+                  <td><a href="#double">double</a></td>
                   <td></td>
                   <td><p>Maximum Value for Integers and Floats </p></td>
                 </tr>
               
                 <tr>
                   <td>maximum</td>
-                  <td><a href="#float">float</a></td>
+                  <td><a href="#double">double</a></td>
                   <td></td>
                   <td><p>Minimum Value for Integers and Floats </p></td>
+                </tr>
+              
+                <tr>
+                  <td>fineSteps</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p>Fine steps allow the devicecore to recommend a fine step value for Integers and Floats </p></td>
+                </tr>
+              
+                <tr>
+                  <td>coarseSteps</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p>Fine steps allow the devicecore to recommend a corse step value for Integers and Floats </p></td>
                 </tr>
               
                 <tr>
                   <td>optionList</td>
                   <td><a href="#ibeam_core.OptionList">OptionList</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Option List including the starting options </p></td>
                 </tr>
               
                 <tr>
                   <td>optionListIsDynamic</td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
-                  <td><p>this is set to true when the optionlist can update during runtime </p></td>
+                  <td><p>This is set to true when the optionlist can update during runtime </p></td>
+                </tr>
+              
+                <tr>
+                  <td>minMaxIsDynamic</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>This is set to true when the minimmum and maximum can update during runtime </p></td>
                 </tr>
               
                 <tr>
                   <td>defaultValue</td>
                   <td><a href="#ibeam_core.ParameterValue">ParameterValue</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Default value for a parameter </p></td>
                 </tr>
               
                 <tr>
-                  <td>metaDescription</td>
-                  <td><a href="#ibeam_core.ParameterDetail.MetaDescriptionEntry">ParameterDetail.MetaDescriptionEntry</a></td>
+                  <td>metaDetails</td>
+                  <td><a href="#ibeam_core.ParameterDetail.MetaDetailsEntry">ParameterDetail.MetaDetailsEntry</a></td>
                   <td>repeated</td>
-                  <td><p> </p></td>
+                  <td><p>Map with Parameter meta values, added values that might need to be used for any additional info that does not require the devicecore to hold more state </p></td>
                 </tr>
               
                 <tr>
-                  <td>incDecStepsUpperRange</td>
+                  <td>incDecStepsUpperLimit</td>
                   <td><a href="#int32">int32</a></td>
                   <td></td>
                   <td><p>Maximum Value for Incrementation </p></td>
                 </tr>
               
                 <tr>
-                  <td>incDecStepsLowerRange</td>
+                  <td>incDecStepsLowerLimit</td>
                   <td><a href="#int32">int32</a></td>
                   <td></td>
                   <td><p>Maximum Negative Value for Decrementation </p></td>
                 </tr>
               
                 <tr>
-                  <td>controlableWhileDisconnected</td>
+                  <td>controllableWhileDisconnected</td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
                   <td><p>Specifies if a parameter can still be controlled while connection state is
@@ -997,7 +1134,7 @@ false, only comes into affect if connectionstate exists in the devicecore </p></
 
         
       
-        <h3 id="ibeam_core.ParameterDetail.MetaDescriptionEntry">ParameterDetail.MetaDescriptionEntry</h3>
+        <h3 id="ibeam_core.ParameterDetail.MetaDetailsEntry">ParameterDetail.MetaDetailsEntry</h3>
         <p></p>
 
         
@@ -1016,7 +1153,7 @@ false, only comes into affect if connectionstate exists in the devicecore </p></
               
                 <tr>
                   <td>value</td>
-                  <td><a href="#ibeam_core.ParameterMetaType">ParameterMetaType</a></td>
+                  <td><a href="#ibeam_core.ParameterMetaDetail">ParameterMetaDetail</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>
@@ -1041,6 +1178,51 @@ false, only comes into affect if connectionstate exists in the devicecore </p></
                 <tr>
                   <td>details</td>
                   <td><a href="#ibeam_core.ParameterDetail">ParameterDetail</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="ibeam_core.ParameterMetaDetail">ParameterMetaDetail</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>metaType</td>
+                  <td><a href="#ibeam_core.ParameterMetaType">ParameterMetaType</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>Minimum</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>Maximum</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>options</td>
+                  <td><a href="#string">string</a></td>
                   <td>repeated</td>
                   <td><p> </p></td>
                 </tr>
@@ -1085,7 +1267,7 @@ false, only comes into affect if connectionstate exists in the devicecore </p></
               
                 <tr>
                   <td>floating</td>
-                  <td><a href="#float">float</a></td>
+                  <td><a href="#double">double</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>
@@ -1116,6 +1298,13 @@ false, only comes into affect if connectionstate exists in the devicecore </p></
               
                 <tr>
                   <td>name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>shortName</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p> </p></td>
@@ -1185,7 +1374,7 @@ It should signal to the client to replace the value with a placeholder </p></td>
               
                 <tr>
                   <td>floating</td>
-                  <td><a href="#float">float</a></td>
+                  <td><a href="#double">double</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>
@@ -1219,8 +1408,36 @@ It should signal to the client to replace the value with a placeholder </p></td>
                 </tr>
               
                 <tr>
-                  <td>optionList</td>
+                  <td>optionListUpdate</td>
                   <td><a href="#ibeam_core.OptionList">OptionList</a></td>
+                  <td></td>
+                  <td><p>Used to update an optionlist </p></td>
+                </tr>
+              
+                <tr>
+                  <td>minimumUpdate</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p>used to update a minimum value </p></td>
+                </tr>
+              
+                <tr>
+                  <td>maximumUpdate</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p>used to update a maximum value </p></td>
+                </tr>
+              
+                <tr>
+                  <td>png</td>
+                  <td><a href="#bytes">bytes</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>jpeg</td>
+                  <td><a href="#bytes">bytes</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>
@@ -1357,7 +1574,7 @@ It should signal to the client to replace the value with a placeholder </p></td>
           <tbody>
             
               <tr>
-                <td>Undefined</td>
+                <td>UndefinedControlStyle</td>
                 <td>0</td>
                 <td><p></p></td>
               </tr>
@@ -1395,71 +1612,6 @@ It should signal to the client to replace the value with a placeholder </p></td>
           </tbody>
         </table>
       
-        <h3 id="ibeam_core.DisplayStyle">DisplayStyle</h3>
-        <p>DisplayStyle can set additional rendering details for the display</p>
-        <table class="enum-table">
-          <thead>
-            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
-          </thead>
-          <tbody>
-            
-              <tr>
-                <td>DisplayDefault</td>
-                <td>0</td>
-                <td><p>Value will be displayed like it is</p></td>
-              </tr>
-            
-              <tr>
-                <td>DisplayFLOAT_1DEZ</td>
-                <td>1</td>
-                <td><p>Value will be displayed with one decimal place (f.e. 32.7)</p></td>
-              </tr>
-            
-              <tr>
-                <td>DisplayFloat_2DEZ</td>
-                <td>2</td>
-                <td><p>Value will be displayed with two decimal places (f.e. 32.78)</p></td>
-              </tr>
-            
-              <tr>
-                <td>DisplayFloat_3DEZ</td>
-                <td>3</td>
-                <td><p>Value will be displayed with three decimal places (f.e. 32.789)</p></td>
-              </tr>
-            
-              <tr>
-                <td>DisplayPercent</td>
-                <td>4</td>
-                <td><p>Value will be displayed with an appended '%' sign</p></td>
-              </tr>
-            
-              <tr>
-                <td>DisplayDb</td>
-                <td>5</td>
-                <td><p>Value will be displayed with an appended 'db' sign</p></td>
-              </tr>
-            
-              <tr>
-                <td>DisplayFstop</td>
-                <td>6</td>
-                <td><p>Value will be displayed with an appended 'f' sign</p></td>
-              </tr>
-            
-              <tr>
-                <td>DisplayFraction</td>
-                <td>7</td>
-                <td><p>Value will be displayed as unit fraction (f.e. 32 will be shown as 1/32)</p></td>
-              </tr>
-            
-              <tr>
-                <td>DisplayKelvin</td>
-                <td>8</td>
-                <td><p>Value will be displayed with an appended 'K' sign</p></td>
-              </tr>
-            
-          </tbody>
-        </table>
-      
         <h3 id="ibeam_core.FeedbackStyle">FeedbackStyle</h3>
         <p></p>
         <table class="enum-table">
@@ -1469,7 +1621,7 @@ It should signal to the client to replace the value with a placeholder </p></td>
           <tbody>
             
               <tr>
-                <td>UndefinedFeedback</td>
+                <td>UndefinedFeedbackStyle</td>
                 <td>0</td>
                 <td><p></p></td>
               </tr>
@@ -1489,6 +1641,47 @@ It should signal to the client to replace the value with a placeholder </p></td>
               <tr>
                 <td>NoFeedback</td>
                 <td>3</td>
+                <td><p></p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+        <h3 id="ibeam_core.FloatPrecision">FloatPrecision</h3>
+        <p></p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>UndefinedFloatPrecision</td>
+                <td>0</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>OneDecimal</td>
+                <td>1</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>TwoDecimals</td>
+                <td>2</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>ThreeDecimals</td>
+                <td>3</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>FourDecimals</td>
+                <td>4</td>
                 <td><p></p></td>
               </tr>
             
@@ -1554,6 +1747,47 @@ It should signal to the client to replace the value with a placeholder </p></td>
           </tbody>
         </table>
       
+        <h3 id="ibeam_core.InputCurve">InputCurve</h3>
+        <p></p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>NormalInputCurve</td>
+                <td>0</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>Ln</td>
+                <td>1</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>Ln_Inverse</td>
+                <td>2</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>Log10</td>
+                <td>3</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>Log10_Inverse</td>
+                <td>4</td>
+                <td><p></p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
         <h3 id="ibeam_core.ParameterError">ParameterError</h3>
         <p>Errortypes when setting a Parameter</p>
         <table class="enum-table">
@@ -1605,7 +1839,7 @@ It should signal to the client to replace the value with a placeholder </p></td>
               </tr>
             
               <tr>
-                <td>RangeViolation</td>
+                <td>StepSizeViolation</td>
                 <td>7</td>
                 <td><p></p></td>
               </tr>
@@ -1648,6 +1882,12 @@ It should signal to the client to replace the value with a placeholder </p></td>
               <tr>
                 <td>MetaFloating</td>
                 <td>3</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>MetaOption</td>
+                <td>4</td>
                 <td><p></p></td>
               </tr>
             
@@ -1695,6 +1935,18 @@ It should signal to the client to replace the value with a placeholder </p></td>
               <tr>
                 <td>Binary</td>
                 <td>5</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>PNG</td>
+                <td>6</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>JPEG</td>
+                <td>7</td>
                 <td><p></p></td>
               </tr>
             
