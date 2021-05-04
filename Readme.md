@@ -8,6 +8,8 @@
 - Change ParameterMetaType map to ParameterMetaDetails message, adding Min/Max and Options
 - Add InputCurve indicator for client
 - Add DescreteValueDetails for specifying special values outside of min/max and with labels
+- Add MinUpdate and MaxUpdate for dynamicMinMax parameters
+- Rename Optionlist to optionListUpdate
 - Add dimension elementLabels
 - Fix controllableWhileDisconnected Typo
 - Add displayPrefix and displaySuffix to specify value renderings
