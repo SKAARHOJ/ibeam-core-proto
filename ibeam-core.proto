@@ -231,7 +231,7 @@ message ParameterDetail {
   // Fine steps allow the devicecore to recommend a fine step value for Integers and Floats
   double fineSteps = 32;
   // Fine steps allow the devicecore to recommend a corse step value for Integers and Floats
-  double corseSteps = 33;
+  double coarseSteps = 33;
 
   // Option List including the starting options
   OptionList optionList = 18;

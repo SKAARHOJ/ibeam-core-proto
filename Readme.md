@@ -2,6 +2,19 @@
 
 ## Changelog
 
+### 0.3.0
+
+- Adds Valuetype PNG and JPEG
+- Change ParameterMetaType map to ParameterMetaDetails message, adding Min/Max and Options
+- Add InputCurve indicator for client
+- Add DescreteValueDetails for specifying special values outside of min/max and with labels
+- Add dimension elementLabels
+- Fix controllableWhileDisconnected Typo
+- Add displayPrefix and displaySuffix to specify value renderings
+- Add displayFloatPrecision to specify normal precision for float rendering
+- Add fineSteps and coarseSteps to specify regular steps for fine and corse mode
+### 0.2.5
+- ?
 ### 0.2.0
 - Adds incDecSteps
 - Replaces instances with Dimension concept
