@@ -14,7 +14,23 @@
 - Add displayFloatPrecision to specify normal precision for float rendering
 - Add fineSteps and coarseSteps to specify regular steps for fine and corse mode
 ### 0.2.5
-- ?
+- change floatprecision to double due to javascript missbehaviour
+- make incDecSteps Limits ints
+
+### 0.2.4
+- rename RangeViolation to StepSizeViolation
+- make incDecSteps Limits floats
+
+### 0.2.3
+- add v prefix to version
+- move connectiontype to CoreInfo
+
+### 0.2.2
+- remove ParameterMetaDescription
+
+### 0.2.1
+- add controllableWhileDisconnected
+- fix dimensionID typo
 ### 0.2.0
 - Adds incDecSteps
 - Replaces instances with Dimension concept
