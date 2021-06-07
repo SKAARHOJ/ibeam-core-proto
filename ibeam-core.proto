@@ -4,45 +4,45 @@
 syntax = "proto3";
 import "google/protobuf/descriptor.proto";
 package ibeam_core;
-option go_package = "../ibeam-core";
+option go_package = "../ibeam-core;ibeam_core";
 
 /// This block hardcodes the ibeam version
-option(ibeam_version) = "v0.3.0";
+option (ibeam_version) = "v0.3.0";
 extend google.protobuf.FileOptions { string ibeam_version = 5000; }
 /// End version block
 
 service IbeamCore {
   // Returns all basic information about the Core.
-  rpc GetCoreInfo(Empty) returns(CoreInfo);
+  rpc GetCoreInfo(Empty) returns (CoreInfo);
 
   // Returns all information about the Device of the given DeviceID.
   // If you specify no ID, you get the DeviceInfos of all Devices.
-  rpc GetDeviceInfo(DeviceIDs) returns(DeviceInfos);
+  rpc GetDeviceInfo(DeviceIDs) returns (DeviceInfos);
 
   // Returns all information about the Model of the given ModelID.
   // If you specify no ID, you get the ModelInfos of all Models.
-  rpc GetModelInfo(ModelIDs) returns(ModelInfos);
+  rpc GetModelInfo(ModelIDs) returns (ModelInfos);
 
   // Returns all Parameters, with the specified DeviceParameterIDs.
   // This Parameters include the actual ParameterValue, which gives Information
   // about the availability and shows if the Parameter is assumed.
   // If you set no ParameterID, you get all Parameters for a given Device.
-  rpc Get(DeviceParameterIDs) returns(Parameters);
+  rpc Get(DeviceParameterIDs) returns (Parameters);
 
   // Returns all ParameterDetails of the given ModelParameterID.
   // The Details include all basic information about a Parameter,
   // that descibe also how you cann controll the Parameter.
   // If you set no ParameterID, you get all Parameters for a given Model.
-  rpc GetParameterDetails(ModelParameterIDs) returns(ParameterDetails);
+  rpc GetParameterDetails(ModelParameterIDs) returns (ParameterDetails);
 
   // With this funciton you can set a Value of a Parameter.
   // This function provides no Error. This will be send over the Subscribe
   // Stream.
-  rpc Set(Parameters) returns(Empty);
+  rpc Set(Parameters) returns (Empty);
 
   // No id -> subscribe to everything
   // On subscribe all current values should be sent back!
-  rpc Subscribe(DeviceParameterIDs) returns(stream Parameter);
+  rpc Subscribe(DeviceParameterIDs) returns (stream Parameter);
 }
 
 // The Empty message type for services that need or return no data
@@ -72,11 +72,11 @@ message CoreInfo {
 }
 
 // The ConnectionType describes how the Core connects to the device
-enum ConnectionType { 
-  Other = 0; 
-  Network = 1; 
-  Serial = 2; 
-  Sdi = 3; 
+enum ConnectionType {
+  Other = 0;
+  Network = 1;
+  Serial = 2;
+  Sdi = 3;
 }
 
 /* * * * * * * * * * * * * *
@@ -139,8 +139,9 @@ message ParameterValue {
   // This field is ignored in set request.
   bool isAssumedState = 3;
 
-  // This boolean should be set by the server if the value is eitehr not yet known, or known to be garbage from the implementation. 
-  // It should signal to the client to replace the value with a placeholder
+  // This boolean should be set by the server if the value is eitehr not yet
+  // known, or known to be garbage from the implementation. It should signal to
+  // the client to replace the value with a placeholder
   bool invalid = 21;
   // The Value for the Parameter.
   oneof value {
@@ -152,8 +153,8 @@ message ParameterValue {
     Command cmd = 9;
     bool binary = 10;
     OptionList optionListUpdate = 11; // Used to update an optionlist
-    double minimumUpdate = 12; // used to update a minimum value
-    double maximumUpdate = 13; // used to update a maximum value
+    double minimumUpdate = 12;        // used to update a minimum value
+    double maximumUpdate = 13;        // used to update a maximum value
     bytes png = 14;
     bytes jpeg = 15;
   }
@@ -170,17 +171,20 @@ message ModelParameterID {
 message ModelParameterIDs { repeated ModelParameterID ids = 1; }
 
 message ParameterDetail {
-  // Parameter IDs should be unique (per model) and will break compatibility if changed between versions
+  // Parameter IDs should be unique (per model) and will break compatibility if
+  // changed between versions
   ModelParameterID id = 1;
 
   // Codesave name of the parameter
   string name = 2;
-  
-  // Path describes a grouping of the parameter to the client. Groups need to be seperated by a / and can contain spaces
-  // This should also end with a / and not contain the parameter name or label again
+
+  // Path describes a grouping of the parameter to the client. Groups need to be
+  // seperated by a / and can contain spaces This should also end with a / and
+  // not contain the parameter name or label again
   string path = 24;
 
-  // give parameters multiple dimensions values, eg for channels of a frame syncroniser or MEs / Keys in a switcher
+  // give parameters multiple dimensions values, eg for channels of a frame
+  // syncroniser or MEs / Keys in a switcher
   repeated DimensionDetail dimensions = 3;
 
   // The parameter label for the client
@@ -189,14 +193,14 @@ message ParameterDetail {
   string description = 6;
 
   GenericType genericType = 7;
-  
+
   // Specifys if this parameter can be controled via a
   // centering analog control like a joystick
   bool isSpeedValue = 8;
 
   ControlStyle controlStyle = 9;
   FeedbackStyle feedbackStyle = 10;
-  
+
   // time to wait between sending commands to the device
   uint32 controlDelayMs = 11;
 
@@ -211,15 +215,19 @@ message ParameterDetail {
   // The actual type of the value
   ValueType valueType = 14;
 
-  string displayPrefix = 27; 
+  string displayPrefix = 27;
   string displaySuffix = 28;
   FloatPrecision displayFloatPrecision = 29;
 
-  // Input curve allows the  core to specify what style of input value range function is appropriate for this parameter, eg focus or audio might need logarithmic style curves
+  // Input curve allows the  core to specify what style of input value range
+  // function is appropriate for this parameter, eg focus or audio might need
+  // logarithmic style curves
   InputCurve inputCurve = 30;
 
-  // Extended value info provides a way of adding further values to a integer or float value type
-  // it also allows to specify labels for certain values like "Close", "Far", "Near". Do NOT use this for indicating unavailable or invalid values! use the corresponding flags instead
+  // Extended value info provides a way of adding further values to a integer or
+  // float value type it also allows to specify labels for certain values like
+  // "Close", "Far", "Near". Do NOT use this for indicating unavailable or
+  // invalid values! use the corresponding flags instead
   repeated DescreteValueDetail descreteValueDetails = 31;
 
   // Maximum Value for Integers and Floats
@@ -227,10 +235,11 @@ message ParameterDetail {
   // Minimum Value for Integers and Floats
   double maximum = 17;
 
-
-  // Fine steps allow the devicecore to recommend a fine step value for Integers and Floats
+  // Fine steps allow the devicecore to recommend a fine step value for Integers
+  // and Floats
   double fineSteps = 32;
-  // Fine steps allow the devicecore to recommend a corse step value for Integers and Floats
+  // Fine steps allow the devicecore to recommend a corse step value for
+  // Integers and Floats
   double coarseSteps = 33;
 
   // Option List including the starting options
@@ -240,21 +249,21 @@ message ParameterDetail {
   bool optionListIsDynamic = 19;
   // This is set to true when the minimmum and maximum can update during runtime
   bool minMaxIsDynamic = 26;
-  
+
   // Default value for a parameter
   ParameterValue defaultValue = 20;
 
-  // Map with Parameter meta values, added values that might need to be used for any additional info that does not require the devicecore to hold more state
+  // Map with Parameter meta values, added values that might need to be used for
+  // any additional info that does not require the devicecore to hold more state
   map<string, ParameterMetaDetail> metaDetails = 21;
   // Maximum Value for Incrementation
   int32 incDecStepsUpperLimit = 22;
   // Maximum Negative Value for Decrementation
   int32 incDecStepsLowerLimit = 23;
-  
+
   // Specifies if a parameter can still be controlled while connection state is
   // false, only comes into affect if connectionstate exists in the devicecore
   bool controllableWhileDisconnected = 25;
-
 }
 
 message ParameterDetails { repeated ParameterDetail details = 1; }
@@ -263,9 +272,13 @@ message DimensionDetail {
   string name = 1;
   uint32 count = 2;
   string description = 3;
-  // if we need to name dimensions elementLabels can be used. Caution: this is not supposed for parameters like RGB or combinations of different values. 
-  // It is rather used to indicate labeling in values like different audiochannels (eg chanell 9 and 10 are refered to as MasterLeft / MasterRight)
-  // Think of it this way: if the user could still understand the parameter without the label it is ok to use it to improve the user experience
+  // if we need to name dimensions elementLabels can be used. Caution: this is
+  // not supposed for parameters like RGB or combinations of different values.
+  // It is rather used to indicate labeling in values like different
+  // audiochannels (eg chanell 9 and 10 are refered to as MasterLeft /
+  // MasterRight) Think of it this way: if the user could still understand the
+  // parameter without the label it is ok to use it to improve the user
+  // experience
   map<uint32, string> elementLabels = 4;
 }
 
@@ -279,18 +292,18 @@ message ParameterMetaValue {
 }
 
 enum ParameterMetaType {
-  MetaInteger = 0; 
-  MetaBinary = 1; 
-  MetaStr = 2; 
+  MetaInteger = 0;
+  MetaBinary = 1;
+  MetaStr = 2;
   MetaFloating = 3;
   MetaOption = 4;
 }
 
 message ParameterMetaDetail {
- ParameterMetaType metaType = 1;
- double Minimum = 2;
- double Maximum = 3;
- repeated string options = 4;
+  ParameterMetaType metaType = 1;
+  double Minimum = 2;
+  double Maximum = 3;
+  repeated string options = 4;
 }
 
 message ParameterOption {
@@ -302,35 +315,33 @@ message ParameterOption {
 message DescreteValueDetail {
   // The actual value that is supposed to be replaced
   double value = 1;
-  
+
   // The actual label for this value or valuerange
   string name = 2;
 }
 
-// From value to toValue a range is specified that will get the same label and color assignment
-// double toValue = 2;
+// From value to toValue a range is specified that will get the same label and
+// color assignment double toValue = 2;
 
 // The color used to represent this value, eg for Button or ledstripe LEDs
 // string color = 4;
 
-enum Command { 
-  Trigger = 0; 
-}
+enum Command { Trigger = 0; }
 
 enum ValueType {
-  NoValue = 0; 
-  Integer = 1; 
-  Floating = 2; 
-  Opt = 3; 
-  String = 4; 
+  NoValue = 0;
+  Integer = 1;
+  Floating = 2;
+  Opt = 3;
+  String = 4;
   Binary = 5;
   PNG = 6;
   JPEG = 7;
 }
 
 enum FeedbackStyle {
-  UndefinedFeedbackStyle = 0; 
-  NormalFeedback = 1; 
+  UndefinedFeedbackStyle = 0;
+  NormalFeedback = 1;
   DelayedFeedback = 2;
   NoFeedback = 3;
 }
@@ -367,11 +378,11 @@ enum InputCurve {
 
 // Some generic types for common parameter
 enum GenericType {
-  Generic = 0; 
-  ConnectionState = 1; 
-  DeviceIP = 2; 
-  Pan = 3; 
-  Tilt = 4; 
+  Generic = 0;
+  ConnectionState = 1;
+  DeviceIP = 2;
+  Pan = 3;
+  Tilt = 4;
   Tally = 5;
   Record = 6;
   Iris = 7;
@@ -379,13 +390,14 @@ enum GenericType {
 
 // Errortypes when setting a Parameter
 enum ParameterError {
-  NoError = 0; 
-  UnknownError = 1; 
-  UnknownID = 2; 
+  NoError = 0;
+  UnknownError = 1;
+  UnknownID = 2;
   MinViolation = 3;
   MaxViolation = 4;
   InvalidType = 5;
   MaxRetrys = 6;
   StepSizeViolation = 7;
-  HasNoValue = 8; // Will be returned if Value for Parameter with NoValue was set
+  HasNoValue =
+      8; // Will be returned if Value for Parameter with NoValue was set
 }
