@@ -398,6 +398,6 @@ enum ParameterError {
   InvalidType = 5;
   MaxRetrys = 6;
   StepSizeViolation = 7;
-  HasNoValue =
-      8; // Will be returned if Value for Parameter with NoValue was set
+  // Will be returned if Value for Parameter with NoValue was set
+  HasNoValue = 8;
 }
