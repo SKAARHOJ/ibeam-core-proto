@@ -400,5 +400,5 @@ enum ParameterError {
   StepSizeViolation = 7;
   // Will be returned if Value for Parameter with NoValue was set
   HasNoValue = 8;
-  ParameterUnavailable = 9;
+  Unavailable = 9;
 }
