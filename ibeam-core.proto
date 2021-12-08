@@ -240,7 +240,14 @@ message ParameterDetail {
   // Input curve allows the  core to specify what style of input value range
   // function is appropriate for this parameter, eg focus or audio might need
   // logarithmic style curves
-  InputCurve inputCurve = 30;
+
+  reserved 30; // blocked for legacy reasons (InputCurve)
+  // Parameter determining an input curve (>0, 0, 0.5 or 1 and >1 are invalid
+  // values and will disable the feature) This adds a curve to the input sliders
+  // for this parameter, think of it like a "logarithmic potentiometer". Usefull
+  // as a simple fix for audio or focus parameters More info here:
+  // https://electronics.stackexchange.com/questions/304692/formula-for-logarithmic-audio-taper-pot
+  float inputCurveExpo = 34;
 
   // Extended value info provides a way of adding further values to a integer or
   // float value type it also allows to specify labels for certain values like
@@ -386,14 +393,6 @@ enum FloatPrecision {
   TwoDecimals = 2;
   ThreeDecimals = 3;
   FourDecimals = 4;
-}
-
-enum InputCurve {
-  NormalInputCurve = 0;
-  Ln = 1;
-  Ln_Inverse = 2;
-  Log10 = 3;
-  Log10_Inverse = 4;
 }
 
 // Some generic types for common parameter
