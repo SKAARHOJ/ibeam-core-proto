@@ -322,6 +322,8 @@ message ParameterMetaDetail {
   double Minimum = 2;
   double Maximum = 3;
   repeated string options = 4;
+
+  bool required = 5;
 }
 
 message ParameterOption {
