@@ -43,6 +43,20 @@ service IbeamCore {
   // No id -> subscribe to everything
   // On subscribe all current values should be sent back!
   rpc Subscribe(DeviceParameterIDs) returns (stream Parameter);
+
+  // Config Handling
+
+  // Get Current Configuration
+  rpc GetCoreConfig(Empty) returns (ByteData);
+
+  // Get the cores configuration schema generated
+  rpc GetCoreConfigSchema(Empty) returns (ByteData);
+
+  // Set the cores current configuration and write it to the config file
+  rpc SetCoreConfig(ByteData) returns (Empty);
+
+  // Restart the core (only works on unix based systems)
+  rpc RestartCore(RestartInfo) returns (Empty);
 }
 
 // The Empty message type for services that need or return no data
@@ -78,6 +92,10 @@ enum ConnectionType {
   Serial = 2;
   Sdi = 3;
 }
+
+message ByteData { bytes data = 1; }
+
+message RestartInfo {} // Might be used in the future
 
 /* * * * * * * * * * * * * *
         DEVICE
