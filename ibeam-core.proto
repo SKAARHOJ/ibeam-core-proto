@@ -7,7 +7,7 @@ package ibeam_core;
 option go_package = "../ibeam-core;ibeam_core";
 
 /// This block hardcodes the ibeam version
-option (ibeam_version) = "v0.3.1";
+option (ibeam_version) = "v0.3.2";
 extend google.protobuf.FileOptions { string ibeam_version = 5000; }
 /// End version block
 
@@ -27,7 +27,7 @@ service IbeamCore {
   // This Parameters include the actual ParameterValue, which gives Information
   // about the availability and shows if the Parameter is assumed.
   // If you set no ParameterID, you get all Parameters for a given Device.
-  rpc Get(DeviceParameterIDs) returns (Parameters);
+  rpc Get(GetRequest) returns (Parameters);
 
   // Returns all ParameterDetails of the given ModelParameterID.
   // The Details include all basic information about a Parameter,
@@ -140,6 +140,17 @@ message DeviceParameterID {
 }
 
 message DeviceParameterIDs { repeated DeviceParameterID ids = 1; }
+
+message GetRequest {
+  DeviceParameterIDs params = 1;
+  GetAction action = 2;
+}
+
+enum GetAction {
+  GetOnly = 0;
+  AddToSubscription = 1;
+  RemoveFromSubscription = 2;
+}
 
 message Parameter {
   DeviceParameterID id = 1;
@@ -331,6 +342,7 @@ message ParameterMetaDetail {
   repeated string options = 4;
 
   bool required = 5;
+  string description = 6;
 }
 
 message ParameterOption {
