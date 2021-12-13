@@ -227,7 +227,7 @@ message ParameterDetail {
   uint32 quarantineDelayMs = 12;
 
   // how often to retry a set if target != current
-  // optional config value for Normal and ControlledIncremental
+  // config value for Normal Control Style
   uint32 retryCount = 13;
 
   // The actual type of the value
@@ -384,8 +384,8 @@ enum ControlStyle {
   NoControl = 3;
   // Accept only Command::Trigger
   Oneshot = 4;
-  // Simulate Normal by using Incremental under the hood
-  ControlledIncremental = 5;
+
+  reserved 5; // reserved for legacy, removed controlled incremental here
 }
 
 enum FloatPrecision {
