@@ -2,6 +2,19 @@
 
 ## Changelog
 
+### 0.3.2
+
+- Remove Controlled Incremental
+- Add GetCoreConfig, GetCoreConfigSchema, SetCoreConfig rpc
+- Add RestartCore rpc
+- Add Required and Description field on meta values
+- Remove InputCuve Enum
+- Add InputCurveExpo value for specifying exponential curves for Ints and Floats
+
+### 0.3.1
+
+- Add error unavailable
+
 ### 0.3.0
 
 - Adds Valuetype PNG and JPEG

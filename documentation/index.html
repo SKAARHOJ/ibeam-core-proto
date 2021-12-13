@@ -199,6 +199,10 @@
             <ul>
               
                 <li>
+                  <a href="#ibeam_core.ByteData" class="m rmBackground"><span class="badge m">M</span>ByteData</a>
+                </li>
+              
+                <li>
                   <a href="#ibeam_core.CoreInfo" class="m rmBackground"><span class="badge m">M</span>CoreInfo</a>
                 </li>
               
@@ -302,6 +306,10 @@
                   <a href="#ibeam_core.Parameters" class="m rmBackground"><span class="badge m">M</span>Parameters</a>
                 </li>
               
+                <li>
+                  <a href="#ibeam_core.RestartInfo" class="m rmBackground"><span class="badge m">M</span>RestartInfo</a>
+                </li>
+              
               
                 <li>
                   <a href="#ibeam_core.Command" class="e rmBackground"><span class="badge e">E</span>Command</a>
@@ -325,10 +333,6 @@
               
                 <li>
                   <a href="#ibeam_core.GenericType" class="e rmBackground"><span class="badge e">E</span>GenericType</a>
-                </li>
-              
-                <li>
-                  <a href="#ibeam_core.InputCurve" class="e rmBackground"><span class="badge e">E</span>InputCurve</a>
                 </li>
               
                 <li>
@@ -367,6 +371,30 @@
       </div>
       <p>This Protofile describes the IBeam-Core Procotol.</p>
 
+      
+        <h3 id="ibeam_core.ByteData">ByteData</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>data</td>
+                  <td><a href="#bytes">bytes</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
       
         <h3 id="ibeam_core.CoreInfo">CoreInfo</h3>
         <p>The CoreInfo inclued tha basic Information about the IBeamCore</p>
@@ -634,9 +662,13 @@
                   <td>elementLabels</td>
                   <td><a href="#ibeam_core.DimensionDetail.ElementLabelsEntry">DimensionDetail.ElementLabelsEntry</a></td>
                   <td>repeated</td>
-                  <td><p>if we need to name dimensions elementLabels can be used. Caution: this is not supposed for parameters like RGB or combinations of different values. 
-It is rather used to indicate labeling in values like different audiochannels (eg chanell 9 and 10 are refered to as MasterLeft / MasterRight)
-Think of it this way: if the user could still understand the parameter without the label it is ok to use it to improve the user experience </p></td>
+                  <td><p>if we need to name dimensions elementLabels can be used. Caution: this is
+not supposed for parameters like RGB or combinations of different values.
+It is rather used to indicate labeling in values like different
+audiochannels (eg chanell 9 and 10 are refered to as MasterLeft /
+MasterRight) Think of it this way: if the user could still understand the
+parameter without the label it is ok to use it to improve the user
+experience </p></td>
                 </tr>
               
             </tbody>
@@ -901,7 +933,8 @@ Think of it this way: if the user could still understand the parameter without t
                   <td>id</td>
                   <td><a href="#ibeam_core.ModelParameterID">ModelParameterID</a></td>
                   <td></td>
-                  <td><p>Parameter IDs should be unique (per model) and will break compatibility if changed between versions </p></td>
+                  <td><p>Parameter IDs should be unique (per model) and will break compatibility if
+changed between versions </p></td>
                 </tr>
               
                 <tr>
@@ -915,15 +948,17 @@ Think of it this way: if the user could still understand the parameter without t
                   <td>path</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Path describes a grouping of the parameter to the client. Groups need to be seperated by a / and can contain spaces
-This should also end with a / and not contain the parameter name or label again </p></td>
+                  <td><p>Path describes a grouping of the parameter to the client. Groups need to be
+seperated by a / and can contain spaces This should also end with a / and
+not contain the parameter name or label again </p></td>
                 </tr>
               
                 <tr>
                   <td>dimensions</td>
                   <td><a href="#ibeam_core.DimensionDetail">DimensionDetail</a></td>
                   <td>repeated</td>
-                  <td><p>give parameters multiple dimensions values, eg for channels of a frame syncroniser or MEs / Keys in a switcher </p></td>
+                  <td><p>give parameters multiple dimensions values, eg for channels of a frame
+syncroniser or MEs / Keys in a switcher </p></td>
                 </tr>
               
                 <tr>
@@ -996,7 +1031,7 @@ values to the client subscribe stream </p></td>
                   <td><a href="#uint32">uint32</a></td>
                   <td></td>
                   <td><p>how often to retry a set if target != current
-optional config value for Normal and ControlledIncremental </p></td>
+config value for Normal Control Style </p></td>
                 </tr>
               
                 <tr>
@@ -1028,18 +1063,24 @@ optional config value for Normal and ControlledIncremental </p></td>
                 </tr>
               
                 <tr>
-                  <td>inputCurve</td>
-                  <td><a href="#ibeam_core.InputCurve">InputCurve</a></td>
+                  <td>inputCurveExpo</td>
+                  <td><a href="#float">float</a></td>
                   <td></td>
-                  <td><p>Input curve allows the  core to specify what style of input value range function is appropriate for this parameter, eg focus or audio might need logarithmic style curves </p></td>
+                  <td><p>Parameter determining an input curve (>0, 0, 0.5 or 1 and >1 are invalid
+values and will disable the feature) This adds a curve to the input sliders
+for this parameter, think of it like a "logarithmic potentiometer". Usefull
+as a simple fix for audio or focus parameters More info here:
+https://electronics.stackexchange.com/questions/304692/formula-for-logarithmic-audio-taper-pot </p></td>
                 </tr>
               
                 <tr>
                   <td>descreteValueDetails</td>
                   <td><a href="#ibeam_core.DescreteValueDetail">DescreteValueDetail</a></td>
                   <td>repeated</td>
-                  <td><p>Extended value info provides a way of adding further values to a integer or float value type
-it also allows to specify labels for certain values like "Close", "Far", "Near". Do NOT use this for indicating unavailable or invalid values! use the corresponding flags instead </p></td>
+                  <td><p>Extended value info provides a way of adding further values to a integer or
+float value type it also allows to specify labels for certain values like
+"Close", "Far", "Near". Do NOT use this for indicating unavailable or
+invalid values! use the corresponding flags instead </p></td>
                 </tr>
               
                 <tr>
@@ -1060,14 +1101,16 @@ it also allows to specify labels for certain values like "Close", "Far", "Near".
                   <td>fineSteps</td>
                   <td><a href="#double">double</a></td>
                   <td></td>
-                  <td><p>Fine steps allow the devicecore to recommend a fine step value for Integers and Floats </p></td>
+                  <td><p>Fine steps allow the devicecore to recommend a fine step value for Integers
+and Floats </p></td>
                 </tr>
               
                 <tr>
                   <td>coarseSteps</td>
                   <td><a href="#double">double</a></td>
                   <td></td>
-                  <td><p>Fine steps allow the devicecore to recommend a corse step value for Integers and Floats </p></td>
+                  <td><p>Fine steps allow the devicecore to recommend a corse step value for
+Integers and Floats </p></td>
                 </tr>
               
                 <tr>
@@ -1102,7 +1145,8 @@ it also allows to specify labels for certain values like "Close", "Far", "Near".
                   <td>metaDetails</td>
                   <td><a href="#ibeam_core.ParameterDetail.MetaDetailsEntry">ParameterDetail.MetaDetailsEntry</a></td>
                   <td>repeated</td>
-                  <td><p>Map with Parameter meta values, added values that might need to be used for any additional info that does not require the devicecore to hold more state </p></td>
+                  <td><p>Map with Parameter meta values, added values that might need to be used for
+any additional info that does not require the devicecore to hold more state </p></td>
                 </tr>
               
                 <tr>
@@ -1224,6 +1268,20 @@ false, only comes into affect if connectionstate exists in the devicecore </p></
                   <td>options</td>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>required</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>description</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
                   <td><p> </p></td>
                 </tr>
               
@@ -1354,8 +1412,9 @@ This field is ignored in set request. </p></td>
                   <td>invalid</td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
-                  <td><p>This boolean should be set by the server if the value is eitehr not yet known, or known to be garbage from the implementation. 
-It should signal to the client to replace the value with a placeholder </p></td>
+                  <td><p>This boolean should be set by the server if the value is eitehr not yet
+known, or known to be garbage from the implementation. It should signal to
+the client to replace the value with a placeholder </p></td>
                 </tr>
               
                 <tr>
@@ -1511,6 +1570,13 @@ It should signal to the client to replace the value with a placeholder </p></td>
 
         
       
+        <h3 id="ibeam_core.RestartInfo">RestartInfo</h3>
+        <p></p>
+
+        
+
+        
+      
 
       
         <h3 id="ibeam_core.Command">Command</h3>
@@ -1601,12 +1667,6 @@ It should signal to the client to replace the value with a placeholder </p></td>
                 <td>Oneshot</td>
                 <td>4</td>
                 <td><p>Accept only Command::Trigger</p></td>
-              </tr>
-            
-              <tr>
-                <td>ControlledIncremental</td>
-                <td>5</td>
-                <td><p>Simulate Normal by using Incremental under the hood</p></td>
               </tr>
             
           </tbody>
@@ -1747,47 +1807,6 @@ It should signal to the client to replace the value with a placeholder </p></td>
           </tbody>
         </table>
       
-        <h3 id="ibeam_core.InputCurve">InputCurve</h3>
-        <p></p>
-        <table class="enum-table">
-          <thead>
-            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
-          </thead>
-          <tbody>
-            
-              <tr>
-                <td>NormalInputCurve</td>
-                <td>0</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>Ln</td>
-                <td>1</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>Ln_Inverse</td>
-                <td>2</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>Log10</td>
-                <td>3</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>Log10_Inverse</td>
-                <td>4</td>
-                <td><p></p></td>
-              </tr>
-            
-          </tbody>
-        </table>
-      
         <h3 id="ibeam_core.ParameterError">ParameterError</h3>
         <p>Errortypes when setting a Parameter</p>
         <table class="enum-table">
@@ -1848,6 +1867,12 @@ It should signal to the client to replace the value with a placeholder </p></td>
                 <td>HasNoValue</td>
                 <td>8</td>
                 <td><p>Will be returned if Value for Parameter with NoValue was set</p></td>
+              </tr>
+            
+              <tr>
+                <td>Unavailable</td>
+                <td>9</td>
+                <td><p></p></td>
               </tr>
             
           </tbody>
@@ -2041,6 +2066,34 @@ Stream.</p></td>
                 <td><a href="#ibeam_core.Parameter">Parameter</a> stream</td>
                 <td><p>No id -> subscribe to everything
 On subscribe all current values should be sent back!</p></td>
+              </tr>
+            
+              <tr>
+                <td>GetCoreConfig</td>
+                <td><a href="#ibeam_core.Empty">Empty</a></td>
+                <td><a href="#ibeam_core.ByteData">ByteData</a></td>
+                <td><p>Get Current Configuration</p></td>
+              </tr>
+            
+              <tr>
+                <td>GetCoreConfigSchema</td>
+                <td><a href="#ibeam_core.Empty">Empty</a></td>
+                <td><a href="#ibeam_core.ByteData">ByteData</a></td>
+                <td><p>Get the cores configuration schema generated</p></td>
+              </tr>
+            
+              <tr>
+                <td>SetCoreConfig</td>
+                <td><a href="#ibeam_core.ByteData">ByteData</a></td>
+                <td><a href="#ibeam_core.Empty">Empty</a></td>
+                <td><p>Set the cores current configuration and write it to the config file</p></td>
+              </tr>
+            
+              <tr>
+                <td>RestartCore</td>
+                <td><a href="#ibeam_core.RestartInfo">RestartInfo</a></td>
+                <td><a href="#ibeam_core.Empty">Empty</a></td>
+                <td><p>Restart the core (only works on unix based systems)</p></td>
               </tr>
             
           </tbody>
