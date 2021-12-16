@@ -7,7 +7,7 @@ package ibeam_core;
 option go_package = "../ibeam-core;ibeam_core";
 
 /// This block hardcodes the ibeam version
-option (ibeam_version) = "v0.3.2";
+option (ibeam_version) = "v0.3.3";
 extend google.protobuf.FileOptions { string ibeam_version = 5000; }
 /// End version block
 
@@ -248,6 +248,11 @@ message ParameterDetail {
   // as a simple fix for audio or focus parameters More info here:
   // https://electronics.stackexchange.com/questions/304692/formula-for-logarithmic-audio-taper-pot
   float inputCurveExpo = 34;
+
+  // Specify a value threshold for when the manager marks the parameter as set
+  // correctly, useful for cases where the device will respond with a slightly
+  // different value then requested
+  double acceptanceThreshold = 35;
 
   // Extended value info provides a way of adding further values to a integer or
   // float value type it also allows to specify labels for certain values like

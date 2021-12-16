@@ -1,6 +1,9 @@
 # IBeam-Core Protocol
 
 ## Changelog
+### 0.3.3
+
+- Add acceptance threashold
 
 ### 0.3.2
 
