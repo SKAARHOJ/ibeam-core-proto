@@ -1,7 +1,14 @@
 # IBeam-Core Protocol
 
 ## Changelog
-### 0.3.3
+### 0.3.5
+
+- Add DeviceCategory to CoreInfo
+- Add HasModelImages to CoreInfo
+
+- Add GetModelImages RPC Request
+
+### 0.3.4
 
 - Add TestTrigger GenericType
 ### 0.3.3

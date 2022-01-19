@@ -7,7 +7,7 @@ package ibeam_core;
 option go_package = "../ibeam-core;ibeam_core";
 
 /// This block hardcodes the ibeam version
-option (ibeam_version) = "v0.3.4";
+option (ibeam_version) = "v0.3.5";
 extend google.protobuf.FileOptions { string ibeam_version = 5000; }
 /// End version block
 
@@ -57,6 +57,9 @@ service IbeamCore {
 
   // Restart the core (only works on unix based systems)
   rpc RestartCore(RestartInfo) returns (Empty);
+
+  // Get Model Images
+  rpc GetModelImages(ModelImageRequest) returns (ModelImages);
 }
 
 // The Empty message type for services that need or return no data
@@ -83,6 +86,10 @@ message CoreInfo {
   uint32 connectedClients = 6;
   // Type of connection. See ConnectionType enum
   ConnectionType connectionType = 7;
+  // Category of the devices this core can control, used as metadata in listings
+  DeviceCategory deviceCategory = 8;
+  // Flag set by the system to indicate the presence of Model Images
+  bool hasModelImages = 9;
 }
 
 // The ConnectionType describes how the Core connects to the device
@@ -93,9 +100,42 @@ enum ConnectionType {
   Sdi = 3;
 }
 
+// The DeviceCategory describes what type of device this core is connecting to
+enum DeviceCategory {
+  Undefined = 0;
+  PTZCamera = 1;
+  ClassicCamera = 2;
+  VideoSwitcher = 3;
+  VideoRouter = 4;
+  AudioDevice = 5;
+  LightDevice = 6;
+  VideoProcessing = 7;
+  MotionSystem = 8;
+  TallySystem = 9;
+  GenericProtocol = 10;
+}
+
 message ByteData { bytes data = 1; }
 
 message RestartInfo {} // Might be used in the future
+
+message ModelImageRequest{
+  // ModelIDs to get images for
+  ModelIDs models =1;
+  // Leave out the image data and just sent the MD5 hashes
+  bool HashOnly = 2;
+}
+
+message ModelImages { repeated ModelImage imgs = 1; } // these are guaranteed to come back in the order of request data
+
+message ModelImage {
+  // ID of the model
+  uint32 ModelID = 1;
+  // actual image data, might be missing in case HashOnly is set to true in the request
+  bytes ImageData = 2;
+  // MD5 Hash of the image
+  string Hash = 3;
+}
 
 /* * * * * * * * * * * * * *
         DEVICE
