@@ -247,6 +247,18 @@
                 </li>
               
                 <li>
+                  <a href="#ibeam_core.ModelImage" class="m rmBackground"><span class="badge m">M</span>ModelImage</a>
+                </li>
+              
+                <li>
+                  <a href="#ibeam_core.ModelImageRequest" class="m rmBackground"><span class="badge m">M</span>ModelImageRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#ibeam_core.ModelImages" class="m rmBackground"><span class="badge m">M</span>ModelImages</a>
+                </li>
+              
+                <li>
                   <a href="#ibeam_core.ModelInfo" class="m rmBackground"><span class="badge m">M</span>ModelInfo</a>
                 </li>
               
@@ -321,6 +333,10 @@
               
                 <li>
                   <a href="#ibeam_core.ControlStyle" class="e rmBackground"><span class="badge e">E</span>ControlStyle</a>
+                </li>
+              
+                <li>
+                  <a href="#ibeam_core.DeviceCategory" class="e rmBackground"><span class="badge e">E</span>DeviceCategory</a>
                 </li>
               
                 <li>
@@ -453,6 +469,20 @@
                   <td><a href="#ibeam_core.ConnectionType">ConnectionType</a></td>
                   <td></td>
                   <td><p>Type of connection. See ConnectionType enum </p></td>
+                </tr>
+              
+                <tr>
+                  <td>deviceCategory</td>
+                  <td><a href="#ibeam_core.DeviceCategory">DeviceCategory</a></td>
+                  <td></td>
+                  <td><p>Category of the devices this core can control, used as metadata in listings </p></td>
+                </tr>
+              
+                <tr>
+                  <td>hasModelImages</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>Flag set by the system to indicate the presence of Model Images </p></td>
                 </tr>
               
             </tbody>
@@ -729,6 +759,99 @@ experience </p></td>
                 <tr>
                   <td>ids</td>
                   <td><a href="#uint32">uint32</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="ibeam_core.ModelImage">ModelImage</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>ModelID</td>
+                  <td><a href="#uint32">uint32</a></td>
+                  <td></td>
+                  <td><p>ID of the model </p></td>
+                </tr>
+              
+                <tr>
+                  <td>ImageData</td>
+                  <td><a href="#bytes">bytes</a></td>
+                  <td></td>
+                  <td><p>actual image data, might be missing in case HashOnly is set to true in the request </p></td>
+                </tr>
+              
+                <tr>
+                  <td>Hash</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>MD5 Hash of the image </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="ibeam_core.ModelImageRequest">ModelImageRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>models</td>
+                  <td><a href="#ibeam_core.ModelIDs">ModelIDs</a></td>
+                  <td></td>
+                  <td><p>ModelIDs to get images for </p></td>
+                </tr>
+              
+                <tr>
+                  <td>HashOnly</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>Leave out the image data and just sent the MD5 hashes </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="ibeam_core.ModelImages">ModelImages</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>imgs</td>
+                  <td><a href="#ibeam_core.ModelImage">ModelImage</a></td>
                   <td>repeated</td>
                   <td><p> </p></td>
                 </tr>
@@ -1071,6 +1194,15 @@ values and will disable the feature) This adds a curve to the input sliders
 for this parameter, think of it like a "logarithmic potentiometer". Usefull
 as a simple fix for audio or focus parameters More info here:
 https://electronics.stackexchange.com/questions/304692/formula-for-logarithmic-audio-taper-pot </p></td>
+                </tr>
+              
+                <tr>
+                  <td>acceptanceThreshold</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p>Specify a value threshold for when the manager marks the parameter as set
+correctly, useful for cases where the device will respond with a slightly
+different value then requested </p></td>
                 </tr>
               
                 <tr>
@@ -1672,6 +1804,83 @@ the client to replace the value with a placeholder </p></td>
           </tbody>
         </table>
       
+        <h3 id="ibeam_core.DeviceCategory">DeviceCategory</h3>
+        <p>The DeviceCategory describes what type of device this core is connecting to</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>Undefined</td>
+                <td>0</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>PTZCamera</td>
+                <td>1</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>ClassicCamera</td>
+                <td>2</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>VideoSwitcher</td>
+                <td>3</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>VideoRouter</td>
+                <td>4</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>AudioDevice</td>
+                <td>5</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>LightDevice</td>
+                <td>6</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>VideoProcessing</td>
+                <td>7</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>MotionSystem</td>
+                <td>8</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>TallySystem</td>
+                <td>9</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>GenericProtocol</td>
+                <td>10</td>
+                <td><p></p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
         <h3 id="ibeam_core.FeedbackStyle">FeedbackStyle</h3>
         <p></p>
         <table class="enum-table">
@@ -1801,6 +2010,12 @@ the client to replace the value with a placeholder </p></td>
               <tr>
                 <td>Iris</td>
                 <td>7</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>TestTrigger</td>
+                <td>8</td>
                 <td><p></p></td>
               </tr>
             
@@ -2094,6 +2309,13 @@ On subscribe all current values should be sent back!</p></td>
                 <td><a href="#ibeam_core.RestartInfo">RestartInfo</a></td>
                 <td><a href="#ibeam_core.Empty">Empty</a></td>
                 <td><p>Restart the core (only works on unix based systems)</p></td>
+              </tr>
+            
+              <tr>
+                <td>GetModelImages</td>
+                <td><a href="#ibeam_core.ModelImageRequest">ModelImageRequest</a></td>
+                <td><a href="#ibeam_core.ModelImages">ModelImages</a></td>
+                <td><p>Get Model Images</p></td>
               </tr>
             
           </tbody>
