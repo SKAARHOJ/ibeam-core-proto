@@ -1,6 +1,11 @@
 # IBeam-Core Protocol
 
 ## Changelog
+
+
+### 0.3.6
+
+- Add DevelopmentStatus to CoreInfo
 ### 0.3.5
 
 - Add DeviceCategory to CoreInfo

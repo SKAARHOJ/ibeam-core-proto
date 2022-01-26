@@ -7,7 +7,7 @@ package ibeam_core;
 option go_package = "../ibeam-core;ibeam_core";
 
 /// This block hardcodes the ibeam version
-option (ibeam_version) = "v0.3.5";
+option (ibeam_version) = "v0.3.6";
 extend google.protobuf.FileOptions { string ibeam_version = 5000; }
 /// End version block
 
@@ -90,6 +90,8 @@ message CoreInfo {
   DeviceCategory deviceCategory = 8;
   // Flag set by the system to indicate the presence of Model Images
   bool hasModelImages = 9;
+  // Used to indicate information about the development status of a core
+  string developmentStatus = 10;
 }
 
 // The ConnectionType describes how the Core connects to the device
