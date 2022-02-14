@@ -3,6 +3,9 @@
 ## Changelog
 
 
+### 0.3.7
+
+- Add Label to CoreInfo
 ### 0.3.6
 
 - Add DevelopmentStatus to CoreInfo

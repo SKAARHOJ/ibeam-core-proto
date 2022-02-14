@@ -7,7 +7,7 @@ package ibeam_core;
 option go_package = "../ibeam-core;ibeam_core";
 
 /// This block hardcodes the ibeam version
-option (ibeam_version) = "v0.3.6";
+option (ibeam_version) = "v0.3.7";
 extend google.protobuf.FileOptions { string ibeam_version = 5000; }
 /// End version block
 
@@ -78,8 +78,10 @@ message CoreInfo {
   // @exclude In unisketch this should be a hard break that requires updating!
   // Flied for describing the Core
   string description = 3;
-  // Name of the Core
+  // Name of the Core in the format core-...
   string name = 4;
+  // Friendly name of the core for display everywhere
+  string label = 11;
   // Number of Devices, that can be handled by the core
   uint32 maxDevices = 5;
   // Number of currently connected clients on the Core
