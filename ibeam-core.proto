@@ -7,7 +7,7 @@ package ibeam_core;
 option go_package = "../ibeam-core;ibeam_core";
 
 /// This block hardcodes the ibeam version
-option (ibeam_version) = "v0.3.7";
+option (ibeam_version) = "v0.3.8";
 extend google.protobuf.FileOptions { string ibeam_version = 5000; }
 /// End version block
 
