@@ -130,6 +130,20 @@ message ModelImageRequest{
   bool HashOnly = 2;
 }
 
+enum DiscoveryType {
+  NoDiscovery = 0;
+  MDNS = 1; // Default type is to use mdns discovery
+}
+
+message DiscoveryMethod {
+  DiscoveryType DiscoverType = 1;
+  int32 PortOverride = 2; // Override the port that has been requested from the device with a different one 
+  
+  string Realm = 3; // Provide the realm of discovery, for mdns this is the search scope
+  string TextRegex = 4; // Provide a regex match for the text record of the discovery. If hostname AND text are set both need to be true to match
+  string HostnameRegex = 5; // provide a regex match for the hostname. If hostname AND text are set both need to be true to match
+}
+
 message ModelImages { repeated ModelImage imgs = 1; } // these are guaranteed to come back in the order of request data
 
 message ModelImage {
@@ -171,6 +185,8 @@ message ModelInfo {
   string name = 2;
   // Description of the model
   string description = 3;
+
+  DiscoveryMethod discovery = 4;
 }
 message ModelInfos { repeated ModelInfo modelInfos = 1; }
 

@@ -6,6 +6,8 @@
 ### 0.3.7
 
 - Add Label to CoreInfo
+- Add DiscoveryMethod on ModelInfo
+
 ### 0.3.6
 
 - Add DevelopmentStatus to CoreInfo
