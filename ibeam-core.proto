@@ -7,7 +7,7 @@ package ibeam_core;
 option go_package = "../ibeam-core;ibeam_core";
 
 /// This block hardcodes the ibeam version
-option (ibeam_version) = "v0.3.8";
+option (ibeam_version) = "v0.3.9";
 extend google.protobuf.FileOptions { string ibeam_version = 5000; }
 /// End version block
 
@@ -88,8 +88,10 @@ message CoreInfo {
   uint32 connectedClients = 6;
   // Type of connection. See ConnectionType enum
   ConnectionType connectionType = 7;
-  // Category of the devices this core can control, used as metadata in listings
+  // Primary category of the devices this core can control, used as metadata in listings
   DeviceCategory deviceCategory = 8;
+  // Additional categories for the core
+  repeated DeviceCategory additionalDeviceCategorys = 12;
   // Flag set by the system to indicate the presence of Model Images
   bool hasModelImages = 9;
   // Used to indicate information about the development status of a core
@@ -138,6 +140,7 @@ enum DiscoveryType {
 message DiscoveryMethod {
   DiscoveryType DiscoverType = 1;
   int32 PortOverride = 2; // Override the port that has been requested from the device with a different one 
+  string NameOverride = 6; // Devicename defaults to discovered hostname, this field can override this behavior
   
   string Realm = 3; // Provide the realm of discovery, for mdns this is the search scope
   string TextRegex = 4; // Provide a regex match for the text record of the discovery. If hostname AND text are set both need to be true to match

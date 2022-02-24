@@ -2,6 +2,9 @@
 
 ## Changelog
 
+### 0.3.9
+- Add AdditionalDevicecoreCategories to CoreInfo
+- Add NameOverride to DiscoveryMethod
 ### 0.3.8
 - Add DiscoveryMethod on ModelInfo
 
