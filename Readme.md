@@ -2,6 +2,11 @@
 
 ## Changelog
 
+### 0.3.10
+- Add SSDP Discovery Method and extra fileds
+- Add IsExperimental Flag to ParameterDetail
+- Add DevelopmentStatus on modelInfo
+
 ### 0.3.9
 - Add AdditionalDevicecoreCategories to CoreInfo
 - Add NameOverride to DiscoveryMethod
