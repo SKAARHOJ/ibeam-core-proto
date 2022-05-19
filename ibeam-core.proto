@@ -7,7 +7,7 @@ package ibeam_core;
 option go_package = "../ibeam-core;ibeam_core";
 
 /// This block hardcodes the ibeam version
-option (ibeam_version) = "v0.3.9";
+option (ibeam_version) = "v0.3.10";
 extend google.protobuf.FileOptions { string ibeam_version = 5000; }
 /// End version block
 
@@ -135,6 +135,7 @@ message ModelImageRequest{
 enum DiscoveryType {
   NoDiscovery = 0;
   MDNS = 1; // Default type is to use mdns discovery
+  SSDP = 2; // Discover via upnp ssdp
 }
 
 message DiscoveryMethod {
@@ -142,9 +143,19 @@ message DiscoveryMethod {
   int32 PortOverride = 2; // Override the port that has been requested from the device with a different one 
   string NameOverride = 6; // Devicename defaults to discovered hostname, this field can override this behavior
   
-  string Realm = 3; // Provide the realm of discovery, for mdns this is the search scope
-  string TextRegex = 4; // Provide a regex match for the text record of the discovery. If hostname AND text are set both need to be true to match
-  string HostnameRegex = 5; // provide a regex match for the hostname. If hostname AND text are set both need to be true to match
+  // Provide the realm of discovery, for mdns this is the search scope
+  string Realm = 3; 
+  // Provide a regex match for the text record of the MDNS discovery. If hostname AND text are set both need to be true to match
+  string TextRegex = 4; 
+  // provide a regex match for the hostname. If hostname AND text are set both need to be true to match
+  string HostnameRegex = 5; 
+
+  // Provide a regex of either the location or the Server header. If it matches discovery will fetch more info and evaluate the response using XMLDeviceRegex
+  string SSDPServerRegex = 7; 
+  // See SSDPServerRegex 
+  string SSDPLocationRegex = 8; 
+
+  map<string, string> XMLDeviceRegex = 9;
 }
 
 message ModelImages { repeated ModelImage imgs = 1; } // these are guaranteed to come back in the order of request data
@@ -189,7 +200,11 @@ message ModelInfo {
   // Description of the model
   string description = 3;
 
+  // Describe how this model can be auto-discovered on a network
   DiscoveryMethod discovery = 4;
+  
+  // Used to indicate information about the development status of a model, uses the same classes as for core-info
+  string developmentStatus = 5;
 }
 message ModelInfos { repeated ModelInfo modelInfos = 1; }
 
@@ -272,6 +287,9 @@ message ParameterDetail {
   string label = 4;
   string shortLabel = 5;
   string description = 6;
+  
+  // Note if the parameter is in experimantal state currently, decription should point out more details
+  bool IsExperimental = 37;
 
   GenericType genericType = 7;
 
