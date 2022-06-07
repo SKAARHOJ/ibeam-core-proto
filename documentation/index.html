@@ -239,6 +239,14 @@
                 </li>
               
                 <li>
+                  <a href="#ibeam_core.DiscoveryMethod" class="m rmBackground"><span class="badge m">M</span>DiscoveryMethod</a>
+                </li>
+              
+                <li>
+                  <a href="#ibeam_core.DiscoveryMethod.XMLDeviceRegexEntry" class="m rmBackground"><span class="badge m">M</span>DiscoveryMethod.XMLDeviceRegexEntry</a>
+                </li>
+              
+                <li>
                   <a href="#ibeam_core.Empty" class="m rmBackground"><span class="badge m">M</span>Empty</a>
                 </li>
               
@@ -337,6 +345,10 @@
               
                 <li>
                   <a href="#ibeam_core.DeviceCategory" class="e rmBackground"><span class="badge e">E</span>DeviceCategory</a>
+                </li>
+              
+                <li>
+                  <a href="#ibeam_core.DiscoveryType" class="e rmBackground"><span class="badge e">E</span>DiscoveryType</a>
                 </li>
               
                 <li>
@@ -447,7 +459,14 @@
                   <td>name</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Name of the Core </p></td>
+                  <td><p>Name of the Core in the format core-... </p></td>
+                </tr>
+              
+                <tr>
+                  <td>label</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Friendly name of the core for display everywhere </p></td>
                 </tr>
               
                 <tr>
@@ -475,7 +494,14 @@
                   <td>deviceCategory</td>
                   <td><a href="#ibeam_core.DeviceCategory">DeviceCategory</a></td>
                   <td></td>
-                  <td><p>Category of the devices this core can control, used as metadata in listings </p></td>
+                  <td><p>Primary category of the devices this core can control, used as metadata in listings </p></td>
+                </tr>
+              
+                <tr>
+                  <td>additionalDeviceCategorys</td>
+                  <td><a href="#ibeam_core.DeviceCategory">DeviceCategory</a></td>
+                  <td>repeated</td>
+                  <td><p>Additional categories for the core </p></td>
                 </tr>
               
                 <tr>
@@ -746,6 +772,117 @@ experience </p></td>
 
         
       
+        <h3 id="ibeam_core.DiscoveryMethod">DiscoveryMethod</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>DiscoverType</td>
+                  <td><a href="#ibeam_core.DiscoveryType">DiscoveryType</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>PortOverride</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>Override the port that has been requested from the device with a different one </p></td>
+                </tr>
+              
+                <tr>
+                  <td>NameOverride</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Devicename defaults to discovered hostname, this field can override this behavior </p></td>
+                </tr>
+              
+                <tr>
+                  <td>Realm</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Provide the realm of discovery, for mdns this is the search scope </p></td>
+                </tr>
+              
+                <tr>
+                  <td>TextRegex</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Provide a regex match for the text record of the MDNS discovery. If hostname AND text are set both need to be true to match </p></td>
+                </tr>
+              
+                <tr>
+                  <td>HostnameRegex</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>provide a regex match for the hostname. If hostname AND text are set both need to be true to match </p></td>
+                </tr>
+              
+                <tr>
+                  <td>SSDPServerRegex</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Provide a regex of either the location or the Server header. If it matches discovery will fetch more info and evaluate the response using XMLDeviceRegex </p></td>
+                </tr>
+              
+                <tr>
+                  <td>SSDPLocationRegex</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>See SSDPServerRegex </p></td>
+                </tr>
+              
+                <tr>
+                  <td>XMLDeviceRegex</td>
+                  <td><a href="#ibeam_core.DiscoveryMethod.XMLDeviceRegexEntry">DiscoveryMethod.XMLDeviceRegexEntry</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="ibeam_core.DiscoveryMethod.XMLDeviceRegexEntry">DiscoveryMethod.XMLDeviceRegexEntry</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>key</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>value</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="ibeam_core.Empty">Empty</h3>
         <p>The Empty message type for services that need or return no data</p>
 
@@ -899,6 +1036,20 @@ experience </p></td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p>Description of the model </p></td>
+                </tr>
+              
+                <tr>
+                  <td>discovery</td>
+                  <td><a href="#ibeam_core.DiscoveryMethod">DiscoveryMethod</a></td>
+                  <td></td>
+                  <td><p>Describe how this model can be auto-discovered on a network </p></td>
+                </tr>
+              
+                <tr>
+                  <td>developmentStatus</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Used to indicate information about the development status of a model, uses the same classes as for core-info </p></td>
                 </tr>
               
             </tbody>
@@ -1110,6 +1261,13 @@ syncroniser or MEs / Keys in a switcher </p></td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>IsExperimental</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>Note if the parameter is in experimantal state currently, decription should point out more details </p></td>
                 </tr>
               
                 <tr>
@@ -1883,6 +2041,35 @@ the client to replace the value with a placeholder </p></td>
                 <td>GenericProtocol</td>
                 <td>10</td>
                 <td><p></p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+        <h3 id="ibeam_core.DiscoveryType">DiscoveryType</h3>
+        <p></p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>NoDiscovery</td>
+                <td>0</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>MDNS</td>
+                <td>1</td>
+                <td><p>Default type is to use mdns discovery</p></td>
+              </tr>
+            
+              <tr>
+                <td>SSDP</td>
+                <td>2</td>
+                <td><p>Discover via upnp ssdp</p></td>
               </tr>
             
           </tbody>
