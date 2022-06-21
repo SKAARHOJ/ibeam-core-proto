@@ -2,6 +2,9 @@
 
 ## Changelog
 
+### 0.3.11
+- Add CustomError and respective ValueType
+
 ### 0.3.10
 - Add SSDP Discovery Method and extra fileds
 - Add IsExperimental Flag to ParameterDetail

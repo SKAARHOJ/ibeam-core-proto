@@ -7,7 +7,7 @@ package ibeam_core;
 option go_package = "../ibeam-core;ibeam_core";
 
 /// This block hardcodes the ibeam version
-option (ibeam_version) = "v0.3.10";
+option (ibeam_version) = "v0.3.11";
 extend google.protobuf.FileOptions { string ibeam_version = 5000; }
 /// End version block
 
@@ -253,9 +253,23 @@ message ParameterValue {
     double maximumUpdate = 13;        // used to update a maximum value
     bytes png = 14;
     bytes jpeg = 15;
+    CustomError error = 16;
   }
 
   map<string, ParameterMetaValue> metaValues = 20;
+}
+
+message CustomError { 
+  string ID = 1; // The ID string allows everybody down the chain to understand if this is a repeating error and can be merged to one existing one
+  string Message = 2;
+  CustomErrorType errortype = 3;
+  //bool HideInUI = 2; // not yet sure if needed, maybe also "show in ui ?"
+}
+
+enum CustomErrorType {
+  Error = 0;
+  Resolve = 1;
+  Warning = 2;
 }
 
 message OptionList { repeated ParameterOption options = 1; }
@@ -508,4 +522,5 @@ enum ParameterError {
   // Will be returned if Value for Parameter with NoValue was set
   HasNoValue = 8;
   Unavailable = 9;
+  Custom = 10; // A way to describe that the message holds a custom error type
 }
