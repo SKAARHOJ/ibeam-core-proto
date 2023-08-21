@@ -7,7 +7,7 @@ package ibeam_core;
 option go_package = "../ibeam-core;ibeam_core";
 
 /// This block hardcodes the ibeam version
-option (ibeam_version) = "v0.3.11";
+option (ibeam_version) = "v0.3.12";
 extend google.protobuf.FileOptions { string ibeam_version = 5000; }
 /// End version block
 
@@ -206,6 +206,9 @@ message ModelInfo {
   // Used to indicate information about the development status of a model, uses the same classes as for core-info
   string developmentStatus = 5;
   bool optimisticConnectionStatus = 6; // When set will never show "Connected/Unconnected" but rather "Ready" in Reactor. Core should still set the connectionstatus of the devices to true
+
+  repeated DeviceCategory deviceCategorys = 12;
+
 }
 message ModelInfos { repeated ModelInfo modelInfos = 1; }
 
