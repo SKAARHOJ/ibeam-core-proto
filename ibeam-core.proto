@@ -402,6 +402,8 @@ message ParameterDetail {
   // Give thge client a hint if this parameter should be paired with another one
   // for display and purposes
   string RecommendedParamForTextDisplay = 39;
+
+  int32 UIListingOrder = 40;
 }
 
 message ParameterDetails { repeated ParameterDetail details = 1; }
