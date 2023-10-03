@@ -140,7 +140,7 @@ enum DiscoveryType {
 
 message DiscoveryMethod {
   DiscoveryType DiscoverType = 1;
-  int32 PortOverride = 2;  // Override the port that has been requested from the evice with a different one
+  int32 PortOverride = 2;  // Override the port that has been requested from the device with a different one
   string NameOverride = 6; // Devicename defaults to discovered hostname, this field can override this behavior
 
   // Provide the realm of discovery, for mdns this is the search scope
@@ -210,6 +210,7 @@ message ModelInfo {
   bool optimisticConnectionStatus = 6; // When set will never show "Connected/Unconnected" but rather "Ready" in Reactor. Core should still set the connectionstatus of the devices to true
 
   repeated DeviceCategory deviceCategorys = 12;
+  string DeviceWebUILink = 13; // provide a link template to the devices webui. use {ip} to add the ip address into it. If defined it will render a new button to open the UI
 }
 message ModelInfos { repeated ModelInfo modelInfos = 1; }
 
@@ -518,12 +519,27 @@ enum GenericType {
   Generic = 0;
   ConnectionState = 1;
   DeviceIP = 2;
-  Pan = 3;
-  Tilt = 4;
+  Pan = 3;  // if this and zoom will add invert conditions
+  Tilt = 4; // if this and zoom will add invert conditions
+
+  Focus = 11; // if this and zoom will add invert conditions
+  Zoom = 12;  // if this and zoom will add invert conditions
+
   Tally = 5;
   Record = 6;
   Iris = 7;
+
   TestTrigger = 8;
+
+  SettableValue = 9; // for alternative label and stuff for setValue first, then add a step change
+  SimpleConfirm = 10;
+
+  PresetRecall = 13;
+  PresetStore = 14;
+  PresetExist = 15;
+
+  PresetThumbnail = 16;
+  PresetThumbnailExists = 17;
 }
 
 // Errortypes when setting a Parameter
