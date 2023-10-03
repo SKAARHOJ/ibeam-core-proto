@@ -207,6 +207,10 @@
                 </li>
               
                 <li>
+                  <a href="#ibeam_core.CustomError" class="m rmBackground"><span class="badge m">M</span>CustomError</a>
+                </li>
+              
+                <li>
                   <a href="#ibeam_core.DescreteValueDetail" class="m rmBackground"><span class="badge m">M</span>DescreteValueDetail</a>
                 </li>
               
@@ -344,6 +348,10 @@
                 </li>
               
                 <li>
+                  <a href="#ibeam_core.CustomErrorType" class="e rmBackground"><span class="badge e">E</span>CustomErrorType</a>
+                </li>
+              
+                <li>
                   <a href="#ibeam_core.DeviceCategory" class="e rmBackground"><span class="badge e">E</span>DeviceCategory</a>
                 </li>
               
@@ -369,6 +377,10 @@
               
                 <li>
                   <a href="#ibeam_core.ParameterMetaType" class="e rmBackground"><span class="badge e">E</span>ParameterMetaType</a>
+                </li>
+              
+                <li>
+                  <a href="#ibeam_core.ParameterUIType" class="e rmBackground"><span class="badge e">E</span>ParameterUIType</a>
                 </li>
               
                 <li>
@@ -494,7 +506,8 @@
                   <td>deviceCategory</td>
                   <td><a href="#ibeam_core.DeviceCategory">DeviceCategory</a></td>
                   <td></td>
-                  <td><p>Primary category of the devices this core can control, used as metadata in listings </p></td>
+                  <td><p>Primary category of the devices this core can control, used as metadata in
+listings </p></td>
                 </tr>
               
                 <tr>
@@ -516,6 +529,44 @@
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p>Used to indicate information about the development status of a core </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="ibeam_core.CustomError">CustomError</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>ID</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The ID string allows everybody down the chain to understand if this </p></td>
+                </tr>
+              
+                <tr>
+                  <td>Message</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>is a repeating error and can be merged to one existing one </p></td>
+                </tr>
+              
+                <tr>
+                  <td>errortype</td>
+                  <td><a href="#ibeam_core.CustomErrorType">CustomErrorType</a></td>
+                  <td></td>
+                  <td><p>bool HideInUI = 2; // not yet sure if needed, maybe also "show in ui ?" </p></td>
                 </tr>
               
             </tbody>
@@ -793,14 +844,16 @@ experience </p></td>
                   <td>PortOverride</td>
                   <td><a href="#int32">int32</a></td>
                   <td></td>
-                  <td><p>Override the port that has been requested from the device with a different one </p></td>
+                  <td><p>Override the port that has been requested from the </p></td>
                 </tr>
               
                 <tr>
                   <td>NameOverride</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Devicename defaults to discovered hostname, this field can override this behavior </p></td>
+                  <td><p>evice with a different one
+
+Devicename defaults to discovered hostname, this </p></td>
                 </tr>
               
                 <tr>
@@ -814,21 +867,25 @@ experience </p></td>
                   <td>TextRegex</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Provide a regex match for the text record of the MDNS discovery. If hostname AND text are set both need to be true to match </p></td>
+                  <td><p>Provide a regex match for the text record of the MDNS discovery. If
+hostname AND text are set both need to be true to match </p></td>
                 </tr>
               
                 <tr>
                   <td>HostnameRegex</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>provide a regex match for the hostname. If hostname AND text are set both need to be true to match </p></td>
+                  <td><p>provide a regex match for the hostname. If hostname AND text are set both
+need to be true to match </p></td>
                 </tr>
               
                 <tr>
                   <td>SSDPServerRegex</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Provide a regex of either the location or the Server header. If it matches discovery will fetch more info and evaluate the response using XMLDeviceRegex </p></td>
+                  <td><p>Provide a regex of either the location or the Server header. If it matches
+discovery will fetch more info and evaluate the response using
+XMLDeviceRegex </p></td>
                 </tr>
               
                 <tr>
@@ -935,7 +992,8 @@ experience </p></td>
                   <td>ImageData</td>
                   <td><a href="#bytes">bytes</a></td>
                   <td></td>
-                  <td><p>actual image data, might be missing in case HashOnly is set to true in the request </p></td>
+                  <td><p>actual image data, might be missing in case HashOnly is set to true in the
+request </p></td>
                 </tr>
               
                 <tr>
@@ -1049,7 +1107,29 @@ experience </p></td>
                   <td>developmentStatus</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Used to indicate information about the development status of a model, uses the same classes as for core-info </p></td>
+                  <td><p>Used to indicate information about the development status of a model, uses
+the same classes as for core-info </p></td>
+                </tr>
+              
+                <tr>
+                  <td>optimisticConnectionStatus</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>When set will never show "Connected/Unconnected" but rather "Ready" </p></td>
+                </tr>
+              
+                <tr>
+                  <td>deviceCategorys</td>
+                  <td><a href="#ibeam_core.DeviceCategory">DeviceCategory</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>DeviceWebUILink</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>provide a link template to the devices webui. use {ip} to add the ip address into it. If defined it will render a new button to open the UI </p></td>
                 </tr>
               
             </tbody>
@@ -1267,7 +1347,8 @@ syncroniser or MEs / Keys in a switcher </p></td>
                   <td>IsExperimental</td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
-                  <td><p>Note if the parameter is in experimantal state currently, decription should point out more details </p></td>
+                  <td><p>Note if the parameter is in experimantal state currently, decription should
+point out more details </p></td>
                 </tr>
               
                 <tr>
@@ -1466,6 +1547,29 @@ any additional info that does not require the devicecore to hold more state </p>
                   <td></td>
                   <td><p>Specifies if a parameter can still be controlled while connection state is
 false, only comes into affect if connectionstate exists in the devicecore </p></td>
+                </tr>
+              
+                <tr>
+                  <td>UIType</td>
+                  <td><a href="#ibeam_core.ParameterUIType">ParameterUIType</a></td>
+                  <td></td>
+                  <td><p>Give thge client a hint what user level this parameter covers (this is
+purely metadata) </p></td>
+                </tr>
+              
+                <tr>
+                  <td>RecommendedParamForTextDisplay</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Give thge client a hint if this parameter should be paired with another one
+for display and purposes </p></td>
+                </tr>
+              
+                <tr>
+                  <td>UIListingOrder</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
                 </tr>
               
             </tbody>
@@ -1799,6 +1903,13 @@ the client to replace the value with a placeholder </p></td>
                 </tr>
               
                 <tr>
+                  <td>error</td>
+                  <td><a href="#ibeam_core.CustomError">CustomError</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
                   <td>metaValues</td>
                   <td><a href="#ibeam_core.ParameterValue.MetaValuesEntry">ParameterValue.MetaValuesEntry</a></td>
                   <td>repeated</td>
@@ -1964,6 +2075,35 @@ the client to replace the value with a placeholder </p></td>
                 <td>Oneshot</td>
                 <td>4</td>
                 <td><p>Accept only Command::Trigger</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+        <h3 id="ibeam_core.CustomErrorType">CustomErrorType</h3>
+        <p></p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>Error</td>
+                <td>0</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>Resolve</td>
+                <td>1</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>Warning</td>
+                <td>2</td>
+                <td><p></p></td>
               </tr>
             
           </tbody>
@@ -2180,13 +2320,25 @@ the client to replace the value with a placeholder </p></td>
               <tr>
                 <td>Pan</td>
                 <td>3</td>
-                <td><p></p></td>
+                <td><p>if this and zoom will add invert conditions</p></td>
               </tr>
             
               <tr>
                 <td>Tilt</td>
                 <td>4</td>
-                <td><p></p></td>
+                <td><p>if this and zoom will add invert conditions</p></td>
+              </tr>
+            
+              <tr>
+                <td>Focus</td>
+                <td>11</td>
+                <td><p>if this and zoom will add invert conditions</p></td>
+              </tr>
+            
+              <tr>
+                <td>Zoom</td>
+                <td>12</td>
+                <td><p>if this and zoom will add invert conditions</p></td>
               </tr>
             
               <tr>
@@ -2210,6 +2362,48 @@ the client to replace the value with a placeholder </p></td>
               <tr>
                 <td>TestTrigger</td>
                 <td>8</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>SettableValue</td>
+                <td>9</td>
+                <td><p>for alternative label and stuff for setValue first, then</p></td>
+              </tr>
+            
+              <tr>
+                <td>SimpleConfirm</td>
+                <td>10</td>
+                <td><p>add a step change</p></td>
+              </tr>
+            
+              <tr>
+                <td>PresetRecall</td>
+                <td>13</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>PresetStore</td>
+                <td>14</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>PresetExist</td>
+                <td>15</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>PresetThumbnail</td>
+                <td>16</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>PresetThumbnailExists</td>
+                <td>17</td>
                 <td><p></p></td>
               </tr>
             
@@ -2284,6 +2478,12 @@ the client to replace the value with a placeholder </p></td>
                 <td><p></p></td>
               </tr>
             
+              <tr>
+                <td>Custom</td>
+                <td>10</td>
+                <td><p>A way to describe that the message holds a custom error type</p></td>
+              </tr>
+            
           </tbody>
         </table>
       
@@ -2323,6 +2523,35 @@ the client to replace the value with a placeholder </p></td>
                 <td>MetaOption</td>
                 <td>4</td>
                 <td><p></p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+        <h3 id="ibeam_core.ParameterUIType">ParameterUIType</h3>
+        <p></p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>NormalParameter</td>
+                <td>0</td>
+                <td><p>selectable in ioref parameter dropdown always</p></td>
+              </tr>
+            
+              <tr>
+                <td>SimpleParameter</td>
+                <td>1</td>
+                <td><p>also show this as autogenerated oneclick behavior</p></td>
+              </tr>
+            
+              <tr>
+                <td>HelperParameter</td>
+                <td>2</td>
+                <td><p>will be hidden in ioref parameter dropdown unless "all</p></td>
               </tr>
             
           </tbody>
