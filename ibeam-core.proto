@@ -7,7 +7,7 @@ package ibeam_core;
 option go_package = "../ibeam-core;ibeam_core";
 
 /// This block hardcodes the ibeam version
-option (ibeam_version) = "v0.3.12";
+option (ibeam_version) = "v0.3.13";
 extend google.protobuf.FileOptions { string ibeam_version = 5000; }
 /// End version block
 
@@ -177,8 +177,7 @@ message ModelImage {
 
 message DeviceIDs { repeated uint32 ids = 1; }
 
-// Deviceinfo is kept simple, connection status and device config is handeled
-// via parameters
+// Deviceinfo is kept simple, connection status and device config is handeled via parameters
 message DeviceInfo {
   uint32 deviceID = 1;
   uint32 modelID = 2;
@@ -192,8 +191,7 @@ message DeviceInfos { repeated DeviceInfo deviceInfos = 1; }
 
 message ModelIDs { repeated uint32 ids = 1; }
 
-// ModelInfo describes a model of the IBeamCore. It is used to describe
-// different sets of Parameter fon different models
+// ModelInfo describes a model of the IBeamCore. It is used to describe different sets of Parameter fon different models
 message ModelInfo {
   // ID of the model
   uint32 id = 1;
@@ -234,16 +232,12 @@ message Parameters { repeated Parameter parameters = 1; }
 
 message ParameterValue {
   repeated uint32 dimensionID = 1;
-  // Shows if the Parameter is currently available.
-  // This field is ignored in set request
+  // Shows if the Parameter is currently available. This field is ignored in set request
   bool available = 2;
-  // Shows if the Parameter is currently assumed.
-  // This field is ignored in set request.
+  // Shows if the Parameter is currently assumed. This field is ignored in set request.
   bool isAssumedState = 3;
 
-  // This boolean should be set by the server if the value is eitehr not yet
-  // known, or known to be garbage from the implementation. It should signal to
-  // the client to replace the value with a placeholder
+  // This boolean should be set by the server if the value is eitehr not yet known, or known to be garbage from the implementation. It should signal to the client to replace the value with a placeholder
   bool invalid = 21;
   // The Value for the Parameter.
   oneof value {
@@ -287,20 +281,16 @@ message ModelParameterID {
 message ModelParameterIDs { repeated ModelParameterID ids = 1; }
 
 message ParameterDetail {
-  // Parameter IDs should be unique (per model) and will break compatibility if
-  // changed between versions
+  // Parameter IDs should be unique (per model) and will break compatibility if changed between versions
   ModelParameterID id = 1;
 
   // Codesave name of the parameter
   string name = 2;
 
-  // Path describes a grouping of the parameter to the client. Groups need to be
-  // seperated by a / and can contain spaces This should also end with a / and
-  // not contain the parameter name or label again
+  // Path describes a grouping of the parameter to the client. Groups need to be seperated by a / and can contain spaces This should also end with a / and not contain the parameter name or label again
   string path = 24;
 
-  // give parameters multiple dimensions values, eg for channels of a frame
-  // syncroniser or MEs / Keys in a switcher
+  // give parameters multiple dimensions values, eg for channels of a frame syncroniser or MEs / Keys in a switcher
   repeated DimensionDetail dimensions = 3;
 
   // The parameter label for the client
@@ -313,8 +303,7 @@ message ParameterDetail {
 
   GenericType genericType = 7;
 
-  // Specifys if this parameter can be controled via a
-  // centering analog control like a joystick
+  // Specifies if this parameter can be controled via a centering analog control like a joystick
   bool isSpeedValue = 8;
 
   ControlStyle controlStyle = 9;
@@ -323,12 +312,10 @@ message ParameterDetail {
   // time to wait between sending commands to the device
   uint32 controlDelayMs = 11;
 
-  // time to wait after a set before sending new
-  // values to the client subscribe stream
+  // time to wait after a set before sending new values to the client subscribe stream
   uint32 quarantineDelayMs = 12;
 
-  // how often to retry a set if target != current
-  // config value for Normal Control Style
+  // how often to retry a set if target != current config value for Normal Control Style
   uint32 retryCount = 13;
 
   // The actual type of the value
@@ -338,27 +325,16 @@ message ParameterDetail {
   string displaySuffix = 28;
   FloatPrecision displayFloatPrecision = 29;
 
-  // Input curve allows the  core to specify what style of input value range
-  // function is appropriate for this parameter, eg focus or audio might need
-  // logarithmic style curves
+  // Input curve allows the  core to specify what style of input value range function is appropriate for this parameter, eg focus or audio might need logarithmic style curves
 
   reserved 30; // blocked for legacy reasons (InputCurve)
-  // Parameter determining an input curve (>0, 0, 0.5 or 1 and >1 are invalid
-  // values and will disable the feature) This adds a curve to the input sliders
-  // for this parameter, think of it like a "logarithmic potentiometer". Usefull
-  // as a simple fix for audio or focus parameters More info here:
-  // https://electronics.stackexchange.com/questions/304692/formula-for-logarithmic-audio-taper-pot
+  // Parameter determining an input curve (>0, 0, 0.5 or 1 and >1 are invalid values and will disable the feature) This adds a curve to the input sliders for this parameter, think of it like a "logarithmic potentiometer". Usefull as a simple fix for audio or focus parameters More info here: https://electronics.stackexchange.com/questions/304692/formula-for-logarithmic-audio-taper-pot
   float inputCurveExpo = 34;
 
-  // Specify a value threshold for when the manager marks the parameter as set
-  // correctly, useful for cases where the device will respond with a slightly
-  // different value then requested
+  // Specify a value threshold for when the manager marks the parameter as set correctly, useful for cases where the device will respond with a slightly different value then requested
   double acceptanceThreshold = 35;
 
-  // Extended value info provides a way of adding further values to a integer or
-  // float value type it also allows to specify labels for certain values like
-  // "Close", "Far", "Near". Do NOT use this for indicating unavailable or
-  // invalid values! use the corresponding flags instead
+  // Extended value info provides a way of adding further values to a integer or float value type it also allows to specify labels for certain values like "Close", "Far", "Near". Do NOT use this for indicating unavailable or invalid values! use the corresponding flags instead
   repeated DescreteValueDetail descreteValueDetails = 31;
 
   // Maximum Value for Integers and Floats
@@ -366,11 +342,9 @@ message ParameterDetail {
   // Minimum Value for Integers and Floats
   double maximum = 17;
 
-  // Fine steps allow the devicecore to recommend a fine step value for Integers
-  // and Floats
+  // Fine steps allow the devicecore to recommend a fine step value for Integers and Floats
   double fineSteps = 32;
-  // Fine steps allow the devicecore to recommend a corse step value for
-  // Integers and Floats
+  // Fine steps allow the devicecore to recommend a corse step value for Integers and Floats
   double coarseSteps = 33;
 
   // Option List including the starting options
@@ -384,25 +358,22 @@ message ParameterDetail {
   // Default value for a parameter
   ParameterValue defaultValue = 20;
 
-  // Map with Parameter meta values, added values that might need to be used for
-  // any additional info that does not require the devicecore to hold more state
+  // Map with Parameter meta values, added values that might need to be used for any additional info that does not require the devicecore to hold more state
   map<string, ParameterMetaDetail> metaDetails = 21;
   // Maximum Value for Incrementation
   int32 incDecStepsUpperLimit = 22;
   // Maximum Negative Value for Decrementation
   int32 incDecStepsLowerLimit = 23;
 
-  // Specifies if a parameter can still be controlled while connection state is
-  // false, only comes into affect if connectionstate exists in the devicecore
+  // Specifies if a parameter can still be controlled while connection state is false, only comes into affect if connectionstate exists in the devicecore
   bool controllableWhileDisconnected = 25;
 
-  // Give thge client a hint what user level this parameter covers (this is
-  // purely metadata)
+  // Give thge client a hint what user level this parameter covers (this is purely metadata)
   ParameterUIType UIType = 38;
 
-  // Give thge client a hint if this parameter should be paired with another one
-  // for display and purposes
+  // Give thge client a hint if this parameter should be paired with another one for display and purposes
   string RecommendedParamForTextDisplay = 39;
+  string RecommendedParamForTitleDisplay = 41;
 
   int32 UIListingOrder = 40;
 }
@@ -413,13 +384,7 @@ message DimensionDetail {
   string name = 1;
   uint32 count = 2;
   string description = 3;
-  // if we need to name dimensions elementLabels can be used. Caution: this is
-  // not supposed for parameters like RGB or combinations of different values.
-  // It is rather used to indicate labeling in values like different
-  // audiochannels (eg chanell 9 and 10 are refered to as MasterLeft /
-  // MasterRight) Think of it this way: if the user could still understand the
-  // parameter without the label it is ok to use it to improve the user
-  // experience
+  // if we need to name dimensions elementLabels can be used. Caution: this is not supposed for parameters like RGB or combinations of different values. It is rather used to indicate labeling in values like different audiochannels (eg channel 9 and 10 are refered to as MasterLeft / MasterRight) Think of it this way: if the user could still understand the parameter without the label it is ok to use it to improve the user experience
   map<uint32, string> elementLabels = 4;
 }
 
@@ -463,12 +428,6 @@ message DescreteValueDetail {
   // The actual label for this value or valuerange
   string name = 2;
 }
-
-// From value to toValue a range is specified that will get the same label and
-// color assignment double toValue = 2;
-
-// The color used to represent this value, eg for Button or ledstripe LEDs
-// string color = 4;
 
 enum Command {
   Trigger = 0;
@@ -537,9 +496,10 @@ enum GenericType {
   PresetRecall = 13;
   PresetStore = 14;
   PresetExist = 15;
+  PresetDelete = 16;
 
-  PresetThumbnail = 16;
-  PresetThumbnailExists = 17;
+  PresetThumbnail = 17;
+  PresetThumbnailExists = 18;
 }
 
 // Errortypes when setting a Parameter
