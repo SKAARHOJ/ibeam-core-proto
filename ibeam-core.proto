@@ -7,7 +7,7 @@ package ibeam_core;
 option go_package = "../ibeam-core;ibeam_core";
 
 /// This block hardcodes the ibeam version
-option (ibeam_version) = "v0.3.13";
+option (ibeam_version) = "v0.3.14";
 extend google.protobuf.FileOptions { string ibeam_version = 5000; }
 /// End version block
 
@@ -88,7 +88,8 @@ message CoreInfo {
   uint32 connectedClients = 6;
   // Type of connection. See ConnectionType enum
   ConnectionType connectionType = 7;
-  // Primary category of the devices this core can control, used as metadata in listings
+  // Primary category of the devices this core can control, used as metadata in
+  // listings
   DeviceCategory deviceCategory = 8;
   // Additional categories for the core
   repeated DeviceCategory additionalDeviceCategorys = 12;
@@ -96,6 +97,8 @@ message CoreInfo {
   bool hasModelImages = 9;
   // Used to indicate information about the development status of a core
   string developmentStatus = 10;
+  // String indicating licensing information
+  string licenseInformation = 13;
 }
 
 // The ConnectionType describes how the Core connects to the device
@@ -140,17 +143,23 @@ enum DiscoveryType {
 
 message DiscoveryMethod {
   DiscoveryType DiscoverType = 1;
-  int32 PortOverride = 2;  // Override the port that has been requested from the device with a different one
-  string NameOverride = 6; // Devicename defaults to discovered hostname, this field can override this behavior
+  int32 PortOverride = 2;  // Override the port that has been requested from the
+                           // device with a different one
+  string NameOverride = 6; // Devicename defaults to discovered hostname, this
+                           // field can override this behavior
 
   // Provide the realm of discovery, for mdns this is the search scope
   string Realm = 3;
-  // Provide a regex match for the text record of the MDNS discovery. If hostname AND text are set both need to be true to match
+  // Provide a regex match for the text record of the MDNS discovery. If
+  // hostname AND text are set both need to be true to match
   string TextRegex = 4;
-  // provide a regex match for the hostname. If hostname AND text are set both need to be true to match
+  // provide a regex match for the hostname. If hostname AND text are set both
+  // need to be true to match
   string HostnameRegex = 5;
 
-  // Provide a regex of either the location or the Server header. If it matches discovery will fetch more info and evaluate the response using XMLDeviceRegex
+  // Provide a regex of either the location or the Server header. If it matches
+  // discovery will fetch more info and evaluate the response using
+  // XMLDeviceRegex
   string SSDPServerRegex = 7;
   // See SSDPServerRegex
   string SSDPLocationRegex = 8;
@@ -165,7 +174,8 @@ message ModelImages {
 message ModelImage {
   // ID of the model
   uint32 ModelID = 1;
-  // actual image data, might be missing in case HashOnly is set to true in the request
+  // actual image data, might be missing in case HashOnly is set to true in the
+  // request
   bytes ImageData = 2;
   // MD5 Hash of the image
   string Hash = 3;
@@ -177,7 +187,8 @@ message ModelImage {
 
 message DeviceIDs { repeated uint32 ids = 1; }
 
-// Deviceinfo is kept simple, connection status and device config is handeled via parameters
+// Deviceinfo is kept simple, connection status and device config is handeled
+// via parameters
 message DeviceInfo {
   uint32 deviceID = 1;
   uint32 modelID = 2;
@@ -191,7 +202,8 @@ message DeviceInfos { repeated DeviceInfo deviceInfos = 1; }
 
 message ModelIDs { repeated uint32 ids = 1; }
 
-// ModelInfo describes a model of the IBeamCore. It is used to describe different sets of Parameter fon different models
+// ModelInfo describes a model of the IBeamCore. It is used to describe
+// different sets of Parameter fon different models
 message ModelInfo {
   // ID of the model
   uint32 id = 1;
@@ -203,12 +215,21 @@ message ModelInfo {
   // Describe how this model can be auto-discovered on a network
   DiscoveryMethod discovery = 4;
 
-  // Used to indicate information about the development status of a model, uses the same classes as for core-info
+  // Used to indicate information about the development status of a model, uses
+  // the same classes as for core-info
   string developmentStatus = 5;
-  bool optimisticConnectionStatus = 6; // When set will never show "Connected/Unconnected" but rather "Ready" in Reactor. Core should still set the connectionstatus of the devices to true
+  bool optimisticConnectionStatus =
+      6; // When set will never show "Connected/Unconnected" but rather "Ready"
+         // in Reactor. Core should still set the connectionstatus of the
+         // devices to true
 
   repeated DeviceCategory deviceCategorys = 12;
-  string DeviceWebUILink = 13; // provide a link template to the devices webui. use {ip} to add the ip address into it. If defined it will render a new button to open the UI
+  string DeviceWebUILink =
+      13; // provide a link template to the devices webui. use {ip} to add the
+          // ip address into it. If defined it will render a new button to open
+          // the UI
+  // String indicating licensing information
+  string licenseInformation = 14;
 }
 message ModelInfos { repeated ModelInfo modelInfos = 1; }
 
@@ -232,12 +253,16 @@ message Parameters { repeated Parameter parameters = 1; }
 
 message ParameterValue {
   repeated uint32 dimensionID = 1;
-  // Shows if the Parameter is currently available. This field is ignored in set request
+  // Shows if the Parameter is currently available. This field is ignored in set
+  // request
   bool available = 2;
-  // Shows if the Parameter is currently assumed. This field is ignored in set request.
+  // Shows if the Parameter is currently assumed. This field is ignored in set
+  // request.
   bool isAssumedState = 3;
 
-  // This boolean should be set by the server if the value is eitehr not yet known, or known to be garbage from the implementation. It should signal to the client to replace the value with a placeholder
+  // This boolean should be set by the server if the value is eitehr not yet
+  // known, or known to be garbage from the implementation. It should signal to
+  // the client to replace the value with a placeholder
   bool invalid = 21;
   // The Value for the Parameter.
   oneof value {
@@ -260,7 +285,9 @@ message ParameterValue {
 }
 
 message CustomError {
-  string ID = 1; // The ID string allows everybody down the chain to understand if this is a repeating error and can be merged to one existing one
+  string ID =
+      1; // The ID string allows everybody down the chain to understand if this
+         // is a repeating error and can be merged to one existing one
   string Message = 2;
   CustomErrorType errortype = 3;
   // bool HideInUI = 2; // not yet sure if needed, maybe also "show in ui ?"
@@ -281,16 +308,20 @@ message ModelParameterID {
 message ModelParameterIDs { repeated ModelParameterID ids = 1; }
 
 message ParameterDetail {
-  // Parameter IDs should be unique (per model) and will break compatibility if changed between versions
+  // Parameter IDs should be unique (per model) and will break compatibility if
+  // changed between versions
   ModelParameterID id = 1;
 
   // Codesave name of the parameter
   string name = 2;
 
-  // Path describes a grouping of the parameter to the client. Groups need to be seperated by a / and can contain spaces This should also end with a / and not contain the parameter name or label again
+  // Path describes a grouping of the parameter to the client. Groups need to be
+  // seperated by a / and can contain spaces This should also end with a / and
+  // not contain the parameter name or label again
   string path = 24;
 
-  // give parameters multiple dimensions values, eg for channels of a frame syncroniser or MEs / Keys in a switcher
+  // give parameters multiple dimensions values, eg for channels of a frame
+  // syncroniser or MEs / Keys in a switcher
   repeated DimensionDetail dimensions = 3;
 
   // The parameter label for the client
@@ -298,12 +329,14 @@ message ParameterDetail {
   string shortLabel = 5;
   string description = 6;
 
-  // Note if the parameter is in experimantal state currently, decription should point out more details
+  // Note if the parameter is in experimantal state currently, decription should
+  // point out more details
   bool IsExperimental = 37;
 
   GenericType genericType = 7;
 
-  // Specifies if this parameter can be controled via a centering analog control like a joystick
+  // Specifies if this parameter can be controled via a centering analog control
+  // like a joystick
   bool isSpeedValue = 8;
 
   ControlStyle controlStyle = 9;
@@ -312,10 +345,12 @@ message ParameterDetail {
   // time to wait between sending commands to the device
   uint32 controlDelayMs = 11;
 
-  // time to wait after a set before sending new values to the client subscribe stream
+  // time to wait after a set before sending new values to the client subscribe
+  // stream
   uint32 quarantineDelayMs = 12;
 
-  // how often to retry a set if target != current config value for Normal Control Style
+  // how often to retry a set if target != current config value for Normal
+  // Control Style
   uint32 retryCount = 13;
 
   // The actual type of the value
@@ -325,16 +360,27 @@ message ParameterDetail {
   string displaySuffix = 28;
   FloatPrecision displayFloatPrecision = 29;
 
-  // Input curve allows the  core to specify what style of input value range function is appropriate for this parameter, eg focus or audio might need logarithmic style curves
+  // Input curve allows the  core to specify what style of input value range
+  // function is appropriate for this parameter, eg focus or audio might need
+  // logarithmic style curves
 
   reserved 30; // blocked for legacy reasons (InputCurve)
-  // Parameter determining an input curve (>0, 0, 0.5 or 1 and >1 are invalid values and will disable the feature) This adds a curve to the input sliders for this parameter, think of it like a "logarithmic potentiometer". Usefull as a simple fix for audio or focus parameters More info here: https://electronics.stackexchange.com/questions/304692/formula-for-logarithmic-audio-taper-pot
+  // Parameter determining an input curve (>0, 0, 0.5 or 1 and >1 are invalid
+  // values and will disable the feature) This adds a curve to the input sliders
+  // for this parameter, think of it like a "logarithmic potentiometer". Usefull
+  // as a simple fix for audio or focus parameters More info here:
+  // https://electronics.stackexchange.com/questions/304692/formula-for-logarithmic-audio-taper-pot
   float inputCurveExpo = 34;
 
-  // Specify a value threshold for when the manager marks the parameter as set correctly, useful for cases where the device will respond with a slightly different value then requested
+  // Specify a value threshold for when the manager marks the parameter as set
+  // correctly, useful for cases where the device will respond with a slightly
+  // different value then requested
   double acceptanceThreshold = 35;
 
-  // Extended value info provides a way of adding further values to a integer or float value type it also allows to specify labels for certain values like "Close", "Far", "Near". Do NOT use this for indicating unavailable or invalid values! use the corresponding flags instead
+  // Extended value info provides a way of adding further values to a integer or
+  // float value type it also allows to specify labels for certain values like
+  // "Close", "Far", "Near". Do NOT use this for indicating unavailable or
+  // invalid values! use the corresponding flags instead
   repeated DescreteValueDetail descreteValueDetails = 31;
 
   // Maximum Value for Integers and Floats
@@ -342,9 +388,11 @@ message ParameterDetail {
   // Minimum Value for Integers and Floats
   double maximum = 17;
 
-  // Fine steps allow the devicecore to recommend a fine step value for Integers and Floats
+  // Fine steps allow the devicecore to recommend a fine step value for Integers
+  // and Floats
   double fineSteps = 32;
-  // Fine steps allow the devicecore to recommend a corse step value for Integers and Floats
+  // Fine steps allow the devicecore to recommend a corse step value for
+  // Integers and Floats
   double coarseSteps = 33;
 
   // Option List including the starting options
@@ -358,20 +406,24 @@ message ParameterDetail {
   // Default value for a parameter
   ParameterValue defaultValue = 20;
 
-  // Map with Parameter meta values, added values that might need to be used for any additional info that does not require the devicecore to hold more state
+  // Map with Parameter meta values, added values that might need to be used for
+  // any additional info that does not require the devicecore to hold more state
   map<string, ParameterMetaDetail> metaDetails = 21;
   // Maximum Value for Incrementation
   int32 incDecStepsUpperLimit = 22;
   // Maximum Negative Value for Decrementation
   int32 incDecStepsLowerLimit = 23;
 
-  // Specifies if a parameter can still be controlled while connection state is false, only comes into affect if connectionstate exists in the devicecore
+  // Specifies if a parameter can still be controlled while connection state is
+  // false, only comes into affect if connectionstate exists in the devicecore
   bool controllableWhileDisconnected = 25;
 
-  // Give thge client a hint what user level this parameter covers (this is purely metadata)
+  // Give thge client a hint what user level this parameter covers (this is
+  // purely metadata)
   ParameterUIType UIType = 38;
 
-  // Give thge client a hint if this parameter should be paired with another one for display and purposes
+  // Give thge client a hint if this parameter should be paired with another one
+  // for display and purposes
   string RecommendedParamForTextDisplay = 39;
   string RecommendedParamForTitleDisplay = 41;
 
@@ -384,7 +436,13 @@ message DimensionDetail {
   string name = 1;
   uint32 count = 2;
   string description = 3;
-  // if we need to name dimensions elementLabels can be used. Caution: this is not supposed for parameters like RGB or combinations of different values. It is rather used to indicate labeling in values like different audiochannels (eg channel 9 and 10 are refered to as MasterLeft / MasterRight) Think of it this way: if the user could still understand the parameter without the label it is ok to use it to improve the user experience
+  // if we need to name dimensions elementLabels can be used. Caution: this is
+  // not supposed for parameters like RGB or combinations of different values.
+  // It is rather used to indicate labeling in values like different
+  // audiochannels (eg channel 9 and 10 are refered to as MasterLeft /
+  // MasterRight) Think of it this way: if the user could still understand the
+  // parameter without the label it is ok to use it to improve the user
+  // experience
   map<uint32, string> elementLabels = 4;
 }
 
@@ -490,7 +548,8 @@ enum GenericType {
 
   TestTrigger = 8;
 
-  SettableValue = 9; // for alternative label and stuff for setValue first, then add a step change
+  SettableValue = 9; // for alternative label and stuff for setValue first, then
+                     // add a step change
   SimpleConfirm = 10;
 
   PresetRecall = 13;
@@ -521,5 +580,6 @@ enum ParameterError {
 enum ParameterUIType {
   NormalParameter = 0; // selectable in ioref parameter dropdown always
   SimpleParameter = 1; // also show this as autogenerated oneclick behavior
-  HelperParameter = 2; // will be hidden in ioref parameter dropdown unless "all parameters" flag is ticked
+  HelperParameter = 2; // will be hidden in ioref parameter dropdown unless "all
+                       // parameters" flag is ticked
 }
