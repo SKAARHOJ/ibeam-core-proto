@@ -224,10 +224,7 @@ message ModelInfo {
          // devices to true
 
   repeated DeviceCategory deviceCategorys = 12;
-  string DeviceWebUILink =
-      13; // provide a link template to the devices webui. use {ip} to add the
-          // ip address into it. If defined it will render a new button to open
-          // the UI
+  string DeviceWebUILink = 13; // provide a link template to the devices webui. use {ip} to add the ip address into it. use {port} or {:port} to add a port if available, optionally with a : . If defined it will render a new button to open the UI
   // String indicating licensing information
   string licenseInformation = 14;
 }
