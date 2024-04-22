@@ -218,8 +218,7 @@ message ModelInfo {
   // Used to indicate information about the development status of a model, uses
   // the same classes as for core-info
   string developmentStatus = 5;
-  bool optimisticConnectionStatus =
-      6; // When set will never show "Connected/Unconnected" but rather "Ready"
+  bool optimisticConnectionStatus = 6; // When set will never show "Connected/Unconnected" but rather "Ready"
          // in Reactor. Core should still set the connectionstatus of the
          // devices to true
 
