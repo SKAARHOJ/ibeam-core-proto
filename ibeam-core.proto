@@ -418,7 +418,7 @@ message ParameterDetail {
   // purely metadata)
   ParameterUIType UIType = 38;
 
-  // Give thge client a hint if this parameter should be paired with another one
+  // Give the client a hint if this parameter should be paired with another one
   // for display and purposes
   string RecommendedParamForTextDisplay = 39;
   string RecommendedParamForTitleDisplay = 41;
