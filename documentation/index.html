@@ -506,7 +506,8 @@
                   <td>deviceCategory</td>
                   <td><a href="#ibeam_core.DeviceCategory">DeviceCategory</a></td>
                   <td></td>
-                  <td><p>Primary category of the devices this core can control, used as metadata in listings </p></td>
+                  <td><p>Primary category of the devices this core can control, used as metadata in
+listings </p></td>
                 </tr>
               
                 <tr>
@@ -528,6 +529,13 @@
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p>Used to indicate information about the development status of a core </p></td>
+                </tr>
+              
+                <tr>
+                  <td>licenseInformation</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>String indicating licensing information </p></td>
                 </tr>
               
             </tbody>
@@ -778,7 +786,7 @@
                   <td><p>if we need to name dimensions elementLabels can be used. Caution: this is
 not supposed for parameters like RGB or combinations of different values.
 It is rather used to indicate labeling in values like different
-audiochannels (eg chanell 9 and 10 are refered to as MasterLeft /
+audiochannels (eg channel 9 and 10 are refered to as MasterLeft /
 MasterRight) Think of it this way: if the user could still understand the
 parameter without the label it is ok to use it to improve the user
 experience </p></td>
@@ -843,14 +851,16 @@ experience </p></td>
                   <td>PortOverride</td>
                   <td><a href="#int32">int32</a></td>
                   <td></td>
-                  <td><p>Override the port that has been requested from the device with a different one </p></td>
+                  <td><p>Override the port that has been requested from the </p></td>
                 </tr>
               
                 <tr>
                   <td>NameOverride</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Devicename defaults to discovered hostname, this field can override this behavior </p></td>
+                  <td><p>device with a different one
+
+Devicename defaults to discovered hostname, this </p></td>
                 </tr>
               
                 <tr>
@@ -864,21 +874,25 @@ experience </p></td>
                   <td>TextRegex</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Provide a regex match for the text record of the MDNS discovery. If hostname AND text are set both need to be true to match </p></td>
+                  <td><p>Provide a regex match for the text record of the MDNS discovery. If
+hostname AND text are set both need to be true to match </p></td>
                 </tr>
               
                 <tr>
                   <td>HostnameRegex</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>provide a regex match for the hostname. If hostname AND text are set both need to be true to match </p></td>
+                  <td><p>provide a regex match for the hostname. If hostname AND text are set both
+need to be true to match </p></td>
                 </tr>
               
                 <tr>
                   <td>SSDPServerRegex</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Provide a regex of either the location or the Server header. If it matches discovery will fetch more info and evaluate the response using XMLDeviceRegex </p></td>
+                  <td><p>Provide a regex of either the location or the Server header. If it matches
+discovery will fetch more info and evaluate the response using
+XMLDeviceRegex </p></td>
                 </tr>
               
                 <tr>
@@ -985,7 +999,8 @@ experience </p></td>
                   <td>ImageData</td>
                   <td><a href="#bytes">bytes</a></td>
                   <td></td>
-                  <td><p>actual image data, might be missing in case HashOnly is set to true in the request </p></td>
+                  <td><p>actual image data, might be missing in case HashOnly is set to true in the
+request </p></td>
                 </tr>
               
                 <tr>
@@ -1099,14 +1114,15 @@ experience </p></td>
                   <td>developmentStatus</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Used to indicate information about the development status of a model, uses the same classes as for core-info </p></td>
+                  <td><p>Used to indicate information about the development status of a model, uses
+the same classes as for core-info </p></td>
                 </tr>
               
                 <tr>
                   <td>optimisticConnectionStatus</td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
-                  <td><p>When set will never show "Connected/Unconnected" but rather "Ready" in Reactor. Core should still set the connectionstatus of the devices to true </p></td>
+                  <td><p>When set will never show "Connected/Unconnected" but rather "Ready" </p></td>
                 </tr>
               
                 <tr>
@@ -1120,7 +1136,14 @@ experience </p></td>
                   <td>DeviceWebUILink</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>provide a link template to the devices webui. use {ip} to add the ip address into it. If defined it will render a new button to open the UI </p></td>
+                  <td><p>provide a link template to the devices webui. use {ip} to add the ip address into it. use {port} or {:port} to add a port if available, optionally with a : . If defined it will render a new button to open the UI </p></td>
+                </tr>
+              
+                <tr>
+                  <td>licenseInformation</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>String indicating licensing information </p></td>
                 </tr>
               
             </tbody>
@@ -1338,7 +1361,8 @@ syncroniser or MEs / Keys in a switcher </p></td>
                   <td>IsExperimental</td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
-                  <td><p>Note if the parameter is in experimantal state currently, decription should point out more details </p></td>
+                  <td><p>Note if the parameter is in experimantal state currently, decription should
+point out more details </p></td>
                 </tr>
               
                 <tr>
@@ -1352,8 +1376,8 @@ syncroniser or MEs / Keys in a switcher </p></td>
                   <td>isSpeedValue</td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
-                  <td><p>Specifys if this parameter can be controled via a
-centering analog control like a joystick </p></td>
+                  <td><p>Specifies if this parameter can be controled via a centering analog control
+like a joystick </p></td>
                 </tr>
               
                 <tr>
@@ -1381,16 +1405,16 @@ centering analog control like a joystick </p></td>
                   <td>quarantineDelayMs</td>
                   <td><a href="#uint32">uint32</a></td>
                   <td></td>
-                  <td><p>time to wait after a set before sending new
-values to the client subscribe stream </p></td>
+                  <td><p>time to wait after a set before sending new values to the client subscribe
+stream </p></td>
                 </tr>
               
                 <tr>
                   <td>retryCount</td>
                   <td><a href="#uint32">uint32</a></td>
                   <td></td>
-                  <td><p>how often to retry a set if target != current
-config value for Normal Control Style </p></td>
+                  <td><p>how often to retry a set if target != current config value for Normal
+Control Style </p></td>
                 </tr>
               
                 <tr>
@@ -1503,6 +1527,13 @@ Integers and Floats </p></td>
                 </tr>
               
                 <tr>
+                  <td>defaultIsDynamic</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>This is set to true when the default can update during runtime </p></td>
+                </tr>
+              
+                <tr>
                   <td>defaultValue</td>
                   <td><a href="#ibeam_core.ParameterValue">ParameterValue</a></td>
                   <td></td>
@@ -1551,8 +1582,15 @@ purely metadata) </p></td>
                   <td>RecommendedParamForTextDisplay</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Give thge client a hint if this parameter should be paired with another one
+                  <td><p>Give the client a hint if this parameter should be paired with another one
 for display and purposes </p></td>
+                </tr>
+              
+                <tr>
+                  <td>RecommendedParamForTitleDisplay</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
                 </tr>
               
                 <tr>
@@ -1787,16 +1825,16 @@ for display and purposes </p></td>
                   <td>available</td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
-                  <td><p>Shows if the Parameter is currently available.
-This field is ignored in set request </p></td>
+                  <td><p>Shows if the Parameter is currently available. This field is ignored in set
+request </p></td>
                 </tr>
               
                 <tr>
                   <td>isAssumedState</td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
-                  <td><p>Shows if the Parameter is currently assumed.
-This field is ignored in set request. </p></td>
+                  <td><p>Shows if the Parameter is currently assumed. This field is ignored in set
+request. </p></td>
                 </tr>
               
                 <tr>
@@ -1876,6 +1914,13 @@ the client to replace the value with a placeholder </p></td>
                   <td><a href="#double">double</a></td>
                   <td></td>
                   <td><p>used to update a maximum value </p></td>
+                </tr>
+              
+                <tr>
+                  <td>defaultUpdate</td>
+                  <td><a href="#ibeam_core.ParameterValue">ParameterValue</a></td>
+                  <td></td>
+                  <td><p>used to update a default value </p></td>
                 </tr>
               
                 <tr>
@@ -2358,13 +2403,13 @@ the client to replace the value with a placeholder </p></td>
               <tr>
                 <td>SettableValue</td>
                 <td>9</td>
-                <td><p>for alternative label and stuff for setValue first, then add a step change</p></td>
+                <td><p>for alternative label and stuff for setValue first, then</p></td>
               </tr>
             
               <tr>
                 <td>SimpleConfirm</td>
                 <td>10</td>
-                <td><p></p></td>
+                <td><p>add a step change</p></td>
               </tr>
             
               <tr>
@@ -2386,14 +2431,20 @@ the client to replace the value with a placeholder </p></td>
               </tr>
             
               <tr>
-                <td>PresetThumbnail</td>
+                <td>PresetDelete</td>
                 <td>16</td>
                 <td><p></p></td>
               </tr>
             
               <tr>
-                <td>PresetThumbnailExists</td>
+                <td>PresetThumbnail</td>
                 <td>17</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>PresetThumbnailExists</td>
+                <td>18</td>
                 <td><p></p></td>
               </tr>
             
@@ -2541,7 +2592,7 @@ the client to replace the value with a placeholder </p></td>
               <tr>
                 <td>HelperParameter</td>
                 <td>2</td>
-                <td><p>will be hidden in ioref parameter dropdown unless "all parameters" flag is ticked</p></td>
+                <td><p>will be hidden in ioref parameter dropdown unless "all</p></td>
               </tr>
             
           </tbody>

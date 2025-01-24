@@ -7,7 +7,7 @@ package ibeam_core;
 option go_package = "../ibeam-core;ibeam_core";
 
 /// This block hardcodes the ibeam version
-option (ibeam_version) = "v0.3.14";
+option (ibeam_version) = "v0.3.15";
 extend google.protobuf.FileOptions { string ibeam_version = 5000; }
 /// End version block
 
@@ -99,6 +99,12 @@ message CoreInfo {
   string developmentStatus = 10;
   // String indicating licensing information
   string licenseInformation = 13;
+
+  // Indicates the core supports sending a configuration save command
+  bool canTriggerConfigSave = 14;
+  
+  // Indicates the core supports reloading the config without a full restart
+  bool canReloadConfig = 15;
 }
 
 // The ConnectionType describes how the Core connects to the device
@@ -126,7 +132,9 @@ enum DeviceCategory {
 
 message ByteData { bytes data = 1; }
 
-message RestartInfo {} // Might be used in the future
+message RestartInfo {
+  bool ReloadOnly = 1; // Indicate that this should only be a reload, not a full restart
+}
 
 message ModelImageRequest {
   // ModelIDs to get images for
@@ -269,30 +277,38 @@ message ParameterValue {
     uint32 currentOption = 8;
     Command cmd = 9;
     bool binary = 10;
-    OptionList optionListUpdate = 11; // Used to update an optionlist
-    double minimumUpdate = 12;        // used to update a minimum value
-    double maximumUpdate = 13;        // used to update a maximum value
+    OptionList optionListUpdate = 11;  // Used to update an optionlist
+    double minimumUpdate = 12;         // used to update a minimum value
+    double maximumUpdate = 13;         // used to update a maximum value
+    ParameterValue defaultUpdate = 18; // used to update a default value
     bytes png = 14;
     bytes jpeg = 15;
     CustomError error = 16;
+    SystemMessage system = 19;
   }
 
   map<string, ParameterMetaValue> metaValues = 20;
 }
 
 message CustomError {
-  string ID =
-      1; // The ID string allows everybody down the chain to understand if this
-         // is a repeating error and can be merged to one existing one
+  string ID = 1; // The ID string allows everybody down the chain to understand if this is a repeating error and can be merged to one existing one
   string Message = 2;
   CustomErrorType errortype = 3;
-  // bool HideInUI = 2; // not yet sure if needed, maybe also "show in ui ?"
+}
+
+message SystemMessage {
+  SystemMessageType messagetype = 1;
 }
 
 enum CustomErrorType {
   Error = 0;
   Resolve = 1;
   Warning = 2;
+}
+
+enum SystemMessageType {
+  None = 0;
+  SaveDeviceConfiguration = 1;
 }
 
 message OptionList { repeated ParameterOption options = 1; }
@@ -398,6 +414,9 @@ message ParameterDetail {
   bool optionListIsDynamic = 19;
   // This is set to true when the minimmum and maximum can update during runtime
   bool minMaxIsDynamic = 26;
+
+  // This is set to true when the default can update during runtime
+  bool defaultIsDynamic = 42;
 
   // Default value for a parameter
   ParameterValue defaultValue = 20;
