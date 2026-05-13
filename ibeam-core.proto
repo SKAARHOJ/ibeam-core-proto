@@ -7,7 +7,7 @@ package ibeam_core;
 option go_package = "../ibeam-core;ibeam_core";
 
 /// This block hardcodes the ibeam version
-option (ibeam_version) = "v0.3.16";
+option (ibeam_version) = "v0.3.17";
 extend google.protobuf.FileOptions { string ibeam_version = 5000; }
 /// End version block
 
@@ -105,6 +105,9 @@ message CoreInfo {
   
   // Indicates the core supports reloading the config without a full restart
   bool canReloadConfig = 15;
+
+  // Indicates the core supports simulated devices when the device ip == "simulated"
+  bool supportsNativeSimulation = 16;
 }
 
 // The ConnectionType describes how the Core connects to the device
@@ -113,6 +116,7 @@ enum ConnectionType {
   Network = 1;
   Serial = 2;
   Sdi = 3;
+  Bluetooth = 3;
 }
 
 // The DeviceCategory describes what type of device this core is connecting to
@@ -149,7 +153,9 @@ enum DiscoveryType {
   SSDP = 2; // Discover via upnp ssdp
 
   PANASONIC_UDP_BROADCAST = 3;
-	VISCA = 4;
+	
+  VISCA = 4;
+	SLP = 5;
 }
 
 message DiscoveryMethod {
@@ -174,7 +180,10 @@ message DiscoveryMethod {
   string SSDPServerRegex = 7;
   // See SSDPServerRegex
   string SSDPLocationRegex = 8;
-
+  
+  // Additional URL to request info from when a device is found. Usually used for NDI
+  string AdditionalRequestURL = 10;
+  
   map<string, string> XMLDeviceRegex = 9;
 }
 
@@ -229,9 +238,9 @@ message ModelInfo {
   // Used to indicate information about the development status of a model, uses
   // the same classes as for core-info
   string developmentStatus = 5;
-  bool optimisticConnectionStatus = 6; // When set will never show "Connected/Unconnected" but rather "Ready"
-         // in Reactor. Core should still set the connectionstatus of the
-         // devices to true
+  
+  // When set will never show "Connected/Unconnected" but rather "Ready" in Reactor. Core should still set the connectionstatus of the devices to true
+  bool optimisticConnectionStatus = 6; 
 
   repeated DeviceCategory deviceCategorys = 12;
   string DeviceWebUILink = 13; // provide a link template to the devices webui. use {ip} to add the ip address into it. use {port} or {:port} to add a port if available, optionally with a : . If defined it will render a new button to open the UI
@@ -445,6 +454,9 @@ message ParameterDetail {
   string RecommendedParamForTextDisplay = 39;
   string RecommendedParamForTitleDisplay = 41;
 
+  // Support specifying a recommended color scheme for this parameter, eg "red/green" or "red/white" (follows "active/inactive" pattern)
+  string RecommendedColorSchema = 43;
+
   int32 UIListingOrder = 40;
 }
 
@@ -577,6 +589,10 @@ enum GenericType {
 
   PresetThumbnail = 17;
   PresetThumbnailExists = 18;
+
+  Routing = 19;
+  RoutingOutputLabel = 20;
+  RoutingInputLabel = 21;
 }
 
 // Errortypes when setting a Parameter
