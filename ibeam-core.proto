@@ -589,6 +589,8 @@ enum GenericType {
   Routing = 19;
   RoutingOutputLabel = 20;
   RoutingInputLabel = 21;
+
+  VUMeter = 22;
 }
 
 // Error types returned when setting a Parameter.
